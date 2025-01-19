@@ -1,0 +1,31 @@
+<div>
+    <section class="bg-white p-2 shadow-sm">
+        <div class="d-flex justify-content-end mb-2">
+            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#tambah-kategori">+ Tambah</button>
+        </div>
+
+        <hr>
+
+        <table class="table table-sm table-hover table-striped datatable">
+            <thead>
+                <th>No</th>
+                <th>Kategori</th>
+                <th>Deskripsi</th>
+                <th>Aksi</th>
+            </thead>
+            <tbody>
+                @foreach ($categories as $key => $item)
+                    <tr>
+                        <td>{{ ++$key }}</td>
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->description }}</td>
+                        <td>
+                            <button class="btn badge text-bg-warning"><i class="bi bi-pencil-square"></i></button>
+                            <button class="btn badge btn-danger"><i class="bi bi-trash"></i></button>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </section>
+</div>

@@ -36,6 +36,9 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+
+  {{-- @livewireStyles --}}
+  @stack('style')
 </head>
 
 <body>
@@ -49,6 +52,7 @@
   <main id="main" class="main">
 
     @yield('content')
+    {{-- {{ $slot }} --}}
 
   </main><!-- End #main -->
 
@@ -69,6 +73,8 @@
   <!-- Template Main JS File -->
   <script src="{{ asset('nice-admin/assets/js/main.js') }}"></script>
 
+  {{-- @livewireScripts --}}
+  @stack('script')
 </body>
 
 </html>

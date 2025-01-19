@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('total_price');
             $table->string('payment_method');
             $table->date('date');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
