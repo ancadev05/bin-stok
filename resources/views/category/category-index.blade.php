@@ -4,28 +4,28 @@
     @livewireStyles
 @endpush --}}
 
-@push('script')
+{{-- @push('script')
     @livewireScripts
     
-    {{-- <script>
+    <script>
         Livewire.on('modal-close', () => {
             $('#tambah-kategori').modal('hide');
         });
-    </script> --}}
+    </script>
 
     <script>
         Livewire.on('post-created', () => {
             $('#tambah-kategori').modal('hide');
         });
     </script>
-@endpush
+@endpush --}}
 
 @section('content')
     <div class="pagetitle">
         <h1>Kategori Produk</h1>
     </div>
 
-    @livewire('category.category-index')
-    @livewire('category.category-create')
+    {{-- @livewire('category.category-index')
+    @livewire('category.category-create') --}}
 
 @endsection
