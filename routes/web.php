@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Livewire\Admin\AdminDashboard;
+use App\Livewire\Category\CategoryCreate;
 use App\Livewire\Category\CategoryIndex;
 
 Route::get('/', function () {
@@ -16,6 +17,7 @@ Route::get('/', function () {
 // });
 
 Route::get('/category', CategoryIndex::class)->name('category');
+Route::get('/category/create', CategoryCreate::class)->name('category.create');
 
 
 
