@@ -43,9 +43,11 @@
                     </div>
                 </div>
             </div>
-            <div class="">
-                <a wire:navigate href="{{ route('supplier') }}" class="btn btn-sm btn-secondary">Batal</a>
-                <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+            <div class="row">
+                <div class="offset-2">
+                    <a wire:navigate href="{{ route('supplier') }}" class="btn btn-sm btn-secondary">Batal</a>
+                    <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                </div>
             </div>
         </form>
     </section>
