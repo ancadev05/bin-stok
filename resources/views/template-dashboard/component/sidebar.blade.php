@@ -34,6 +34,19 @@
 
           <li class="nav-heading">Transaksi</li>
 
+          <li class="nav-item">
+              <a class="nav-link collapsed" href="#">
+                  <i class="bi bi-cart-plus"></i>
+                  <span>Pembelian</span>
+              </a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link collapsed" href="#">
+                  <i class="bi bi-cart-dash"></i>
+                  <span>Penjualan</span>
+              </a>
+          </li>
+
       </ul>
 
   </aside><!-- End Sidebar-->
