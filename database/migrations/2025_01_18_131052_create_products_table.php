@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('stock')->default(0);
             $table->integer('cost');
             $table->integer('selling_price');
-            $table->string('gambar')->nullable();
+            $table->string('images')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();
         });

@@ -14,13 +14,13 @@
           <li class="nav-heading">Master</li>
 
           <li class="nav-item">
-              <a class="nav-link collapsed" href="{{ url('category') }}">
+              <a wire:navigate class="nav-link collapsed" href="{{ route('category') }}">
                   <i class="bi bi-box"></i>
                   <span>Kategori</span>
               </a>
           </li>
           <li class="nav-item">
-              <a class="nav-link collapsed" href="#">
+              <a wire:navigate class="nav-link collapsed" href="{{ route('product') }}">
                   <i class="bi bi-boxes"></i>
                   <span>Produk</span>
               </a>
