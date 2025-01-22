@@ -3,10 +3,11 @@
 use App\Livewire\Category\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CategoryController;
 use App\Livewire\Admin\AdminDashboard;
-use App\Livewire\Category\CategoryCreate;
+use App\Livewire\Category\CategoryEdit;
 use App\Livewire\Category\CategoryIndex;
+use App\Livewire\Category\CategoryCreate;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,8 +17,6 @@ Route::get('/', function () {
 //     return view('category.category-index');
 // });
 
-Route::get('/category', CategoryIndex::class)->name('category');
-Route::get('/category/create', CategoryCreate::class)->name('category.create');
 
 
 
@@ -29,4 +28,9 @@ Auth::routes(['register' => false]);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard', AdminDashboard::class)->name('admin.dashboard');
+
+    // category
+    Route::get('/category', CategoryIndex::class)->name('category');
+    Route::get('/category/create', CategoryCreate::class)->name('category.create');
+    Route::get('/category/edit/{id}', CategoryEdit::class)->name('category.edit');
 });

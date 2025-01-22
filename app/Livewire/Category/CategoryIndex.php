@@ -16,4 +16,10 @@ class CategoryIndex extends Component
         $categories = Category::all();
         return view('livewire.category.category-index', compact('categories'));
     }
+
+    public function destroy($id)
+    {
+        Category::find($id)->delete();
+        $this->redirectRoute('category', navigate:true);
+    }
 }
