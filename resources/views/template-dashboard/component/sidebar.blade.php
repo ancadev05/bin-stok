@@ -35,13 +35,13 @@
           <li class="nav-heading">Transaksi</li>
 
           <li class="nav-item">
-              <a class="nav-link {{ Request::is('admin.dashboard') ? '' : 'collapsed' }}" href="#">
+              <a wire:navigate class="nav-link {{ Request::is('purchase') ? '' : 'collapsed' }}" href="{{ route('purchase') }}">
                   <i class="bi bi-cart-plus"></i>
                   <span>Pembelian</span>
               </a>
           </li>
           <li class="nav-item">
-              <a class="nav-link {{ Request::is('admin.dashboard') ? '' : 'collapsed' }}" href="#">
+              <a wire:navigate class="nav-link {{ Request::is('admin.dashboard') ? '' : 'collapsed' }}" href="#">
                   <i class="bi bi-cart-dash"></i>
                   <span>Penjualan</span>
               </a>
