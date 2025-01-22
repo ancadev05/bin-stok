@@ -24,6 +24,8 @@
                 <th>Kode Produk</th>
                 <th>Nama Produk</th>
                 <th>Merek</th>
+                <th>HPP (Rp)</th>
+                <th>Harga Jual (Rp)</th>
                 <th>Stok</th>
                 <th>Aksi</th>
             </thead>
@@ -34,7 +36,9 @@
                         <td>{{ $item->product_code }}</td>
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->brand }}</td>
-                        <td>{{ $item->stock }}</td>
+                        <td class="text-end">{{ number_format($item->cost) }}</td>
+                        <td class="text-end">{{ number_format($item->selling_price) }}</td>
+                        <td class="text-center {{ $item->stock < 5 ? 'text-bg-danger' : '' }}">{{ $item->stock }}</td>
                         <td>
                             <a wire:navigate href="{{ route('product.edit', $item->id) }}" class="btn badge text-bg-warning"><i class="bi bi-pencil-square"></i></a>
                             <button wire:click="destroy({{ $item->id }})" wire:confirm="Yakin inign hapus {{ $item->name }}" class="btn badge btn-danger"><i class="bi bi-trash"></i></button>
@@ -42,6 +46,11 @@
                     </tr>
                 @endforeach
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="7"><small><i>Produk dengna stok dibawah 5 (lima) akan merah!</i></small></td>
+                </tr>
+            </tfoot>
         </table>
     </section>
 </div>
