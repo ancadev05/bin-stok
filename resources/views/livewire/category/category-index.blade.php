@@ -9,6 +9,15 @@
 
         <hr>
 
+        @if (session('status'))
+            <section>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('status') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </section>
+        @endif
+
         <table class="table table-sm table-hover table-striped datatable">
             <thead>
                 <th>No</th>
@@ -23,8 +32,11 @@
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->description }}</td>
                         <td>
-                            <a wire:navigate href="{{ route('category.edit', $item->id) }}" class="btn badge text-bg-warning"><i class="bi bi-pencil-square"></i></a>
-                            <button wire:click="destroy({{ $item->id }})" wire:confirm="Yakin inign hapus {{ $item->name }}" class="btn badge btn-danger"><i class="bi bi-trash"></i></button>
+                            <a wire:navigate href="{{ route('category.edit', $item->id) }}"
+                                class="btn badge text-bg-warning"><i class="bi bi-pencil-square"></i></a>
+                            <button wire:click="destroy({{ $item->id }})"
+                                wire:confirm="Yakin inign hapus {{ $item->name }}" class="btn badge btn-danger"><i
+                                    class="bi bi-trash"></i></button>
                         </td>
                     </tr>
                 @endforeach

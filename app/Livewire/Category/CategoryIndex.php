@@ -20,6 +20,7 @@ class CategoryIndex extends Component
     public function destroy($id)
     {
         Category::find($id)->delete();
-        $this->redirectRoute('category', navigate:true);
+
+        session()->flash('status','Data berhasil dihapus!');
     }
 }

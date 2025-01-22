@@ -40,6 +40,7 @@ class SupplierEdit extends Component
             'description' => $this->description
         ]);
 
+        session()->flash('status','Data berhasil diubah!');
         $this->redirectRoute('supplier', navigate:'true');
     }
 

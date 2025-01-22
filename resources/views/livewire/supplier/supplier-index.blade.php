@@ -9,6 +9,15 @@
 
         <hr>
 
+        @if (session('status'))
+            <section>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('status') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </section>
+        @endif
+
         <table class="table table-sm table-hover table-striped datatable">
             <thead>
                 <th>No</th>

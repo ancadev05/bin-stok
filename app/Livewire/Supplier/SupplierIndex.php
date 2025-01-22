@@ -17,5 +17,6 @@ class SupplierIndex extends Component
     public function destroy($id)
     {
         Supplier::find($id)->delete();
+        session()->flash('status','Data berhasil dihapus!');
     }
 }

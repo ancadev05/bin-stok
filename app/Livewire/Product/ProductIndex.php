@@ -18,5 +18,6 @@ class ProductIndex extends Component
     public function destroy($id)
     {
         Product::find($id)->delete();
+        session()->flash('status','Data berhasil dihapus!');
     }
 }

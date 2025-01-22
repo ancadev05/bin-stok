@@ -28,6 +28,7 @@ class SupplierCreate extends Component
             'description' => $this->description
         ]);
 
+        session()->flash('status','Data berhasil ditambahkan!');
         $this->redirectRoute('supplier', navigate:'true');
     }
     #[Layout('template-dashboard.main')]

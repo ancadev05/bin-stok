@@ -58,6 +58,7 @@ class ProductEdit extends Component
             'description' => $this->description,
         ]);
 
+        session()->flash('status','Data berhasil diubah!');
         $this->redirectRoute('product', navigate: true);
     }
 

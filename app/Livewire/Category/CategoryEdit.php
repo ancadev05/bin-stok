@@ -31,6 +31,7 @@ class CategoryEdit extends Component
             'description'=> $this->description
         ]);
         
+        session()->flash('status','Data berhasil diubah!');
         $this->redirectRoute('category', navigate:true);
     }
 
