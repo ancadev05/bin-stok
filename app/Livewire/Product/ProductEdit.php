@@ -6,16 +6,23 @@ use App\Models\Product;
 use Livewire\Component;
 use App\Models\Category;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Validate;
 
 class ProductEdit extends Component
 {
     public $id;
+    #[Validate('required', message:'Pilih kategori produk!')]
     public $category_id;
     public $product_code;
+    #[Validate('required', message:'Isi nama produk!')]
     public $name;
+    #[Validate('required', message:'Isi merek produk!')]
     public $brand;
+    #[Validate('required', message:'Isi spesifikasi produk!')]
     public $specifications;
+    #[Validate('required', message:'Isi HPP produk!')]
     public $cost;
+    #[Validate('required', message:'Isi harga jual produk!')]
     public $selling_price;
     public $images;
     public $description;
@@ -37,6 +44,8 @@ class ProductEdit extends Component
 
     public function update()
     {
+        $this->validate();
+        
         Product::find($this->id)->update([
             'category_id' => $this->category_id,
             'product_code' => $this->product_code,

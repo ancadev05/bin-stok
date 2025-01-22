@@ -9,15 +9,13 @@ use Livewire\Attributes\Validate;
 
 class CategoryCreate extends Component
 {
-    #[Validate('required', message:'Masukkan nama produk!')]
+    #[Validate('required', message:'Isi nama kategori!')]
     public $name; 
     public $description;
 
     public function store()
     {
         $this->validate();
-
-        // dd($this->name);
 
         Category::create([
             'name' => $this->name,

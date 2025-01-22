@@ -12,7 +12,9 @@ class SupplierEdit extends Component
     public $id;
     #[Validate('required', message: 'Isi nama supplayer!')]
     public $name;
+    #[Validate('required', message: 'Isi alamat supplayer!')]
     public $address;
+    #[Validate('required', message: 'Isi no telepon supplayer!')]
     public $phone_number;
     public $description;
 
