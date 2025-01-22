@@ -10,7 +10,7 @@
                     <label for="name" class="col-sm-2 col-form-label text-end">Kategori</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                            wire:model="name">
+                            wire:model="name" autofocus>
                         @error('name')
                             <small class="invalid-feedback">{{ $message }}</small>
                         @enderror

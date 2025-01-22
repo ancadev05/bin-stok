@@ -13,4 +13,9 @@ class SupplierIndex extends Component
     {
         return view('livewire.supplier.supplier-index', ['suppliers' => Supplier::all()]);
     }
+
+    public function destroy($id)
+    {
+        Supplier::find($id)->delete();
+    }
 }
