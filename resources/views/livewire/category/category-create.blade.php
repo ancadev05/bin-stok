@@ -7,7 +7,7 @@
             @csrf
             <div class="modal-body">
                 <div class="mb-3 row">
-                    <label for="name" class="col-sm-2 col-form-label">Kategori</label>
+                    <label for="name" class="col-sm-2 col-form-label text-end">Kategori</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                             wire:model="name">
@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
-                    <label for="description" class="col-sm-2 col-form-label">Deskripsi</label>
+                    <label for="description" class="col-sm-2 col-form-label text-end">Deskripsi</label>
                     <div class="col-sm-10">
                         <textarea class="form-control" id="description" wire:model="description"></textarea>
                     </div>

@@ -8,9 +8,12 @@ use App\Livewire\Admin\AdminDashboard;
 use App\Livewire\Product\ProductIndex;
 use App\Livewire\Category\CategoryEdit;
 use App\Livewire\Product\ProductCreate;
+use App\Livewire\Supplier\SupplierEdit;
 use App\Http\Controllers\HomeController;
 use App\Livewire\Category\CategoryIndex;
+use App\Livewire\Supplier\SupplierIndex;
 use App\Livewire\Category\CategoryCreate;
+use App\Livewire\Supplier\SupplierCreate;
 use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
@@ -41,4 +44,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product', ProductIndex::class)->name('product');
     Route::get('/product/create', ProductCreate::class)->name('product.create');
     Route::get('/product/edit/{id}', ProductEdit::class)->name('product.edit');
+    // supplier
+    Route::get('/supplier', SupplierIndex::class)->name('supplier');
+    Route::get('/supplier/create', SupplierCreate::class)->name('supplier.create');
+    Route::get('/supplier/edit/{id}', SupplierEdit::class)->name('supplier.edit');
 });

@@ -1,3 +1,5 @@
 <div>
-    <h1>halaman dashboard</h1>
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+    </div>
 </div>
