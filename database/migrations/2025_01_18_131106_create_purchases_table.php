@@ -13,11 +13,13 @@ return new class extends Migration
     {
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('supplier_id')->constrained();
-            $table->integer('discount');
-            $table->integer('total_price');
-            $table->string('payment_method');
+            $table->string('purchase_code')->unique();
+            $table->string('supplier_name')->nullable();
+            $table->integer('discount')->default(0);
+            $table->integer('total_price')->default(0);
+            $table->string('payment_method')->nullable();
             $table->date('date');
+            $table->string('status')->default('Pending');
             $table->string('description')->nullable();
             $table->timestamps();
         });

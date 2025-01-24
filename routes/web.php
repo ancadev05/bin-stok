@@ -15,6 +15,7 @@ use App\Livewire\Supplier\SupplierIndex;
 use App\Livewire\Category\CategoryCreate;
 use App\Livewire\Supplier\SupplierCreate;
 use App\Http\Controllers\CategoryController;
+use App\Livewire\Purchase\PurchaseCreate;
 use App\Livewire\Purchase\PurchaseIndex;
 
 Route::get('/', function () {
@@ -51,4 +52,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/supplier/edit/{id}', SupplierEdit::class)->name('supplier.edit');
     // purchase
     Route::get('/purchase', PurchaseIndex::class)->name('purchase');
+    Route::get('/purchase/create/{id}', PurchaseCreate::class)->name('purchase.create');
 });

@@ -8,7 +8,7 @@
                     <th>#</th>
                     <th>Tanggal</th>
                     <th>Kode Pembelian</th>
-                    <th>Total (Rp)</th>
+                    <th>Total</th>
                     <th>Status</th>
                     <th>Aksi</th>
                 </tr>
@@ -20,10 +20,10 @@
                         {{-- <td>{{ Carbon\Carbon::parse($item->date)->translatedFormat('d F Y') }}</td> --}}
                         <td>{{ $item->date }}</td>
                         <td>{{ $item->purchase_code }}</td>
-                        <td>{{ number_format($item->total_price) }}</td>
+                        <td>{{ $item->total_price }}</td>
                         <td>{{ $item->status }}</td>
                         <td>
-                            <button wire:click="purchaseDestroy({{ $item->id }})" class="btn badge btn-danger"><i class="bi bi-trash"></i></button>
+                            <button wire:click="purchaseDestroy({{ $item->id }})" class="btn badge text-bg-danger"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>
                 @endforeach

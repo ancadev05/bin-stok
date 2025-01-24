@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Purchase;
 
+use livewire;
+use App\Models\Product;
 use Livewire\Component;
 use App\Models\Purchase;
-use App\Models\PurchaseDetails;
+use App\Models\Supplier;
 use Illuminate\Support\Carbon;
 use Livewire\Attributes\Layout;
 
@@ -14,6 +16,7 @@ class PurchaseIndex extends Component
     public function render()
     {
         $purchases = Purchase::all();
+
         return view('livewire.purchase.purchase-index', compact('purchases'));
     }
 
@@ -30,11 +33,11 @@ class PurchaseIndex extends Component
         
 
         $this->redirect('purchase/create/' . $purchase_id, navigate: true);
+
     }
 
     public function purchaseDestroy($id)
     {
-        PurchaseDetails::where('purchase_id', $id)->delete();
         Purchase::find($id)->delete();
     }
 }

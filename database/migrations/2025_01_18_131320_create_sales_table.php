@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->string('cotumer');
-            $table->integer('discount');
-            $table->integer('total_price');
-            $table->string('payment_method');
+            $table->string('sales_code')->unique();
+            $table->string('cotumer')->nullable();
+            $table->integer('discount')->default(0);
+            $table->integer('total_price')->default(0);
+            $table->string('payment_method')->nullable();
             $table->date('date');
             $table->string('description')->nullable();
             $table->timestamps();
