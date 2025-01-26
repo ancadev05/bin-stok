@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('brand');
             $table->string('specifications');
             $table->integer('stock')->default(0);
+            $table->integer('min_stock')->default(0);
             $table->integer('cost');
             $table->integer('selling_price');
             $table->string('images')->nullable();

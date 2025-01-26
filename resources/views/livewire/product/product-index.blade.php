@@ -31,14 +31,14 @@
             </thead>
             <tbody>
                 @foreach ($products as $key => $item)
-                    <tr>
-                        <td>{{ ++$key }}</td>
-                        <td>{{ $item->product_code }}</td>
-                        <td>{{ $item->name }}</td>
-                        <td>{{ $item->brand }}</td>
-                        <td class="text-end">{{ number_format($item->cost) }}</td>
-                        <td class="text-end">{{ number_format($item->selling_price) }}</td>
-                        <td class="text-center {{ $item->stock < 5 ? 'text-bg-danger' : '' }}">{{ $item->stock }}</td>
+                    <tr class="">
+                        <td class="{{ $item->min_stock >= $item->stock ? 'text-bg-danger' : '' }}">{{ ++$key }}</td>
+                        <td class="{{ $item->min_stock >= $item->stock ? 'text-bg-danger' : '' }}">{{ $item->product_code }}</td>
+                        <td class="{{ $item->min_stock >= $item->stock ? 'text-bg-danger' : '' }}">{{ $item->name }}</td>
+                        <td class="{{ $item->min_stock >= $item->stock ? 'text-bg-danger' : '' }}">{{ $item->brand }}</td>
+                        <td class="{{ $item->min_stock >= $item->stock ? 'text-bg-danger' : '' }} text-end">{{ number_format($item->cost) }}</td>
+                        <td class="{{ $item->min_stock >= $item->stock ? 'text-bg-danger' : '' }} text-end">{{ number_format($item->selling_price) }}</td>
+                        <td class="text-center {{ $item->min_stock >= $item->stock ? 'text-bg-danger' : '' }}">{{ $item->stock }}</td>
                         <td>
                             <a wire:navigate href="{{ route('product.edit', $item->id) }}" class="btn badge text-bg-warning"><i class="bi bi-pencil-square"></i></a>
                             <button wire:click="destroy({{ $item->id }})" wire:confirm="Yakin inign hapus {{ $item->name }}" class="btn badge btn-danger"><i class="bi bi-trash"></i></button>
@@ -48,7 +48,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="7"><small><i>Produk dengna stok dibawah 5 (lima) akan merah!</i></small></td>
+                    <td colspan="7"><small><i>Produk merah sudah mencapai stok minimal!</i></small></td>
                 </tr>
             </tfoot>
         </table>

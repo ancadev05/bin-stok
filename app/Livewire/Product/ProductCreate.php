@@ -20,6 +20,8 @@ class ProductCreate extends Component
     public $brand;
     #[Validate('required', message:'Isi spesifikasi produk!')]
     public $specifications;
+    #[Validate('required', message:'Masukkan minimal stok!')]
+    public $min_stock;
     #[Validate('required', message:'Isi HPP produk!')]
     public $cost;
     #[Validate('required', message:'Isi harga jual produk!')]
@@ -33,7 +35,7 @@ class ProductCreate extends Component
         
         // penentuan kode product
         if ($this->product_code == null) {
-            $product_code = Str::upper( 'PRD-' . $this->category_id . '-' . time());
+            $product_code = Str::upper( 'P' . $this->category_id  . time());
         } else {
             $product_code = Str::upper( $this->product_code);
         }
@@ -44,6 +46,7 @@ class ProductCreate extends Component
             'name' => $this->name,
             'brand' => $this->brand,
             'specifications' => $this->specifications,
+            'min_stock' => $this->min_stock,
             'cost' => $this->cost,
             'selling_price' => $this->selling_price,
             'images' => 'images.png',

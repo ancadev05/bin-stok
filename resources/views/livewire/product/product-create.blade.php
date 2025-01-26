@@ -78,6 +78,16 @@
                     </div>
                 </div>
                 <div class="mb-3 row">
+                    <label for="min_stock" class="col-sm-2 col-form-label text-end">Stok Minimal</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control @error('min_stock') is-invalid @enderror" id="min_stock"
+                            wire:model="min_stock">
+                        @error('min_stock')
+                            <small class="invalid-feedback">{{ $message }}</small>
+                        @enderror
+                    </div>
+                </div>
+                <div class="mb-3 row">
                     <label for="gambar" class="col-sm-2 col-form-label text-end">Gambar</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control @error('gambar') is-invalid @enderror" id="gambar"

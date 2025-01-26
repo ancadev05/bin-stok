@@ -4,7 +4,7 @@
     </div>
 
     <section class="bg-white p-2 shadow-sm">
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-6">
                 {{-- pembelian produk --}}
                 <section>
@@ -23,10 +23,12 @@
                         <div class="mb-3 row">
                             <label for="product_id" class="col-sm-3 col-form-label text-end">Kode Produk</label>
                             <div class="col">
-                                <select wire:model="product_id" id="product_id" class="form-select @error('product_id') is-invalid @enderror">
+                                <select wire:model="product_id" id="product_id"
+                                    class="form-select @error('product_id') is-invalid @enderror">
                                     <option value="">-- Pilih Produk --</option>
                                     @foreach ($products as $item)
-                                        <option value="{{ $item->id }}">{{ '(' . $item->product_code .') - '. $item->name }}</option>
+                                        <option value="{{ $item->id }}">
+                                            {{ '(' . $item->product_code . ') - ' . $item->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('product_id')
@@ -54,71 +56,80 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-sm btn-primary offset-3">Tambah</button>
+                        <div class="row">
+                            <div class="col offset-3">
+                                <button type="submit" class="btn btn-sm btn-secondary">Tambah</button>
+                            </div>
                         </div>
                     </form>
                 </section>
             </div>
 
-            <div class="col-6">
-                <div class="mb-3 row">
-                    <label for="name" class="col-sm-3 col-form-label text-end">Supplayer</label>
-                    <div class="col">
-                        <select name="" id="" class="form-select">
-                            <option value="">-- Pilih Supplayer --</option>
-                            @foreach ($suppliers as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('name')
-                            <small class="invalid-feedback">{{ $message }}</small>
-                        @enderror
+            <div class="col-6 border-start">
+                <form wire:submit="purchaseProcess">
+                    @csrf
+                    <div class="mb-3 row">
+                        <label for="supplier_name" class="col-sm-3 col-form-label text-end">Supplayer</label>
+                        <div class="col">
+                            <select wire:model="supplier_name" id="supplier_name" class="form-select">
+                                <option value="">-- Pilih Supplayer --</option>
+                                @foreach ($suppliers as $item)
+                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('supplier_name')
+                                <small class="invalid-feedback">{{ $message }}</small>
+                            @enderror
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="date" class="col-sm-3 col-form-label text-end">Date</label>
-                    <div class="col">
-                        <input type="date" class="form-control @error('date') is-invalid @enderror" id="date"
-                            wire:model="date">
-                        @error('date')
-                            <small class="invalid-feedback">{{ $message }}</small>
-                        @enderror
+                    <div class="mb-3 row">
+                        <label for="date" class="col-sm-3 col-form-label text-end">Date</label>
+                        <div class="col">
+                            <input type="date" class="form-control @error('date') is-invalid @enderror"
+                                id="date" wire:model="date">
+                            @error('date')
+                                <small class="invalid-feedback">{{ $message }}</small>
+                            @enderror
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="discount" class="col-sm-3 col-form-label text-end">Diskon %</label>
-                    <div class="col">
-                        <input type="number" class="form-control @error('discount') is-invalid @enderror" id="discount"
-                            wire:model.live="discount" min="0" max="100">
-                        @error('discount')
-                            <small class="invalid-feedback">{{ $message }}</small>
-                        @enderror
+                    <div class="mb-3 row">
+                        <label for="discount" class="col-sm-3 col-form-label text-end">Diskon %</label>
+                        <div class="col">
+                            <input type="number" class="form-control @error('discount') is-invalid @enderror"
+                                id="discount" wire:model.live="discount" min="0" max="100">
+                            @error('discount')
+                                <small class="invalid-feedback">{{ $message }}</small>
+                            @enderror
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="payment_method" class="col-sm-3 col-form-label text-end">Metode Pembayaran</label>
-                    <div class="col">
-                        <select wire:model="payment_method" id="payment_method" class="form-select">
-                            <option value="">--</option>
-                            <option value="">Tunai</option>
-                            <option value="">Transfer</option>
-                            <option value="">Transfer</option>
-                        </select>
-                        @error('payment_method')
-                            <small class="invalid-feedback">{{ $message }}</small>
-                        @enderror
+                    <div class="mb-3 row">
+                        <label for="payment_method" class="col-sm-3 col-form-label text-end">Metode Pembayaran</label>
+                        <div class="col">
+                            <select wire:model="payment_method" id="payment_method" class="form-select">
+                                <option value="">--</option>
+                                <option value="Tunai">Tunai</option>
+                                <option value="Non Tunai">Non Tunai</option>
+                            </select>
+                            @error('payment_method')
+                                <small class="invalid-feedback">{{ $message }}</small>
+                            @enderror
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3 row">
-                    <label for="description" class="col-sm-3 col-form-label text-end">Ket</label>
-                    <div class="col">
-                        <textarea wire:model="description" id="" class="form-control"></textarea>
-                        @error('description')
-                            <small class="invalid-feedback">{{ $message }}</small>
-                        @enderror
+                    <div class="mb-3 row">
+                        <label for="description" class="col-sm-3 col-form-label text-end">Ket</label>
+                        <div class="col">
+                            <textarea wire:model="description" id="" class="form-control"></textarea>
+                            @error('description')
+                                <small class="invalid-feedback">{{ $message }}</small>
+                            @enderror
+                        </div>
                     </div>
-                </div>
+                    <div class="d-flex justify-content-end">
+                        <button wire:click="purchaseUndo" type="button" class="btn btn-sm btn-danger me-2">Batal</button>
+                        <a wire:navigate href="{{ route('purchase') }}" type="button" class="btn btn-sm btn-success me-2">Simpan</a>
+                        <button type="submit" class="btn btn-sm btn-primary">Proses</button>
+                    </div>
+                </form>
             </div>
         </div>
 
@@ -130,10 +141,10 @@
                 <thead>
                     <tr class="text-center">
                         <th>No</th>
-                        <th>Nama Produk</th>
-                        <th>Harga Beli</th>
+                        <th>Produk</th>
+                        <th>Harga Beli (Rp)</th>
                         <th>Qty</th>
-                        <th>Total</th>
+                        <th>Total (Rp)</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -141,12 +152,14 @@
                     @foreach ($purchase_details as $index => $item)
                         <tr>
                             <td>{{ ++$index }}</td>
-                            <td>{{ $item->product->name }}</td>
+                            <td>{{ '(' . $item->product->product_code . ') - ' . $item->product->name }}</td>
                             <td class="text-end">{{ number_format($item->purchase_price) }}</td>
                             <td class="text-center">{{ $item->total_products }}</td>
                             <td class="text-end">{{ number_format($item->total_price) }}</td>
                             <td class="text-center">
-                                <button class="btn badge text-bg-danger" wire:click="deleteProduct({{ $item->id }})"><i class="bi bi-trash"></i></button>
+                                <button class="btn badge text-bg-danger"
+                                    wire:click="deleteProduct({{ $item->id }})"><i
+                                        class="bi bi-trash"></i></button>
                             </td>
                         </tr>
                     @endforeach
@@ -163,9 +176,5 @@
 
         <hr>
 
-        <div class="d-flex justify-content-end">
-            <button wire:click="purchaseUndo" class="btn btn-sm btn-danger me-2">Batal</button>
-            <button wire:click="" class="btn btn-sm btn-primary">Proses</button>
-        </div>
     </section>
 </div>

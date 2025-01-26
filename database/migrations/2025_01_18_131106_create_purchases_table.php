@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('purchase_code')->unique();
             $table->string('supplier_name')->nullable();
-            $table->integer('discount')->default(0);
             $table->integer('total_price')->default(0);
+            $table->integer('discount')->default(0);
+            $table->integer('discount_price')->default(0);
             $table->string('payment_method')->nullable();
             $table->date('date');
             $table->string('status')->default('Pending');

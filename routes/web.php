@@ -8,18 +8,20 @@ use App\Livewire\Admin\AdminDashboard;
 use App\Livewire\Product\ProductIndex;
 use App\Livewire\Category\CategoryEdit;
 use App\Livewire\Product\ProductCreate;
+use App\Livewire\Purchase\PurchaseEdit;
+use App\Livewire\Purchase\PurchaseShow;
 use App\Livewire\Supplier\SupplierEdit;
 use App\Http\Controllers\HomeController;
 use App\Livewire\Category\CategoryIndex;
+use App\Livewire\Purchase\PurchaseIndex;
 use App\Livewire\Supplier\SupplierIndex;
 use App\Livewire\Category\CategoryCreate;
+use App\Livewire\Purchase\PurchaseCreate;
 use App\Livewire\Supplier\SupplierCreate;
 use App\Http\Controllers\CategoryController;
-use App\Livewire\Purchase\PurchaseCreate;
-use App\Livewire\Purchase\PurchaseIndex;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
 
 // Route::get('/category', function () {
@@ -53,4 +55,6 @@ Route::middleware(['auth'])->group(function () {
     // purchase
     Route::get('/purchase', PurchaseIndex::class)->name('purchase');
     Route::get('/purchase/create/{id}', PurchaseCreate::class)->name('purchase.create');
+    Route::get('/purchase/show/{id}', PurchaseShow::class)->name('purchase.show');
+    Route::get('/purchase/edit/{id}', PurchaseEdit::class)->name('purchase.edit');
 });

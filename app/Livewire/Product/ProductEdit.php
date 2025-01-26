@@ -20,6 +20,8 @@ class ProductEdit extends Component
     public $brand;
     #[Validate('required', message:'Isi spesifikasi produk!')]
     public $specifications;
+    #[Validate('required', message:'Masukkan minimal stok!')]
+    public $min_stock;
     #[Validate('required', message:'Isi HPP produk!')]
     public $cost;
     #[Validate('required', message:'Isi harga jual produk!')]
@@ -37,6 +39,7 @@ class ProductEdit extends Component
         $this->name = $produtc->name;
         $this->brand = $produtc->brand;
         $this->specifications = $produtc->specifications;
+        $this->min_stock = $produtc->min_stock;
         $this->cost = $produtc->cost;
         $this->selling_price = $produtc->selling_price;
         $this->description = $produtc->description;
@@ -52,6 +55,7 @@ class ProductEdit extends Component
             'name' => $this->name,
             'brand' => $this->brand,
             'specifications' => $this->specifications,
+            'min_stock' => $this->min_stock,
             'cost' => $this->cost,
             'selling_price' => $this->selling_price,
             'images' => 'images.png',

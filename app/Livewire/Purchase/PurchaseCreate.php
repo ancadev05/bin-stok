@@ -46,8 +46,6 @@ class PurchaseCreate extends Component
         $product_id = PurchaseDetails::where('purchase_id', $this->purchase_id)
             ->where('product_id', $this->product_id)->count();
 
-        // dd($product_id);
-
         if ($product_id == 0) {
 
             $purchase_detail = [
@@ -73,7 +71,8 @@ class PurchaseCreate extends Component
 
         if ($product_id > 0) {
 
-            $total_product = PurchaseDetails::where('product_id', $this->product_id)->first()->total_products;
+            $total_product = PurchaseDetails::where('purchase_id', $this->purchase_id)
+                ->where('product_id', $this->product_id)->first()->total_products;
             $total_product_now = $total_product + $this->total_products;
 
             $purchase_detail = [
@@ -83,8 +82,8 @@ class PurchaseCreate extends Component
             ];
 
             PurchaseDetails::where('product_id', $this->product_id)
-            ->where('purchase_id', $this->purchase_id)
-            ->update($purchase_detail);
+                ->where('purchase_id', $this->purchase_id)
+                ->update($purchase_detail);
 
             $this->product_id = null;
             $this->purchase_price = null;
@@ -125,7 +124,35 @@ class PurchaseCreate extends Component
     public function purchaseUndo()
     {
         PurchaseDetails::where('purchase_id', $this->purchase_id)->delete();
-        Purchase::find( $this->purchase_id)->delete();
-        $this->redirectRoute('purchase');
+        Purchase::find($this->purchase_id)->delete();
+        $this->redirectRoute('purchase', navigate: true);
+    }
+
+    // proses pembelian
+    public function purchaseProcess()
+    {
+        // update data pembelian
+        Purchase::find($this->purchase_id)->update([
+            'supplier_name' => $this->supplier_name,
+            'discount' => $this->discount,
+            'discount_price' => $this->total_price_products,
+            'payment_method' => $this->payment_method,
+            'date' => $this->date,
+            'status' => 'Selesai',
+            'description' => $this->description,
+        ]);
+
+        $purchase_details = PurchaseDetails::where('purchase_id', $this->purchase_id)->get();
+
+        // aupdate stok barang
+        foreach ($purchase_details as $key => $value) {
+            $product = Product::find($value->product_id);
+            if ($product) {
+                $product->stock += $value->total_products;
+                $product->save();
+            }
+        }
+
+        $this->redirectRoute('purchase', navigate: true);
     }
 }
