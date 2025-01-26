@@ -31,6 +31,21 @@ class SupplierCreate extends Component
         session()->flash('status','Data berhasil ditambahkan!');
         $this->redirectRoute('supplier', navigate:'true');
     }
+
+    public function saveNew()
+    {
+        $this->validate();
+
+        Supplier::create([
+            "name"=> $this->name,
+            "address"=> $this->address,
+            "phone_number"=> $this->phone_number,
+            'description' => $this->description
+        ]);
+
+        session()->flash('status','Data berhasil ditambahkan!');
+        $this->redirectRoute('supplier.create', navigate:'true');
+    }
     #[Layout('template-dashboard.main')]
     public function render()
     {

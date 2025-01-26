@@ -25,6 +25,18 @@ class CategoryCreate extends Component
         session()->flash('status','Data berhasil ditambahkan!');
         $this->redirectRoute('category', navigate:true);
     }
+
+    public function saveNew()
+    {
+        $this->validate();
+
+        Category::create([
+            'name' => $this->name,
+            'description'=> $this->description
+        ]);
+        
+        $this->redirectRoute('category.create', navigate:true);
+    }
     #[Layout('template-dashboard.main')]
     public function render()
     {

@@ -2,6 +2,16 @@
     <div class="pagetitle mb-3">
         <h1>Tambah Supplayer</h1>
     </div>
+
+    @if (session('status'))
+        <section>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('status') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </section>
+    @endif
+    
     <section class="card p-3">
         <form wire:submit="store">
             @csrf
@@ -47,6 +57,7 @@
                 <div class="offset-2">
                     <a wire:navigate href="{{ route('supplier') }}" class="btn btn-sm btn-secondary">Batal</a>
                     <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                    <button type="button" wire:click="saveNew" class="btn btn-sm btn-warning">Simpan + Baru</button>
                 </div>
             </div>
         </form>

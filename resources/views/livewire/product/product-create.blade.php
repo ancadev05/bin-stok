@@ -2,6 +2,16 @@
     <div class="pagetitle mb-3">
         <h1>Tambah Produk</h1>
     </div>
+
+    @if (session('status'))
+        <section>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('status') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </section>
+    @endif
+
     <section class="card p-3">
         <form wire:submit="store">
             @csrf
@@ -20,8 +30,8 @@
                 <div class="mb-3 row">
                     <label for="product_code" class="col-sm-2 col-form-label text-end">Kode Produk</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control @error('product_code') is-invalid @enderror" id="product_code"
-                            wire:model="product_code" placeholder="Sementara boleh kosong...">
+                        <input type="text" class="form-control @error('product_code') is-invalid @enderror"
+                            id="product_code" wire:model="product_code" placeholder="Sementara boleh kosong...">
                         @error('product_code')
                             <small class="invalid-feedback">{{ $message }}</small>
                         @enderror
@@ -50,8 +60,8 @@
                 <div class="mb-3 row">
                     <label for="specifications" class="col-sm-2 col-form-label text-end">Spesifikasi</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control @error('specifications') is-invalid @enderror" id="specifications"
-                            wire:model="specifications">
+                        <input type="text" class="form-control @error('specifications') is-invalid @enderror"
+                            id="specifications" wire:model="specifications">
                         @error('specifications')
                             <small class="invalid-feedback">{{ $message }}</small>
                         @enderror
@@ -70,8 +80,8 @@
                 <div class="mb-3 row">
                     <label for="selling_price" class="col-sm-2 col-form-label text-end">Harga Jual</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control @error('selling_price') is-invalid @enderror" id="selling_price"
-                            wire:model="selling_price">
+                        <input type="number" class="form-control @error('selling_price') is-invalid @enderror"
+                            id="selling_price" wire:model="selling_price">
                         @error('selling_price')
                             <small class="invalid-feedback">{{ $message }}</small>
                         @enderror
@@ -80,8 +90,8 @@
                 <div class="mb-3 row">
                     <label for="min_stock" class="col-sm-2 col-form-label text-end">Stok Minimal</label>
                     <div class="col-sm-10">
-                        <input type="number" class="form-control @error('min_stock') is-invalid @enderror" id="min_stock"
-                            wire:model="min_stock">
+                        <input type="number" class="form-control @error('min_stock') is-invalid @enderror"
+                            id="min_stock" wire:model="min_stock">
                         @error('min_stock')
                             <small class="invalid-feedback">{{ $message }}</small>
                         @enderror
@@ -108,6 +118,7 @@
                 <div class="offset-2">
                     <a wire:navigate href="{{ route('product') }}" class="btn btn-sm btn-secondary">Batal</a>
                     <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                    <button type="button" wire:click="saveNew" class="btn btn-sm btn-warning">Simpan + Baru</button>
                 </div>
             </div>
         </form>

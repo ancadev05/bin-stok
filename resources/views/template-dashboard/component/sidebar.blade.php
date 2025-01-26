@@ -14,19 +14,19 @@
           <li class="nav-heading">Master</li>
 
           <li class="nav-item">
-              <a wire:navigate class="nav-link {{ Request::is('category') ? '' : 'collapsed' }}" href="{{ route('category') }}">
+              <a wire:navigate class="nav-link {{ Request::is('category*') ? '' : 'collapsed' }}" href="{{ route('category') }}">
                   <i class="bi bi-box"></i>
                   <span>Kategori</span>
               </a>
           </li>
           <li class="nav-item">
-              <a wire:navigate class="nav-link {{ Request::is('product') ? '' : 'collapsed' }}" href="{{ route('product') }}">
+              <a wire:navigate class="nav-link {{ Request::is('product*') ? '' : 'collapsed' }}" href="{{ route('product') }}">
                   <i class="bi bi-boxes"></i>
                   <span>Produk</span>
               </a>
           </li>
           <li class="nav-item">
-              <a wire:navigate class="nav-link {{ Request::is('supplier') ? 'active' : 'collapsed' }}" href="{{ route('supplier') }}">
+              <a wire:navigate class="nav-link {{ Request::is('supplier*') ? 'active' : 'collapsed' }}" href="{{ route('supplier') }}">
                   <i class="bi bi-truck"></i>
                   <span>Supplayer</span>
               </a>
@@ -35,13 +35,13 @@
           <li class="nav-heading">Transaksi</li>
 
           <li class="nav-item">
-              <a wire:navigate class="nav-link {{ Request::is('purchase') ? '' : 'collapsed' }}" href="{{ route('purchase') }}">
+              <a wire:navigate class="nav-link {{ Request::is('purchase*') ? '' : 'collapsed' }}" href="{{ route('purchase') }}">
                   <i class="bi bi-cart-plus"></i>
                   <span>Pembelian</span>
               </a>
           </li>
           <li class="nav-item">
-              <a wire:navigate class="nav-link {{ Request::is('admin.dashboard') ? '' : 'collapsed' }}" href="#">
+              <a wire:navigate class="nav-link {{ Request::is('sale*') ? '' : 'collapsed' }}" href="{{ route('sale') }}">
                   <i class="bi bi-cart-dash"></i>
                   <span>Penjualan</span>
               </a>

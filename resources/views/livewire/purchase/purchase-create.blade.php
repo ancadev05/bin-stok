@@ -24,7 +24,7 @@
                             <label for="product_id" class="col-sm-3 col-form-label text-end">Kode Produk</label>
                             <div class="col">
                                 <select wire:model="product_id" id="product_id"
-                                    class="form-select @error('product_id') is-invalid @enderror">
+                                    class="form-select @error('product_id') is-invalid @enderror select2">
                                     <option value="">-- Pilih Produk --</option>
                                     @foreach ($products as $item)
                                         <option value="{{ $item->id }}">
@@ -125,8 +125,10 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button wire:click="purchaseUndo" type="button" class="btn btn-sm btn-danger me-2">Batal</button>
-                        <a wire:navigate href="{{ route('purchase') }}" type="button" class="btn btn-sm btn-success me-2">Simpan</a>
+                        <button wire:click="purchaseUndo" type="button"
+                            class="btn btn-sm btn-danger me-2">Batal</button>
+                        <a wire:navigate href="{{ route('purchase') }}" type="button"
+                            class="btn btn-sm btn-success me-2">Simpan</a>
                         <button type="submit" class="btn btn-sm btn-primary">Proses</button>
                     </div>
                 </form>
@@ -177,4 +179,12 @@
         <hr>
 
     </section>
+
+    <script>
+        document.addEventListener('livewire:load', function() {
+            Livewire.hook('message.processed', (message, component) => {
+                $('.select2').select2();
+            });
+        });
+    </script>
 </div>

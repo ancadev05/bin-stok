@@ -56,6 +56,36 @@ class ProductCreate extends Component
         session()->flash('status','Data berhasil ditambahkan!');
         $this->redirectRoute('product', navigate: true);
     }
+
+    // simpan tambah baru
+    public function saveNew()
+    {
+        $this->validate();
+        
+        // penentuan kode product
+        if ($this->product_code == null) {
+            $product_code = Str::upper( 'P' . $this->category_id  . time());
+        } else {
+            $product_code = Str::upper( $this->product_code);
+        }
+
+        Product::create([
+            'category_id' => $this->category_id,
+            'product_code' => $product_code,
+            'name' => $this->name,
+            'brand' => $this->brand,
+            'specifications' => $this->specifications,
+            'min_stock' => $this->min_stock,
+            'cost' => $this->cost,
+            'selling_price' => $this->selling_price,
+            'images' => 'images.png',
+            'description' => $this->description,
+        ]);
+
+        session()->flash('status','Data berhasil ditambahkan!');
+        $this->redirectRoute('product.create', navigate: true);
+    }
+
     #[Layout('template-dashboard.main')]
     public function render()
     {

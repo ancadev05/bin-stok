@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->string('sales_code')->unique();
-            $table->string('cotumer')->nullable();
-            $table->integer('discount')->default(0);
+            $table->string('sale_code')->unique();
+            $table->string('costumer')->nullable();
             $table->integer('total_price')->default(0);
+            $table->integer('discount')->default(0);
+            $table->integer('discount_price')->default(0);
             $table->string('payment_method')->nullable();
             $table->date('date');
+            $table->string('status')->default('Pending');
             $table->string('description')->nullable();
             $table->timestamps();
         });

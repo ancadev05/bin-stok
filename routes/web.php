@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\Sale\SaleShow;
+use App\Livewire\Sale\SaleIndex;
 use App\Livewire\Category\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Livewire\Product\ProductEdit;
@@ -19,6 +21,7 @@ use App\Livewire\Category\CategoryCreate;
 use App\Livewire\Purchase\PurchaseCreate;
 use App\Livewire\Supplier\SupplierCreate;
 use App\Http\Controllers\CategoryController;
+use App\Livewire\Sale\SaleCreate;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -57,4 +60,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/purchase/create/{id}', PurchaseCreate::class)->name('purchase.create');
     Route::get('/purchase/show/{id}', PurchaseShow::class)->name('purchase.show');
     Route::get('/purchase/edit/{id}', PurchaseEdit::class)->name('purchase.edit');
+    // sell
+    Route::get('/sale', SaleIndex::class)->name('sale');
+    Route::get('/sale/create/{id}', SaleCreate::class)->name('sale.create');
+    Route::get('/sale/show/{id}', SaleShow::class)->name('sale.show');
+    // Route::get('/sale/edit/{id}', SaleEdit::class)->name('sale.edit');
 });
