@@ -14,10 +14,10 @@
     <link href="{{ asset('nice-admin/assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.gstatic.com" rel="preconnect">
+    {{-- <link href="https://fonts.gstatic.com" rel="preconnect">
     <link
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-        rel="stylesheet">
+        rel="stylesheet"> --}}
 
     <!-- Vendor CSS Files -->
     <link href="{{ asset('nice-admin/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -40,8 +40,14 @@
   ======================================================== -->
 
     {{-- select2 --}}
-    <link rel="stylesheet" href="{{ asset('vendor/select2/css/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/select2/css/select2.min.css') }}" rel="stylesheet">
     {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
+
+    {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
+
+    {{-- jquery --}}
+    <script src="{{ asset('vendor/jquery/jquery-3.7.1.min.js') }}"></script>
 
     @livewireStyles
     @stack('style')
@@ -68,8 +74,7 @@
             class="bi bi-arrow-up-short"></i></a>
 
     @livewireScripts
-    {{-- jquery --}}
-    <script src="{{ asset('vendor/jquery/jquery-3.7.1.min.js') }}"></script>
+    
 
     <!-- Vendor JS Files -->
     <script src="{{ asset('nice-admin/assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
@@ -85,19 +90,13 @@
     <script src="{{ asset('nice-admin/assets/js/main.js') }}"></script>
 
     {{-- select2 --}}
-    <script src="{{ asset('vendor/select2/css/select2.min.css') }}"></script>
+    <script src="{{ asset('vendor/select2/js/select2.min.js') }}"></script>
 
-    <script>
-        // $(document).ready(function() {
-        // $('.select2').select2();
-        // });
-
-        document.addEventListener('livewire:load', function() {
-            Livewire.hook('message.processed', (message, component) => {
-                $('#select2').select2();
-            });
+    {{-- <script>
+        $(document).ready(function() {
+            $('.select2').select2();
         });
-    </script>
+    </script> --}}
 
     @stack('script')
 </body>

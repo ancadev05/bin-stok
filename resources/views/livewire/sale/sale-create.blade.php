@@ -7,7 +7,7 @@
         <div class="row mb-3">
             {{-- penjualan produk --}}
             <div class="col-6">
-                <form wire:submit="purchaseProcess">
+                <form wire:submit="saleProcess">
                     @csrf
                     <div class="mb-3 row">
                         <label for="costumer" class="col-sm-3 col-form-label text-end">Nama Pelanggang</label>
@@ -61,8 +61,8 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button wire:click="purchaseUndo" type="button" class="btn btn-sm btn-danger me-2">Batal</button>
-                        <a wire:navigate href="{{ route('purchase') }}" type="button" class="btn btn-sm btn-success me-2">Simpan</a>
+                        <button wire:click="saleUndo" type="button" class="btn btn-sm btn-danger me-2">Batal</button>
+                        <a wire:navigate href="{{ route('sale') }}" type="button" class="btn btn-sm btn-success me-2">Simpan</a>
                         <button type="submit" class="btn btn-sm btn-primary">Proses</button>
                     </div>
                 </form>
@@ -70,7 +70,7 @@
 
             <div class="col-6">
                 <section>
-                    <form wire:submit="purchaseDetailsStore">
+                    <form wire:submit="saleDetailsStore">
                         @csrf
                         <div class="mb-3 row">
                             <label for="sale_code" class="col-sm-3 col-form-label text-end">Kode Transaksi</label>
@@ -99,11 +99,11 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="purchase_price" class="col-sm-3 col-form-label text-end">Harga Beli</label>
+                            <label for="sale_price" class="col-sm-3 col-form-label text-end">Harga Beli</label>
                             <div class="col">
-                                <input type="number" class="form-control @error('purchase_price') is-invalid @enderror"
-                                    id="purchase_price" wire:model="purchase_price">
-                                @error('purchase_price')
+                                <input type="number" class="form-control @error('sale_price') is-invalid @enderror"
+                                    id="sale_price" wire:model="sale_price">
+                                @error('sale_price')
                                     <small class="invalid-feedback">{{ $message }}</small>
                                 @enderror
                             </div>
@@ -148,7 +148,7 @@
                         <tr>
                             <td>{{ ++$index }}</td>
                             <td>{{ '(' . $item->product->product_code . ') - ' . $item->product->name }}</td>
-                            <td class="text-end">{{ number_format($item->purchase_price) }}</td>
+                            <td class="text-end">{{ number_format($item->sale_price) }}</td>
                             <td class="text-center">{{ $item->total_products }}</td>
                             <td class="text-end">{{ number_format($item->total_price) }}</td>
                             <td class="text-center">

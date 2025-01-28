@@ -8,8 +8,10 @@
         <section class="row">
 
             <div class="col">
-                <h4 class="fw-bold m-0 p-0">CV. Wana Satria Komputindo</h4>
-                <p>Jl. Monumen Emmy Saelan No. 9C</p>
+                <div class="d-flex flex-column">
+                    <h5 class="fw-bold m-0 p-0">CV. Wana Satria Komputindo</h5>
+                    <span>Jl. Monumen Emmy Saelan No. 9C</span>
+                </div>
             </div>
             <div class="col offset-3">
                 <table class="table table-sm">

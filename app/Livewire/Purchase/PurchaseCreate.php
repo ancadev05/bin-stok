@@ -13,11 +13,12 @@ use Livewire\Attributes\Validate;
 class PurchaseCreate extends Component
 {
     // tabel pembelian
-    public $purchase_code, $supplier_name, $discount, $total_price, $payment_method, $date, $description;
+    public $purchase_code, $supplier_name, $total_price, $discount, $discount_price,  $payment_method, $date, $description;
     // tabel pembelian detail
     #[Validate('required', message: 'wajib diisi!')]
     public $purchase_id, $product_id, $purchase_price, $total_products;
-    public $total_price_products;
+    // tambahan
+    public $subtotal;
 
     public function mount($id)
     {
@@ -25,7 +26,9 @@ class PurchaseCreate extends Component
         $this->purchase_id = $id;
         $this->purchase_code = $purchase->purchase_code;
 
-        $this->total_price_products = Purchase::find($this->purchase_id)->total_price;
+        $this->discount_price = Purchase::find($this->purchase_id)->total_price;
+
+        $this->subtotal();
     }
 
     #[Layout('template-dashboard.main')]
@@ -40,6 +43,7 @@ class PurchaseCreate extends Component
 
     public function purchaseDetailsStore()
     {
+        // dd($this->purchase_price);
         $this->validate();
         $purchase_total_price = Purchase::find($this->purchase_id)->total_price;
 
@@ -66,7 +70,7 @@ class PurchaseCreate extends Component
                 'total_price' => PurchaseDetails::where('purchase_id', $this->purchase_id)->sum('total_price'),
             ]);
 
-            $this->total_price_products = Purchase::find($this->purchase_id)->total_price;
+            $this->discount_price = Purchase::find($this->purchase_id)->total_price;
         }
 
         if ($product_id > 0) {
@@ -93,8 +97,35 @@ class PurchaseCreate extends Component
                 'total_price' => PurchaseDetails::where('purchase_id', $this->purchase_id)->sum('total_price'),
             ]);
 
-            $this->total_price_products = Purchase::find($this->purchase_id)->total_price;
+            $this->discount_price = Purchase::find($this->purchase_id)->total_price;
         }
+
+        $this->discount();
+
+        $this->subtotal();
+
+        // $this->pu
+    }
+
+    // penentuan discount
+    public function discount()
+    {
+        $purchase = Purchase::find($this->purchase_id);
+        $total_price = $purchase->total_price;
+
+        if ($this->discount >= 0) {
+            $discount = $this->discount;
+        } else {
+            $discount = 0;
+        }
+
+        $this->discount_price = $total_price - ($total_price * $discount / 100);
+    }
+
+    // menghitung subtotal
+    public function subtotal()
+    {
+        $this->subtotal = PurchaseDetails::where('purchase_id', $this->purchase_id)->sum('total_price');
     }
 
     public function deleteProduct($id)
@@ -107,7 +138,7 @@ class PurchaseCreate extends Component
         PurchaseDetails::find($id)->delete();
     }
 
-    public function updated($total_price_products)
+    public function updated($discount_price)
     {
         $purchase = Purchase::find($this->purchase_id);
         $total_price = $purchase->total_price;
@@ -118,7 +149,7 @@ class PurchaseCreate extends Component
             $discount = 0;
         }
 
-        $this->total_price_products = $total_price - ($total_price * $discount / 100);
+        $this->discount_price = $total_price - ($total_price * $discount / 100);
     }
 
     public function purchaseUndo()
@@ -131,11 +162,23 @@ class PurchaseCreate extends Component
     // proses pembelian
     public function purchaseProcess()
     {
+        // penentuan tanggal otomatis
+        if($this->date == null)
+        {
+            $this->date = date('Y-m-d') ;
+        }
+
+        // penentuan discount otomatis
+        if($this->discount == null)
+        {
+            $this->discount = 0;
+        }
+
         // update data pembelian
         Purchase::find($this->purchase_id)->update([
             'supplier_name' => $this->supplier_name,
             'discount' => $this->discount,
-            'discount_price' => $this->total_price_products,
+            'discount_price' => $this->discount_price,
             'payment_method' => $this->payment_method,
             'date' => $this->date,
             'status' => 'Selesai',

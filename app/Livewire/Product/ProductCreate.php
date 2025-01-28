@@ -11,20 +11,20 @@ use Livewire\Attributes\Validate;
 
 class ProductCreate extends Component
 {
-    #[Validate('required', message:'Pilih kategori produk!')]
+    #[Validate('required', message: 'Pilih kategori produk!')]
     public $category_id;
     public $product_code;
-    #[Validate('required', message:'Isi nama produk!')]
+    #[Validate('required', message: 'Isi nama produk!')]
     public $name;
-    #[Validate('required', message:'Isi merek produk!')]
+    #[Validate('required', message: 'Isi merek produk!')]
     public $brand;
-    #[Validate('required', message:'Isi spesifikasi produk!')]
+    #[Validate('required', message: 'Isi spesifikasi produk!')]
     public $specifications;
-    #[Validate('required', message:'Masukkan minimal stok!')]
+    #[Validate('required', message: 'Masukkan minimal stok!')]
     public $min_stock;
-    #[Validate('required', message:'Isi HPP produk!')]
+    #[Validate('required', message: 'Isi HPP produk!')]
     public $cost;
-    #[Validate('required', message:'Isi harga jual produk!')]
+    #[Validate('required', message: 'Isi harga jual produk!')]
     public $selling_price;
     public $images;
     public $description;
@@ -32,17 +32,12 @@ class ProductCreate extends Component
     public function store()
     {
         $this->validate();
-        
-        // penentuan kode product
-        if ($this->product_code == null) {
-            $product_code = Str::upper( 'P' . $this->category_id  . time());
-        } else {
-            $product_code = Str::upper( $this->product_code);
-        }
+
+        $new_code = $this->generateProductCode();
 
         Product::create([
             'category_id' => $this->category_id,
-            'product_code' => $product_code,
+            'product_code' => $new_code,
             'name' => $this->name,
             'brand' => $this->brand,
             'specifications' => $this->specifications,
@@ -53,7 +48,7 @@ class ProductCreate extends Component
             'description' => $this->description,
         ]);
 
-        session()->flash('status','Data berhasil ditambahkan!');
+        session()->flash('status', 'Data berhasil ditambahkan!');
         $this->redirectRoute('product', navigate: true);
     }
 
@@ -61,17 +56,13 @@ class ProductCreate extends Component
     public function saveNew()
     {
         $this->validate();
-        
+
         // penentuan kode product
-        if ($this->product_code == null) {
-            $product_code = Str::upper( 'P' . $this->category_id  . time());
-        } else {
-            $product_code = Str::upper( $this->product_code);
-        }
+        $new_code = $this->generateProductCode();
 
         Product::create([
             'category_id' => $this->category_id,
-            'product_code' => $product_code,
+            'product_code' => $new_code,
             'name' => $this->name,
             'brand' => $this->brand,
             'specifications' => $this->specifications,
@@ -82,8 +73,32 @@ class ProductCreate extends Component
             'description' => $this->description,
         ]);
 
-        session()->flash('status','Data berhasil ditambahkan!');
+        session()->flash('status', 'Data berhasil ditambahkan!');
         $this->redirectRoute('product.create', navigate: true);
+    }
+
+    public function generateProductCode()
+    {
+        // penentuan kode product
+        if ($this->product_code == null) {
+            $last_product = Product::where('category_id', $this->category_id)->latest()->first();
+            if ($last_product) {
+                // Ambil nomor urut dari kode terakhir
+                $last_code = intval(substr($last_product->product_code, -4));
+                $new_code = str_pad($last_code + 1, 4, '0', STR_PAD_LEFT);
+            } else {
+                $new_code = str_pad(1, 4, '0', STR_PAD_LEFT);
+            }
+        } else {
+            $new_code = Str::upper($this->product_code);
+        }
+
+        $product_name = Str::upper(substr($this->name, 0, 1));
+        $product_brand = Str::upper(substr($this->brand, 0, 1));
+
+        $product_code = 'PC' . $this->category_id . '-' . $product_brand . $product_name . $new_code;
+
+        return $product_code;
     }
 
     #[Layout('template-dashboard.main')]

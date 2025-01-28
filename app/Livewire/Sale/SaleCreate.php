@@ -29,4 +29,30 @@ class SaleCreate extends Component
         $sale_details = SalesDetails::where('sale_id', $this->sale_id)->get();
         return view('livewire.sale.sale-create', compact('products', 'sale_details'));
     }
+
+    public function saleDetailsStore()
+    {
+
+    }
+
+    // penentuan discount
+    public function discount()
+    {
+        $purchase = Sale::find($this->purchase_id);
+        $total_price = $purchase->total_price;
+
+        if ($this->discount >= 0) {
+            $discount = $this->discount;
+        } else {
+            $discount = 0;
+        }
+
+        $this->discount_price = $total_price - ($total_price * $discount / 100);
+    }
+
+    // menghitung subtotal
+    public function subtotal()
+    {
+        $this->subtotal = SalesDetails::where('sale_id', $this->purchase_id)->sum('total_price');
+    }
 }

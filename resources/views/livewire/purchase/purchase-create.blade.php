@@ -23,8 +23,7 @@
                         <div class="mb-3 row">
                             <label for="product_id" class="col-sm-3 col-form-label text-end">Kode Produk</label>
                             <div class="col">
-                                <select wire:model="product_id" id="product_id"
-                                    class="form-select @error('product_id') is-invalid @enderror select2">
+                                <select wire:model="product_id" id="product_id" class="select2 form-select">
                                     <option value="">-- Pilih Produk --</option>
                                     @foreach ($products as $item)
                                         <option value="{{ $item->id }}">
@@ -37,7 +36,7 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="purchase_price" class="col-sm-3 col-form-label text-end">Harga Beli</label>
+                            <label for="purchase_price" class="col-sm-3 col-form-label text-end">Harga Satuan</label>
                             <div class="col">
                                 <input type="number" class="form-control @error('purchase_price') is-invalid @enderror"
                                     id="purchase_price" wire:model="purchase_price">
@@ -118,7 +117,7 @@
                     <div class="mb-3 row">
                         <label for="description" class="col-sm-3 col-form-label text-end">Ket</label>
                         <div class="col">
-                            <textarea wire:model="description" id="" class="form-control"></textarea>
+                            <textarea wire:model="description" id="description" class="form-control"></textarea>
                             @error('description')
                                 <small class="invalid-feedback">{{ $message }}</small>
                             @enderror
@@ -144,8 +143,8 @@
                     <tr class="text-center">
                         <th>No</th>
                         <th>Produk</th>
-                        <th>Harga Beli (Rp)</th>
                         <th>Qty</th>
+                        <th>Harga Beli (Rp)</th>
                         <th>Total (Rp)</th>
                         <th>Aksi</th>
                     </tr>
@@ -155,8 +154,8 @@
                         <tr>
                             <td>{{ ++$index }}</td>
                             <td>{{ '(' . $item->product->product_code . ') - ' . $item->product->name }}</td>
-                            <td class="text-end">{{ number_format($item->purchase_price) }}</td>
                             <td class="text-center">{{ $item->total_products }}</td>
+                            <td class="text-end">{{ number_format($item->purchase_price) }}</td>
                             <td class="text-end">{{ number_format($item->total_price) }}</td>
                             <td class="text-center">
                                 <button class="btn badge text-bg-danger"
@@ -165,10 +164,15 @@
                             </td>
                         </tr>
                     @endforeach
+                    <tr>
+                        <td colspan="4" class="text-end">Subtotal</td>
+                        <td class="text-end fw-bold">{{ number_format($subtotal) }}</td=>
+                        <td class="text-end"></td>
+                    </tr>
                 </tbody>
             </table>
             <div class="border p-2 mb-3">
-                <h3 class="fw-bold text-center">Total Bayar : Rp {{ number_format($total_price_products) }}</h3>
+                <h3 class="fw-bold text-center">Total Bayar : Rp {{ number_format($discount_price) }}</h3>
             </div>
 
             {{-- <section>
@@ -181,10 +185,31 @@
     </section>
 
     <script>
-        document.addEventListener('livewire:load', function() {
-            Livewire.hook('message.processed', (message, component) => {
-                $('.select2').select2();
+        $(document).ready(function() {
+            $('.select2').select2();
+            $('.select2').on('change', function(e) {
+                @this.set('product_id', $(this).val());
             });
         });
+
+        document.addEventListener('livewire:load', function() {
+            // $('.select2').select2();
+            initializeSelect2();
+
+            window.livewire.on('select2', () => {
+                $('.select2').select2();
+            });
+
+            function initializeSelect2() {
+                $('.select2').select2();
+                $('.select2').on('change', function(e) {
+                    @this.set('selectedValue', $(this).val());
+                });
+            }
+        });
+
+        // window.livewire.on('select2', () => {
+        //     $('.select2').select2();
+        // });
     </script>
 </div>
