@@ -174,10 +174,6 @@
             <div class="border p-2 mb-3">
                 <h3 class="fw-bold text-center">Total Bayar : Rp {{ number_format($discount_price) }}</h3>
             </div>
-
-            {{-- <section>
-                <div class="alert alert-info">Pembelian yang sudah di proses tidak bisa dibatalkan atau dihapus!</div>
-            </section> --}}
         </section>
 
         <hr>
@@ -185,28 +181,52 @@
     </section>
 
     <script>
-        $(document).ready(function() {
-            $('.select2').select2();
-            $('.select2').on('change', function(e) {
-                @this.set('product_id', $(this).val());
-            });
-        });
-
-        document.addEventListener('livewire:load', function() {
-            // $('.select2').select2();
-            initializeSelect2();
-
-            window.livewire.on('select2', () => {
-                $('.select2').select2();
-            });
-
-            function initializeSelect2() {
-                $('.select2').select2();
+        document.addEventListener("DOMContentLoaded", function() {
+            function initSelect2() {
+                $('.select2').select2({
+                    width: '100%', // Sesuaikan dengan kebutuhan
+                    // allowClear: true
+                });
                 $('.select2').on('change', function(e) {
-                    @this.set('selectedValue', $(this).val());
+                    @this.set('product_id', $(this).val());
                 });
             }
-        });
+
+            initSelect2(); // Inisialisasi awal saat halaman pertama dimuat
+
+            Livewire.hook('commit', () => {
+                alert('ok');
+                initSelect2(); // Inisialisasi ulang setiap kali Livewire memperbarui DOM
+            });
+            
+            
+            // Livewire.on('select2Updated', function() {
+                //     $('.select2').select2();
+                // });
+            });
+        
+        // $(document).ready(function() {
+        //     $('.select2').select2();
+        //     $('.select2').on('change', function(e) {
+        //         @this.set('product_id', $(this).val());
+        //     });
+        // });
+
+        // document.addEventListener('livewire:load', function() {
+        //     // $('.select2').select2();
+        //     initializeSelect2();
+
+        //     window.livewire.on('select2', () => {
+        //         $('.select2').select2();
+        //     });
+
+        //     function initializeSelect2() {
+        //         $('.select2').select2();
+        //         $('.select2').on('change', function(e) {
+        //             @this.set('selectedValue', $(this).val());
+        //         });
+        //     }
+        // });
 
         // window.livewire.on('select2', () => {
         //     $('.select2').select2();

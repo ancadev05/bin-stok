@@ -100,12 +100,18 @@ class PurchaseCreate extends Component
             $this->discount_price = Purchase::find($this->purchase_id)->total_price;
         }
 
+        $this->subtotal();
         $this->discount();
 
-        $this->subtotal();
-
-        // $this->pu
+        $this->dispatch('select2Updated');
     }
+
+    // inisialisasi ulang select2
+    public function updatedSelectedItem()
+    {
+        $this->dispatch('select2Updated');
+    }
+
 
     // penentuan discount
     public function discount()
@@ -136,6 +142,9 @@ class PurchaseCreate extends Component
         Purchase::find($this->purchase_id)->update(['total_price' => $purchase - $product]);
 
         PurchaseDetails::find($id)->delete();
+
+        $this->subtotal();
+        $this->discount();
     }
 
     public function updated($discount_price)
@@ -163,14 +172,12 @@ class PurchaseCreate extends Component
     public function purchaseProcess()
     {
         // penentuan tanggal otomatis
-        if($this->date == null)
-        {
-            $this->date = date('Y-m-d') ;
+        if ($this->date == null) {
+            $this->date = date('Y-m-d');
         }
 
         // penentuan discount otomatis
-        if($this->discount == null)
-        {
+        if ($this->discount == null) {
             $this->discount = 0;
         }
 
