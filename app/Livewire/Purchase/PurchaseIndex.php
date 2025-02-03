@@ -14,7 +14,8 @@ class PurchaseIndex extends Component
     #[Layout('template-dashboard.main')]
     public function render()
     {
-        $purchases = Purchase::orderBy('id', 'desc')->get();
+        $today = date('Y-m-d');
+        $purchases = Purchase::where('date', $today)->orderBy('id', 'desc')->get();
         return view('livewire.purchase.purchase-index', compact('purchases'));
     }
 

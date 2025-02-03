@@ -7,14 +7,18 @@
         {{-- kop --}}
         <section class="row">
 
-            <div class="col">
-                <div class="d-flex flex-column">
-                    <h5 class="fw-bold m-0 p-0">CV. Wana Satria Komputindo</h5>
-                    <span>Jl. Monumen Emmy Saelan No. 9C</span>
+            <div class="col-6">
+                <div class="d-flex align-items-center border-bottom border-black pb-2">
+                    <img src="{{ Storage::url($company->company_logo) }}" alt="" width="70px">
+                    <div class="d-flex flex-column ms-3" style="font-size: 12px">
+                        <h5 class="fw-bold m-0 p-0">{{ $company->company_name }}</h4>
+                        <small>{{ $company->address }}</small>
+                        <small>Email: {{ $company->email . ', Telp. ' . $company->telephone }}</small>
+                    </div>
                 </div>
             </div>
-            <div class="col offset-3">
-                <table class="table table-sm">
+            <div class="col offset-1">
+                <table class="table table-sm" style="font-size: 14px">
                     <tr>
                         <td colspan="2" class="fw-bold">PEMBELIAN</td>
                     </tr>
@@ -33,12 +37,12 @@
         <hr>
 
         <section>
-            <span><strong>Supplayer</strong> : {{ $purchase->supplier_name }}</span>
+            <span style="font-size: 14px"><strong>Supplayer</strong> : {{ $purchase->supplier_name }}</span>
         </section>
 
         {{-- detail pembelian --}}
         <section class="mt-3">
-            <table class="table table-sm table-bordered">
+            <table class="table table-sm table-bordered" style="font-size: 12px">
                 <thead>
                     <tr class="text-center">
                         <th>No</th>

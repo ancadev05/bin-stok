@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Purchase;
 
+use App\Models\Company;
 use App\Models\Purchase;
 use App\Models\PurchaseDetails;
 use Livewire\Component;
@@ -20,9 +21,10 @@ class PurchaseShow extends Component
     #[Layout('template-dashboard.main')]
     public function render()
     {
+        $company = Company::first();
         $purchase = Purchase::find($this->purchase_id);
         $purchase_details = PurchaseDetails::where('purchase_id', $this->purchase_id)->get();
 
-        return view('livewire.purchase.purchase-show', compact('purchase', 'purchase_details'));
+        return view('livewire.purchase.purchase-show', compact('purchase', 'purchase_details', 'company'));
     }
 }

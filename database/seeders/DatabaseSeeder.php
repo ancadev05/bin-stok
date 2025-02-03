@@ -27,5 +27,9 @@ class DatabaseSeeder extends Seeder
             "password"=> Hash::make('123'),
             "roles"=> 1,
         ]);
+
+        $this->call([
+            CompanySeeder::class,
+        ]);
     }
 }

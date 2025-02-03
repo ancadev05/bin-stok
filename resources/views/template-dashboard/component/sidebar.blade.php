@@ -58,7 +58,7 @@
             </a>
         </li>
           <li class="nav-item">
-            <a wire:navigate class="nav-link {{ Request::is('setting*') ? '' : 'collapsed' }}" href="{{ route('setting') }}">
+            <a wire:navigate class="nav-link {{ Request::is('company*') ? '' : 'collapsed' }}" href="{{ route('company') }}">
                 <i class="bi bi-tools"></i>
                 <span>Pengaturan</span>
             </a>
