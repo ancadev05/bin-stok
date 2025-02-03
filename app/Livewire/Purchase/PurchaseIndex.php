@@ -41,6 +41,7 @@ class PurchaseIndex extends Component
         // update stok barang
         foreach ($purchase_details as $key => $value) {
             $product = Product::find($value->product_id);
+            
             if ($product) {
                 $product->stock -= $value->total_products;
                 $product->save();
