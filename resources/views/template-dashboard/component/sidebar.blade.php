@@ -49,6 +49,20 @@
 
           <li class="nav-heading">Laporan</li>
 
+          <li class="nav-heading">System</li>
+
+          <li class="nav-item">
+            <a wire:navigate class="nav-link {{ Request::is('users*') ? '' : 'collapsed' }}" href="{{ route('users') }}">
+                <i class="bi bi-people"></i>
+                <span>User</span>
+            </a>
+        </li>
+          <li class="nav-item">
+            <a wire:navigate class="nav-link {{ Request::is('setting*') ? '' : 'collapsed' }}" href="{{ route('setting') }}">
+                <i class="bi bi-tools"></i>
+                <span>Pengaturan</span>
+            </a>
+        </li>
       </ul>
 
   </aside><!-- End Sidebar-->

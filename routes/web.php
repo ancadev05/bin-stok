@@ -3,6 +3,8 @@
 use App\Livewire\Sale\SaleShow;
 use App\Livewire\Sale\SaleIndex;
 use App\Livewire\Category\Category;
+use App\Livewire\Setting\SettingIndex;
+use App\Livewire\User\UserCreate;
 use Illuminate\Support\Facades\Auth;
 use App\Livewire\Product\ProductEdit;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +24,8 @@ use App\Livewire\Purchase\PurchaseCreate;
 use App\Livewire\Supplier\SupplierCreate;
 use App\Http\Controllers\CategoryController;
 use App\Livewire\Sale\SaleCreate;
+use App\Livewire\User\UserEdit;
+use App\Livewire\User\UserIndex;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -65,4 +69,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/sale/create/{id}', SaleCreate::class)->name('sale.create');
     Route::get('/sale/show/{id}', SaleShow::class)->name('sale.show');
     // Route::get('/sale/edit/{id}', SaleEdit::class)->name('sale.edit');
+    // user
+    Route::get('/users', UserIndex::class)->name('users');
+    Route::get('/users/create', UserCreate::class)->name('users.create');
+    Route::get('/users/edit/{id}', UserEdit::class)->name('users.edit');
+    // setting
+    Route::get('/setting', SettingIndex::class)->name('setting');
 });

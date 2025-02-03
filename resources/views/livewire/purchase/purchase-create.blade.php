@@ -194,17 +194,19 @@
 
             initSelect2(); // Inisialisasi awal saat halaman pertama dimuat
 
-            Livewire.hook('commit', () => {
-                alert('ok');
-                initSelect2(); // Inisialisasi ulang setiap kali Livewire memperbarui DOM
+            // Livewire.hook('commit', () => {
+            //     // alert('ok');
+            //     window.location.reload();
+            //     initSelect2(); // Inisialisasi ulang setiap kali Livewire memperbarui DOM
+            // });
+
+
+            Livewire.on('select2Updated', function() {
+                // window.location.reload();
+                $('.select2').select2();
             });
-            
-            
-            // Livewire.on('select2Updated', function() {
-                //     $('.select2').select2();
-                // });
-            });
-        
+        });
+
         // $(document).ready(function() {
         //     $('.select2').select2();
         //     $('.select2').on('change', function(e) {
