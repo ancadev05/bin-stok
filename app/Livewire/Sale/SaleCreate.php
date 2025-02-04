@@ -11,9 +11,14 @@ use Livewire\Attributes\Layout;
 class SaleCreate extends Component
 {
     // tabel sales
-    public $sale_code, $costumer, $total_price, $discount, $discount_price, $payment_method, $date, $status, $description;
+    public $sale_code, $costumer, $subtotal, $discount, $discount_price, $payment_method, $date, $status, $description;
     // tabel sales_details
-    public $sale_id, $product_id, $sale_price, $total_products ; 
+    public $sale_id, $product_id, $sale_price, $total_products, $total_price;
+
+    // tabel product
+    public $max_stock, $min_stock;
+    // variabel bantu
+    public $sale_price2, $total_price2;
 
     public function mount($id)
     {
@@ -30,9 +35,37 @@ class SaleCreate extends Component
         return view('livewire.sale.sale-create', compact('products', 'sale_details'));
     }
 
+    // update nilai
+    public function updated()
+    {
+        $product = Product::find($this->product_id);
+
+        // update stok produk tersisa
+        $this->max_stock = $product->stock;
+        $this->min_stock = 1;
+
+        // update harga produk
+        $this->sale_price = 'Rp. ' . number_format($product->selling_price);
+        $this->sale_price2 = $product->selling_price;
+
+        // update total harga
+        $this->total_price = 'Rp. ' . number_format($this->total_products * $product->selling_price);
+        $this->total_price2 = $this->total_products * $product->selling_price;
+    }
+
     public function saleDetailsStore()
     {
+        $sale_details = [
+            'sale_id' => $this->sale_id,
+            'product_id' => $this->product_id,
+            'sale_price' => $this->sale_price2,
+            'total_products' => $this->total_products,
+            'total_price' => $this->total_price2,
+        ];
 
+        SalesDetails::create($sale_details);
+
+        $this->subtotal();
     }
 
     // penentuan discount
@@ -53,6 +86,11 @@ class SaleCreate extends Component
     // menghitung subtotal
     public function subtotal()
     {
-        $this->subtotal = SalesDetails::where('sale_id', $this->purchase_id)->sum('total_price');
+        $this->subtotal = SalesDetails::where('sale_id', $this->sale_id)->sum('total_price');
+    }
+
+    public function deleteProduct($id)
+    {
+
     }
 }

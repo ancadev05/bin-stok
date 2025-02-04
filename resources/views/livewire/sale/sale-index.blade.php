@@ -17,9 +17,8 @@
                 @foreach ($sales as $index => $item)
                     <tr>
                         <td>{{ ++$index }}</td>
-                        {{-- <td>{{ Carbon\Carbon::parse($item->date)->translatedFormat('d F Y') }}</td> --}}
                         <td>{{ \Carbon\Carbon::parse($item->date)->format('d/m/Y') }}</td>
-                        <td>{{ $item->purchase_code }}</td>
+                        <td>{{ $item->sale_code }}</td>
                         <td class="text-end pe-5">{{ number_format($item->discount_price) }}</td>
                         <td>{{ $item->status }}</td>
                         <td>

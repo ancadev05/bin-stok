@@ -17,7 +17,13 @@ class ProductIndex extends Component
 
     public function destroy($id)
     {
-        Product::find($id)->delete();
-        session()->flash('status','Data berhasil dihapus!');
+        $product = Product::find($id);
+
+        if ($product->stock == 0) {
+            Product::find($id)->delete();
+            session()->flash('status','Data berhasil dihapus!');
+        } else {
+            session()->flash('status','Produk memiliki stock, TIDAK BISA DIHAPUS!');
+        }
     }
 }

@@ -3,7 +3,7 @@
         <h1>Pembelian</h1>
     </div>
 
-    <section class="bg-white p-2 shadow-sm">
+    <section class="bg-white p-3 shadow-sm">
         {{-- kop --}}
         <section class="row">
 

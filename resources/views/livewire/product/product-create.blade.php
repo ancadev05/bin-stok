@@ -31,7 +31,8 @@
                     <label for="product_code" class="col-sm-2 col-form-label text-end">Kode Produk</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control @error('product_code') is-invalid @enderror"
-                            id="product_code" wire:model="product_code" placeholder="Sementara boleh kosong...">
+                            id="product_code" wire:model="product_code">
+                            <small style="font-size: 12px" class="text-secondary"><i>Jika kode produk kosong, maka akan digenerate otomatis!</i></small>
                         @error('product_code')
                             <small class="invalid-feedback">{{ $message }}</small>
                         @enderror

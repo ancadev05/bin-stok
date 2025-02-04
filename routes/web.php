@@ -28,6 +28,7 @@ use App\Livewire\Purchase\PurchaseCreate;
 use App\Livewire\Supplier\SupplierCreate;
 use App\Http\Controllers\CategoryController;
 use App\Livewire\Company\CompanyEdit;
+use App\Livewire\Report\PurchaseReport;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -71,6 +72,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/sale/create/{id}', SaleCreate::class)->name('sale.create');
     Route::get('/sale/show/{id}', SaleShow::class)->name('sale.show');
     // Route::get('/sale/edit/{id}', SaleEdit::class)->name('sale.edit');
+    // report
+    Route::get('/report-purchase', PurchaseReport::class)->name('purchase.report');
     // user
     Route::get('/users', UserIndex::class)->name('users');
     Route::get('/users/create', UserCreate::class)->name('users.create');
@@ -78,4 +81,5 @@ Route::middleware(['auth'])->group(function () {
     // company
     Route::get('/company', CompanyIndex::class)->name('company');
     Route::get('/company/edit/{id}', CompanyEdit::class)->name('company.edit');
+
 });

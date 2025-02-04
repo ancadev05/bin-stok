@@ -9,6 +9,17 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+
+/* file yang diubah */
+/**
+- sidebar width: 230px;
+- logo width: 210px;
+- main margin-left: 230px;
+- .sidebar-nav .nav-link color:#f6f9ff background: #0D6EFD;
+- nav-link i color: #f6f9ff;
+*/
+
+
 :root {
   scroll-behavior: smooth;
 }
@@ -360,7 +371,8 @@ h6 {
 
 @media (min-width: 1200px) {
   .logo {
-    width: 280px;
+    /* width: 280px; */
+    width: 210px;
   }
 }
 
@@ -602,7 +614,8 @@ h6 {
   top: 60px;
   left: 0;
   bottom: 0;
-  width: 300px;
+  /* width: 300px; */
+  width: 230px;
   z-index: 996;
   transition: all 0.3s;
   padding: 20px;
@@ -633,7 +646,8 @@ h6 {
 
   #main,
   #footer {
-    margin-left: 300px;
+    /* margin-left: 300px; */
+    margin-left: 230px;
   }
 }
 
@@ -684,9 +698,12 @@ h6 {
   align-items: center;
   font-size: 15px;
   font-weight: 600;
-  color: #4154f1;
+  /* color: #4154f1; */
+  color: #f6f9ff;
   transition: 0.3;
-  background: #f6f9ff;
+  /* background: #f6f9ff; */
+  /* background: #0D6EFD; */
+  background: #5C636A;
   padding: 10px 15px;
   border-radius: 4px;
 }
@@ -694,7 +711,8 @@ h6 {
 .sidebar-nav .nav-link i {
   font-size: 16px;
   margin-right: 10px;
-  color: #4154f1;
+  /* color: #4154f1; */
+  color: #f6f9ff;
 }
 
 .sidebar-nav .nav-link.collapsed {

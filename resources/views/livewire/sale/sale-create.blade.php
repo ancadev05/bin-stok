@@ -3,8 +3,108 @@
         <h1>Penjualan</h1>
     </div>
 
-    <section class="bg-white p-2 shadow-sm">
-        <div class="row mb-3">
+            <section class="bg-white p-3 shadow-sm mb-3">
+                <form wire:submit="saleDetailsStore">
+                    @csrf
+                    <div class="mb-3 row">
+                        <label for="sale_code" class="col-sm-2 col-form-label text-end">Kode Transaksi</label>
+                        <div class="col">
+                            <input type="text" class="form-control @error('sale_code') is-invalid @enderror"
+                                wire:model="sale_code" disabled>
+                            @error('sale_code')
+                                <small class="invalid-feedback">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="product_id" class="col-sm-2 col-form-label text-end">Kode Produk</label>
+                        <div class="col">
+                            <select wire:model.live="product_id"
+                                class="form-select @error('product_id') is-invalid @enderror">
+                                <option value="">-- Pilih Produk --</option>
+                                @foreach ($products as $item)
+                                    <option value="{{ $item->id }}">
+                                        {{ '(' . $item->product_code . ') - ' . $item->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('product_id')
+                                <small class="invalid-feedback">{{ $message }}</small>
+                            @enderror
+                        </div>
+                    </div>
+
+
+                    <div class="mt-3">
+                        <table class="table table-sm table-borderless ">
+                            <tr>
+                                <td class="text-end align-middle">
+                                    <label for="total_products">Qty</label>
+                                </td>
+                                <td>
+                                    <input wire:model.live="total_products" id="total_products" type="number" class="form-control" min="{{ $min_stock }}" max="{{ $max_stock }}">
+                                </td>
+                                <td class="text-end align-middle">
+                                    <label for="sale_price">Harga</label>
+                                </td>
+                                <td>
+                                    <input wire:model="sale_price" id="sele_price" type="text" class="form-control" readonly>
+                                </td>
+                                <td class="text-end align-middle">
+                                    <label for="total_price">Total</label>
+                                </td>
+                                <td>
+                                    <input wire:model="total_price" id="total_price" type="text" class="form-control" readonly>
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn btn-secondary"><b>+</b></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><span style="font-size: 12px" class="text-secondary">Ready {{ $max_stock }} stok</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
+            </section>
+
+            {{-- detail pembelian --}}
+            <section class="bg-white p-3 shadow-sm mb-3">
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr class="text-center">
+                            <th>No</th>
+                            <th>Produk</th>
+                            <th>Harga (Rp)</th>
+                            <th>Qty</th>
+                            <th>Total (Rp)</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($sale_details as $index => $item)
+                            <tr>
+                                <td>{{ ++$index }}</td>
+                                <td>{{ '(' . $item->product->product_code . ') - ' . $item->product->name }}</td>
+                                <td class="text-end">{{ number_format($item->sale_price) }}</td>
+                                <td class="text-center">{{ $item->total_products }}</td>
+                                <td class="text-end">{{ number_format($item->total_price) }}</td>
+                                <td class="text-center">
+                                    <button class="btn badge text-bg-danger"
+                                        wire:click="deleteProduct({{ $item->id }})"><i
+                                            class="bi bi-trash"></i></button>
+                                </td>
+                            </tr>
+                            @endforeach
+                            <tr class="fw-bold">
+                                <td colspan="4" class="text-end">Subtotal</td>
+                                <td class="text-end">324</td>
+                            </tr>
+                    </tbody>
+                </table>
+            </section>
+
+        <section class="bg-white p-3 shadow-sm mb-3">
             {{-- penjualan produk --}}
             <div class="col-6">
                 <form wire:submit="saleProcess">
@@ -12,7 +112,8 @@
                     <div class="mb-3 row">
                         <label for="costumer" class="col-sm-3 col-form-label text-end">Nama Pelanggang</label>
                         <div class="col">
-                            <input wire:model="costumer" type="text" class="form-control @error('costumer') is-invalid @enderror">
+                            <input wire:model="costumer" type="text"
+                                class="form-control @error('costumer') is-invalid @enderror">
                             @error('costumer')
                                 <small class="invalid-feedback">{{ $message }}</small>
                             @enderror
@@ -61,115 +162,16 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button wire:click="saleUndo" type="button" class="btn btn-sm btn-danger me-2">Batal</button>
-                        <a wire:navigate href="{{ route('sale') }}" type="button" class="btn btn-sm btn-success me-2">Simpan</a>
+                        <button wire:click="saleUndo" type="button"
+                            class="btn btn-sm btn-danger me-2">Batal</button>
+                        <a wire:navigate href="{{ route('sale') }}" type="button"
+                            class="btn btn-sm btn-success me-2">Simpan</a>
                         <button type="submit" class="btn btn-sm btn-primary">Proses</button>
                     </div>
                 </form>
             </div>
 
-            <div class="col-6">
-                <section>
-                    <form wire:submit="saleDetailsStore">
-                        @csrf
-                        <div class="mb-3 row">
-                            <label for="sale_code" class="col-sm-3 col-form-label text-end">Kode Transaksi</label>
-                            <div class="col">
-                                <input type="text" class="form-control @error('sale_code') is-invalid @enderror"
-                                    id="sale_code" wire:model="sale_code" disabled>
-                                @error('sale_code')
-                                    <small class="invalid-feedback">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="product_id" class="col-sm-3 col-form-label text-end">Kode Produk</label>
-                            <div class="col">
-                                <select wire:model="product_id" id="product_id"
-                                    class="form-select @error('product_id') is-invalid @enderror">
-                                    <option value="">-- Pilih Produk --</option>
-                                    @foreach ($products as $item)
-                                        <option value="{{ $item->id }}">
-                                            {{ '(' . $item->product_code . ') - ' . $item->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('product_id')
-                                    <small class="invalid-feedback">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="sale_price" class="col-sm-3 col-form-label text-end">Harga Beli</label>
-                            <div class="col">
-                                <input type="number" class="form-control @error('sale_price') is-invalid @enderror"
-                                    id="sale_price" wire:model="sale_price">
-                                @error('sale_price')
-                                    <small class="invalid-feedback">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <label for="total_products" class="col-sm-3 col-form-label text-end">Qty</label>
-                            <div class="col">
-                                <input type="number" class="form-control @error('total_products') is-invalid @enderror"
-                                    id="total_products" wire:model="total_products">
-                                @error('total_products')
-                                    <small class="invalid-feedback">{{ $message }}</small>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col offset-3">
-                                <button type="submit" class="btn btn-sm btn-secondary">Tambah</button>
-                            </div>
-                        </div>
-                    </form>
-                </section>
-            </div>
-        </div>
 
-        <hr>
-
-        {{-- detail pembelian --}}
-        <section class="mt-3">
-            <table class="table table-sm table-bordered">
-                <thead>
-                    <tr class="text-center">
-                        <th>No</th>
-                        <th>Produk</th>
-                        <th>Harga Beli (Rp)</th>
-                        <th>Qty</th>
-                        <th>Total (Rp)</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($sale_details as $index => $item)
-                        <tr>
-                            <td>{{ ++$index }}</td>
-                            <td>{{ '(' . $item->product->product_code . ') - ' . $item->product->name }}</td>
-                            <td class="text-end">{{ number_format($item->sale_price) }}</td>
-                            <td class="text-center">{{ $item->total_products }}</td>
-                            <td class="text-end">{{ number_format($item->total_price) }}</td>
-                            <td class="text-center">
-                                <button class="btn badge text-bg-danger"
-                                    wire:click="deleteProduct({{ $item->id }})"><i
-                                        class="bi bi-trash"></i></button>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <div class="border p-2 mb-3">
-                {{-- <h3 class="fw-bold text-center">Total Bayar : Rp {{ number_format($total_price_products) }}</h3> --}}
-            </div>
-
-            {{-- <section>
-                <div class="alert alert-info">Pembelian yang sudah di proses tidak bisa dibatalkan atau dihapus!</div>
-            </section> --}}
         </section>
 
-        <hr>
-
-    </section>
 </div>

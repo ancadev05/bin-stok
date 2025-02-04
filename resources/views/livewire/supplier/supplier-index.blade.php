@@ -2,7 +2,7 @@
     <div class="pagetitle">
         <h1>Data Supplayer</h1>
     </div>
-    <section class="bg-white p-2 shadow-sm">
+    <section class="bg-white p-3 shadow-sm">
         <div class="d-flex justify-content-end mb-2">
             <a wire:navigate href="{{ route('supplier.create') }}" class="btn btn-sm btn-primary">+ Tambah</a>
         </div>
