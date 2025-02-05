@@ -39,5 +39,9 @@
                 @endforeach
             </tbody>
         </table>
+
+        <div class="alert alert-secondary">
+            <small><i>Menghapus transaksi akan mempengaruhi jumlah stok!</i></small>
+        </div>
     </section>
 </div>

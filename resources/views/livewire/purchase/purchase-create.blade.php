@@ -8,7 +8,7 @@
             <div class="col-6">
                 {{-- pembelian produk --}}
                 <section>
-                    <form wire:submit="purchaseDetailsStore">
+                    <form wire:submit.prevent="purchaseDetailsStore">
                         @csrf
                         <div class="mb-3 row">
                             <label for="purchase_code" class="col-sm-3 col-form-label text-end">Kode Transaksi</label>
@@ -20,7 +20,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="mb-3 row">
+                        <div wire:ignore class="mb-3 row">
                             <label for="product_id" class="col-sm-3 col-form-label text-end">Kode Produk</label>
                             <div class="col">
                                 <select wire:model="product_id" id="product_id" class="select2 form-select">
@@ -181,57 +181,12 @@
     </section>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            function initSelect2() {
-                $('.select2').select2({
-                    width: '100%', // Sesuaikan dengan kebutuhan
-                    // allowClear: true
-                });
-                $('.select2').on('change', function(e) {
-                    @this.set('product_id', $(this).val());
-                });
-            }
+        $(document).ready(function() {
+            $('.select2').select2();
 
-            initSelect2(); // Inisialisasi awal saat halaman pertama dimuat
-
-            // Livewire.hook('commit', () => {
-            //     // alert('ok');
-            //     window.location.reload();
-            //     initSelect2(); // Inisialisasi ulang setiap kali Livewire memperbarui DOM
-            // });
-
-
-            Livewire.on('select2Updated', function() {
-                // window.location.reload();
-                $('.select2').select2();
+            $('.select2').on('change', function(e) {
+                @this.set('product_id', $(this).val());
             });
-        });
-
-        // $(document).ready(function() {
-        //     $('.select2').select2();
-        //     $('.select2').on('change', function(e) {
-        //         @this.set('product_id', $(this).val());
-        //     });
-        // });
-
-        // document.addEventListener('livewire:load', function() {
-        //     // $('.select2').select2();
-        //     initializeSelect2();
-
-        //     window.livewire.on('select2', () => {
-        //         $('.select2').select2();
-        //     });
-
-        //     function initializeSelect2() {
-        //         $('.select2').select2();
-        //         $('.select2').on('change', function(e) {
-        //             @this.set('selectedValue', $(this).val());
-        //         });
-        //     }
-        // });
-
-        // window.livewire.on('select2', () => {
-        //     $('.select2').select2();
-        // });
+        })
     </script>
 </div>

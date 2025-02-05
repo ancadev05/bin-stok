@@ -9,7 +9,7 @@
 
             <div class="col-6">
                 <div class="d-flex align-items-center border-bottom border-black pb-2">
-                    <img src="{{ Storage::url($company->company_logo) }}" alt="" width="70px">
+                    <img src="{{ Storage::url($company->company_logo) }}" alt="" width="55px">
                     <div class="d-flex flex-column ms-3" style="font-size: 12px">
                         <h5 class="fw-bold m-0 p-0">{{ $company->company_name }}</h4>
                         <small>{{ $company->address }}</small>

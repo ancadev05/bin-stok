@@ -20,14 +20,14 @@
             <tbody>
                 @foreach ($purchases as $index => $item)
                     <tr>
-                        <td>{{ ++$index }}</td>
+                        <td class="text-center">{{ ++$index }}</td>
                         <td>{{ \Carbon\Carbon::parse($item->date)->format('d/m/Y') }}</td>
                         <td>{{ $item->purchase_code }}</td>
                         <td class="text-center">{{ $item->purchaseDetails->sum('total_products') }}</td>
                         <td class="text-end">{{ number_format($item->total_price) }}</td>
                         <td class="text-center">{{ $item->discount }}%</td>
                         <td class="text-end">{{ number_format($item->discount_price) }}</td>
-                        <td>
+                        <td class="text-center">
                             <a wire:navigate href="{{ route('purchase.show' , $item->id) }}" class="btn btn-secondary badge"><i class="bi bi-eye"></i></a>
                         </td>
                     </tr>
