@@ -3,6 +3,8 @@
 namespace App\Livewire\Sale;
 
 use App\Models\Sale;
+use App\Models\Product;
+use App\Models\SalesDetails;
 use Livewire\Component;
 use Illuminate\Support\Carbon;
 use Livewire\Attributes\Layout;
@@ -28,6 +30,25 @@ class SaleIndex extends Component
         $sale_id = Sale::where('sale_code', $sale_code)->first()->id;
 
         $this->redirect('sale/create/' . $sale_id, navigate: true);
+    }
+
+    public function saleDestroy($id)
+    {
+        // mengurangi stok produk
+        $sale_details = SalesDetails::where('sale_id', $id)->get();
+
+        // update stok barang
+        foreach ($sale_details as $key => $value) {
+            $product = Product::find($value->product_id);
+
+            if ($product) {
+                $product->stock -= $value->total_products;
+                $product->save();
+            }
+        }
+
+        SalesDetails::where('sale_id', $id)->delete();
+        Sale::find($id)->delete();
     }
 
     public function saleCode()

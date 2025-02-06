@@ -126,8 +126,8 @@
                     <div class="d-flex justify-content-end">
                         <button wire:click="purchaseUndo" type="button"
                             class="btn btn-sm btn-danger me-2">Batal</button>
-                        <a wire:navigate href="{{ route('purchase') }}" type="button"
-                            class="btn btn-sm btn-success me-2">Simpan</a>
+                        {{-- <a wire:navigate href="{{ route('purchase') }}" type="button"
+                            class="btn btn-sm btn-success me-2">Simpan</a> --}}
                         <button type="submit" class="btn btn-sm btn-primary">Proses</button>
                     </div>
                 </form>

@@ -26,11 +26,15 @@
                             @if ($item->status == 'Pending')
                                 <a wire:navigate href="{{ route('purchase.edit', $item->id) }}" class="btn badge btn-warning"><i class="bi bi-pencil-square"></i></a>
                             @endif
-                            <button wire:confirm="Yakin ingin hapus {{ $item->purchase_code }}" wire:click="purchaseDestroy({{ $item->id }})" class="btn badge btn-danger"><i class="bi bi-trash"></i></button>
+                            <button wire:confirm="Yakin ingin hapus {{ $item->purchase_code }}" wire:click="saleDestroy({{ $item->id }})" class="btn badge btn-danger"><i class="bi bi-trash"></i></button>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
+
+        <div class="alert alert-secondary">
+            <small><i>Menghapus transaksi akan mempengaruhi jumlah stok!</i></small>
+        </div>
     </section>
 </div>

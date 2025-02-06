@@ -25,6 +25,8 @@ class SaleCreate extends Component
         $sale = Sale::find($id);
         $this->sale_id = $sale->id;
         $this->sale_code = $sale->sale_code;
+
+        $this->subtotal();
     }
 
     #[Layout('template-dashboard.main')]
@@ -68,11 +70,24 @@ class SaleCreate extends Component
         $this->subtotal();
     }
 
+    public function deleteProduct($id)
+    {
+        $sale = Sale::find($this->sale_id)->total_price;
+        $sale_details = SalesDetails::find($id)->total_price;
+
+        Sale::find($this->sale_id)->update(['total_price' => $sale - $sale_details]);
+
+        SalesDetails::find($id)->delete();
+
+        $this->subtotal();
+        $this->discount();
+    }
+
     // penentuan discount
     public function discount()
     {
-        $purchase = Sale::find($this->purchase_id);
-        $total_price = $purchase->total_price;
+        $sale = Sale::find($this->sale_id);
+        $total_price = $sale->total_price;
 
         if ($this->discount >= 0) {
             $discount = $this->discount;
@@ -89,8 +104,4 @@ class SaleCreate extends Component
         $this->subtotal = SalesDetails::where('sale_id', $this->sale_id)->sum('total_price');
     }
 
-    public function deleteProduct($id)
-    {
-
-    }
 }

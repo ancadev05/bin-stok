@@ -16,11 +16,11 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="mb-3 row">
+                    <div wire:ignore class="mb-3 row">
                         <label for="product_id" class="col-sm-2 col-form-label text-end">Kode Produk</label>
                         <div class="col">
                             <select wire:model.live="product_id"
-                                class="form-select @error('product_id') is-invalid @enderror">
+                                class="form-select @error('product_id') is-invalid @enderror select2">
                                 <option value="">-- Pilih Produk --</option>
                                 @foreach ($products as $item)
                                     <option value="{{ $item->id }}">
@@ -98,7 +98,7 @@
                             @endforeach
                             <tr class="fw-bold">
                                 <td colspan="4" class="text-end">Subtotal</td>
-                                <td class="text-end">324</td>
+                                <td class="text-end">{{ number_format($subtotal) }}</td>
                             </tr>
                     </tbody>
                 </table>
@@ -173,5 +173,15 @@
 
 
         </section>
+
+        <script>
+            $(document).ready(function() {
+                $('.select2').select2();
+    
+                $('.select2').on('change', function(e) {
+                    @this.set('product_id', $(this).val());
+                });
+            })
+        </script>
 
 </div>

@@ -27,8 +27,8 @@
                         <td class="text-end">{{ number_format($item->total_price) }}</td>
                         <td class="text-center">{{ $item->discount }}%</td>
                         <td class="text-end">{{ number_format($item->discount_price) }}</td>
-                        <td class="text-center">{{ $item->status }}</td>
-                        <td class="text-end">
+                        <td class="text-center"><span class="badge text-bg-success">{{ $item->status }}</span></td>
+                        <td class="text-center">
                             <a wire:navigate href="{{ route('purchase.show' , $item->id) }}" class="btn btn-secondary badge"><i class="bi bi-eye"></i></a>
                             @if ($item->status == 'Pending')
                                 <a wire:navigate href="{{ route('purchase.edit', $item->id) }}" class="btn badge btn-warning"><i class="bi bi-pencil-square"></i></a>
