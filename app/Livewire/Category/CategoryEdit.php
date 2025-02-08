@@ -37,7 +37,7 @@ class CategoryEdit extends Component
         $this->redirectRoute('category', navigate:true);
     }
 
-    #[Layout('template-dashboard.main')]
+    // #[Layout('template-dashboard.main')]
     public function render()
     {
         return view('livewire.category.category-edit');

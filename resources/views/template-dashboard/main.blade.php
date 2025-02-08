@@ -13,25 +13,29 @@
     <link href="{{ asset('assets/img/logo-biner.png') }}" rel="icon">
     <link href="{{ asset('assets/img/logo-biner.png') }}" rel="apple-touch-icon">
 
-    <!-- Vendor CSS Files -->
-    <link href="{{ asset('nice-admin/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('nice-admin/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-    <link href="{{ asset('nice-admin/assets/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('nice-admin/assets/vendor/quill/quill.snow.css') }}" rel="stylesheet">
-    <link href="{{ asset('nice-admin/assets/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
-    <link href="{{ asset('nice-admin/assets/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
-    <link href="{{ asset('nice-admin/assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
+    <!-- Fonts and icons -->
+    <script src="{{ asset('kaiadmin/js/plugin/webfont/webfont.min.js') }}"></script>
+    <script>
+        WebFont.load({
+            google: {
+                "families": ["Public Sans:300,400,500,600,700"]
+            },
+            custom: {
+                "families": ["Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands",
+                    "simple-line-icons"
+                ],
+                urls: ["{{ asset('kaiadmin/css/fonts.min.css') }}"]
+            },
+            active: function() {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
 
-    <!-- Template Main CSS File -->
-    <link href="{{ asset('nice-admin/assets/css/style.css') }}" rel="stylesheet">
-
-    <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Updated: Apr 20 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="{{ asset('kaiadmin/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('kaiadmin/css/plugins.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('kaiadmin/css/kaiadmin.min.css') }}" />
 
     {{-- select2 --}}
     <link href="{{ asset('vendor/select2/css/select2.min.css') }}" rel="stylesheet">
@@ -66,27 +70,47 @@
     @livewireScripts
     
 
-    <!-- Vendor JS Files -->
-    <script src="{{ asset('nice-admin/assets/vendor/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('nice-admin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('nice-admin/assets/vendor/chart.js/chart.umd.js') }}"></script>
-    <script src="{{ asset('nice-admin/assets/vendor/echarts/echarts.min.js') }}"></script>
-    <script src="{{ asset('nice-admin/assets/vendor/quill/quill.js') }}"></script>
-    <script src="{{ asset('nice-admin/assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
-    <script src="{{ asset('nice-admin/assets/vendor/tinymce/tinymce.min.js') }}"></script>
-    <script src="{{ asset('nice-admin/assets/vendor/php-email-form/validate.js') }}"></script>
-
-    <!-- Template Main JS File -->
-    <script src="{{ asset('nice-admin/assets/js/main.js') }}"></script>
+     <!--   Core JS Files   -->
+     <script src="{{ asset('kaiadmin/js/core/jquery-3.7.1.min.js') }}"></script>
+     <script src="{{ asset('kaiadmin/js/core/popper.min.js') }}"></script>
+     <script src="{{ asset('kaiadmin/js/core/bootstrap.min.js') }}"></script>
+ 
+ 
+ 
+     <!-- jQuery Scrollbar -->
+     <script src="{{ asset('kaiadmin/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
+ 
+     <!-- Chart JS -->
+     <script src="{{ asset('kaiadmin/js/plugin/chart.js/chart.min.js') }}"></script>
+ 
+     <!-- jQuery Sparkline -->
+     <script src="{{ asset('kaiadmin/js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
+ 
+     <!-- Chart Circle -->
+     <script src="{{ asset('kaiadmin/js/plugin/chart-circle/circles.min.js') }}"></script>
+ 
+     <!-- Datatables -->
+     <script src="{{ asset('kaiadmin/js/plugin/datatables/datatables.min.js') }}"></script>
+ 
+     <!-- Bootstrap Notify -->
+     <script src="{{ asset('kaiadmin/js/plugin/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
+ 
+     <!-- jQuery Vector Maps -->
+     <script src="{{ asset('kaiadmin/js/plugin/jsvectormap/jsvectormap.min.js') }}"></script>
+     <script src="{{ asset('kaiadmin/js/plugin/jsvectormap/world.js') }}"></script>
+ 
+     <!-- Google Maps Plugin -->
+     <script src="{{ asset('kaiadmin/js/plugin/gmaps/gmaps.js') }}"></script>
+ 
+     <!-- Sweet Alert -->
+     <script src="{{ asset('kaiadmin/js/plugin/sweetalert/sweetalert.min.js') }}"></script>
+ 
+     <!-- Kaiadmin JS -->
+     <script src="{{ asset('kaiadmin/js/kaiadmin.min.js') }}"></script>
 
     {{-- select2 --}}
     <script src="{{ asset('vendor/select2/js/select2.min.js') }}"></script>
 
-    {{-- <script>
-        $(document).ready(function() {
-            $('.select2').select2();
-        });
-    </script> --}}
 
     @stack('script')
 </body>

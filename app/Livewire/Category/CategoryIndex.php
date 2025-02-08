@@ -11,7 +11,7 @@ use Livewire\Attributes\Title;
 #[Title("Kategori")]
 class CategoryIndex extends Component
 {
-    #[Layout('template-dashboard.main')]
+    // #[Layout('template-dashboard.main')]
     // #[On('modal-close')]
     public function render()
     {
