@@ -10,7 +10,7 @@ use Livewire\Attributes\Layout;
 #[Title("Akun")]
 class UserIndex extends Component
 {
-    #[Layout('template-dashboard.main')]
+    // #[Layout('template-dashboard.main')]
     public function render()
     {
         $users = User::all();

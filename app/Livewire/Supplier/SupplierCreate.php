@@ -48,7 +48,7 @@ class SupplierCreate extends Component
         session()->flash('status','Data berhasil ditambahkan!');
         $this->redirectRoute('supplier.create', navigate:'true');
     }
-    #[Layout('template-dashboard.main')]
+    // #[Layout('template-dashboard.main')]
     public function render()
     {
         return view('livewire.supplier.supplier-create');

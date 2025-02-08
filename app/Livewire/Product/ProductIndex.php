@@ -10,7 +10,7 @@ use Livewire\Attributes\Layout;
 #[Title("Produk")]
 class ProductIndex extends Component
 {
-    #[Layout('template-dashboard.main')]
+    // #[Layout('template-dashboard.main')]
     public function render()
     {
         $products = Product::all();

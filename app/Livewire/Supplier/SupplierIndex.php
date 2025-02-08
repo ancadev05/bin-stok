@@ -10,7 +10,7 @@ use Livewire\Attributes\Layout;
 #[Title("Supplayer")]
 class SupplierIndex extends Component
 {
-    #[Layout('template-dashboard.main')]
+    // #[Layout('template-dashboard.main')]
     public function render()
     {
         return view('livewire.supplier.supplier-index', ['suppliers' => Supplier::all()]);

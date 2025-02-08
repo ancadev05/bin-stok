@@ -44,13 +44,13 @@
                         <p>Kategori</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ Request::is('product*') ? 'active' : '' }}">
                     <a href="{{ route('product') }}">
                         <i class="fas fa-cubes"></i>
                         <p>Produk</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ Request::is('supplier*') ? 'active' : '' }}">
                     <a href="{{ route('supplier') }}">
                         <i class="fas fa-truck"></i>
                         <p>Supplayer</p>
@@ -64,13 +64,13 @@
                     <h4 class="text-section">Transaksi</h4>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item {{ Request::is('purchase*') ? 'active' : '' }}">
                     <a href="{{ route('purchase') }}">
                         <i class="fas fa-shopping-cart"></i>
                         <p>Pembelian</p>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item {{ Request::is('sale*') ? 'active' : '' }}">
                     <a href="{{ route('sale') }}">
                         <i class="fas fa-shopping-cart"></i>
                         <p>Penjualan</p>
@@ -84,6 +84,13 @@
                     <h4 class="text-section">Laporan</h4>
                 </li>
 
+                <li class="nav-item {{ Request::is('purchase.report') ? 'active' : '' }}">
+                    <a href="{{ route('purchase.report') }}">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>Laporan Pembelian</p>
+                    </a>
+                </li>
+
                 <li class="nav-section">
                     <span class="sidebar-mini-icon">
                         <i class="fa fa-ellipsis-h"></i>
@@ -91,14 +98,14 @@
                     <h4 class="text-section">System</h4>
                 </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('sale') }}">
+                <li class="nav-item {{ Request::is('users*') ? 'active' : '' }}">
+                    <a href="{{ route('users') }}">
                         <i class="fas fa-user-cog"></i>
                         <p>User</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('sale') }}">
+                <li class="nav-item {{ Request::is('company*') ? 'active' : '' }}">
+                    <a href="{{ route('company') }}">
                         <i class="fas fa-cog"></i>
                         <p>Pengaturan</p>
                     </a>

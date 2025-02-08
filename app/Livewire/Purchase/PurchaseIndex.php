@@ -13,7 +13,7 @@ use Livewire\Attributes\Layout;
 #[Title("Pembelian")]
 class PurchaseIndex extends Component
 {
-    #[Layout('template-dashboard.main')]
+    // #[Layout('template-dashboard.main')]
     public function render()
     {
         $today = date('Y-m-d');

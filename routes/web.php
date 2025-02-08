@@ -86,10 +86,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/company', CompanyIndex::class)->name('company');
     Route::get('/company/edit/{id}', CompanyEdit::class)->name('company.edit');
 
-
-    Route::get('/qqq', function() {
-        dd('ok');
-        // return view('kaiadmin');
-    });
 });
 

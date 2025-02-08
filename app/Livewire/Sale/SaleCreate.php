@@ -31,7 +31,7 @@ class SaleCreate extends Component
         $this->subtotal();
     }
 
-    #[Layout('template-dashboard.main')]
+    // #[Layout('template-dashboard.main')]
     public function render()
     {
         $products = Product::all();

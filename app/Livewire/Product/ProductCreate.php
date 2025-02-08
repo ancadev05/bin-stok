@@ -91,19 +91,19 @@ class ProductCreate extends Component
             } else {
                 $new_code = str_pad(1, 4, '0', STR_PAD_LEFT);
             }
+
+            $product_name = Str::upper(substr($this->name, 0, 1));
+            $product_brand = Str::upper(substr($this->brand, 0, 1));
+    
+            $product_code = 'PC' . $this->category_id . '-' . $product_brand . $product_name . $new_code;
         } else {
-            $new_code = Str::upper($this->product_code);
+            $product_code = Str::upper($this->product_code);
         }
-
-        $product_name = Str::upper(substr($this->name, 0, 1));
-        $product_brand = Str::upper(substr($this->brand, 0, 1));
-
-        $product_code = 'PC' . $this->category_id . '-' . $product_brand . $product_name . $new_code;
 
         return $product_code;
     }
 
-    #[Layout('template-dashboard.main')]
+    // #[Layout('template-dashboard.main')]
     public function render()
     {
         $categories = Category::all();

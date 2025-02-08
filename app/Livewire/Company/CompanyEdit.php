@@ -35,7 +35,7 @@ class CompanyEdit extends Component
         $this->old_logo = $company->company_logo;
     }
 
-    #[Layout('template-dashboard.main')]
+    // #[Layout('template-dashboard.main')]
     public function render()
     {
         return view('livewire.company.company-edit');

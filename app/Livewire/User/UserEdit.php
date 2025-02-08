@@ -48,7 +48,7 @@ class UserEdit extends Component
         $this->redirectRoute('users', navigate:'true');
     }
 
-    #[Layout('template-dashboard.main')]
+    // #[Layout('template-dashboard.main')]
     public function render()
     {
         return view('livewire.user.user-edit');

@@ -41,7 +41,7 @@ class PurchaseEdit extends Component
     }
 
 
-    #[Layout('template-dashboard.main')]
+    // #[Layout('template-dashboard.main')]
     public function render()
     {
         $suppliers = Supplier::all();

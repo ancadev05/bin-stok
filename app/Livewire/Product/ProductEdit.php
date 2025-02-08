@@ -68,7 +68,7 @@ class ProductEdit extends Component
         $this->redirectRoute('product', navigate: true);
     }
 
-    #[Layout('template-dashboard.main')]
+    // #[Layout('template-dashboard.main')]
     public function render()
     {
         $categories = Category::all();

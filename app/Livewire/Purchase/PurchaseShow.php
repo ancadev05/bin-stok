@@ -20,7 +20,7 @@ class PurchaseShow extends Component
         $this->purchase_id = $purchase->id;
     }
 
-    #[Layout('template-dashboard.main')]
+    // #[Layout('template-dashboard.main')]
     public function render()
     {
         $company = Company::first();

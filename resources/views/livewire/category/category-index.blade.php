@@ -5,7 +5,7 @@
 
     <div class="page-category">
         <section class="card">
-            <div class="card-header d-flex justify-content-end mb-2">
+            <div class="card-header d-flex justify-content-end">
                 <a wire:navigate href="{{ route('category.create') }}" class="btn btn-sm btn-primary"><i
                         class="fas fa-plus"></i> Tambah</a>
             </div>

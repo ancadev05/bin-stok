@@ -10,7 +10,7 @@ use Livewire\Attributes\Layout;
 #[Title("Pengaturan")]
 class CompanyIndex extends Component
 {
-    #[Layout('template-dashboard.main')]
+    // #[Layout('template-dashboard.main')]
     public function render()
     {
         $company = Company::first();

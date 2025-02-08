@@ -8,8 +8,8 @@
             <div class="col">
                 <div class="card">
                     <div class="card-body">
-                        <h1 class="card-title">Produk</h1>
-                        {{ $products }}
+                        <h1 class="card-title">Total Produk</h1>
+                        <h3>{{ $products }}</h3>
                     </div>
                 </div>
             </div>

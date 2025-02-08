@@ -10,7 +10,7 @@ use Livewire\Attributes\Layout;
 #[Title("Laporan")]
 class PurchaseReport extends Component
 {
-    #[Layout('template-dashboard.main')]
+    // #[Layout('template-dashboard.main')]
     public function render()
     {
         $purchases = Purchase::all();

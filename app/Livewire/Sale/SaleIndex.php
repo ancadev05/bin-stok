@@ -13,7 +13,7 @@ use Livewire\Attributes\Layout;
 #[Title("Penjualan")]
 class SaleIndex extends Component
 {
-    #[Layout('template-dashboard.main')]
+    // #[Layout('template-dashboard.main')]
     public function render()
     {
         $sales = Sale::all();
