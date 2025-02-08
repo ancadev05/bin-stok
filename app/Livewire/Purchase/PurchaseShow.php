@@ -3,11 +3,13 @@
 namespace App\Livewire\Purchase;
 
 use App\Models\Company;
-use App\Models\Purchase;
-use App\Models\PurchaseDetails;
 use Livewire\Component;
+use App\Models\Purchase;
+use Livewire\Attributes\Title;
+use App\Models\PurchaseDetails;
 use Livewire\Attributes\Layout;
 
+#[Title("Pembelian")]
 class PurchaseShow extends Component
 {
     public $purchase_id;

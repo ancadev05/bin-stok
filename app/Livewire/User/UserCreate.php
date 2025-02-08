@@ -3,11 +3,13 @@
 namespace App\Livewire\User;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
+use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
+use Illuminate\Support\Facades\Hash;
 
+#[Title("Akun")]
 class UserCreate extends Component
 {
     #[Validate('required', message: 'Kolom wajib diisi!')]

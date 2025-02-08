@@ -2,10 +2,12 @@
 
 namespace App\Livewire\Report;
 
-use App\Models\Purchase;
 use Livewire\Component;
+use App\Models\Purchase;
+use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
 
+#[Title("Laporan")]
 class PurchaseReport extends Component
 {
     #[Layout('template-dashboard.main')]

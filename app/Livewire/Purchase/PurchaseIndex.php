@@ -6,9 +6,11 @@ use App\Models\Product;
 use Livewire\Component;
 use App\Models\Purchase;
 use Illuminate\Support\Carbon;
+use Livewire\Attributes\Title;
 use App\Models\PurchaseDetails;
 use Livewire\Attributes\Layout;
 
+#[Title("Pembelian")]
 class PurchaseIndex extends Component
 {
     #[Layout('template-dashboard.main')]

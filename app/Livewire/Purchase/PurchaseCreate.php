@@ -6,10 +6,12 @@ use App\Models\Product;
 use Livewire\Component;
 use App\Models\Purchase;
 use App\Models\Supplier;
+use Livewire\Attributes\Title;
 use App\Models\PurchaseDetails;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 
+#[Title("Pembelian")]
 class PurchaseCreate extends Component
 {
     // tabel pembelian

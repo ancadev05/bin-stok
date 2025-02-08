@@ -6,9 +6,11 @@ use App\Models\Product;
 use Livewire\Component;
 use App\Models\Category;
 use Illuminate\Support\Str;
+use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 
+#[Title("Produk")]
 class ProductCreate extends Component
 {
     #[Validate('required', message: 'Pilih kategori produk!')]

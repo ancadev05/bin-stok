@@ -4,9 +4,11 @@ namespace App\Livewire\Category;
 
 use Livewire\Component;
 use App\Models\Category;
+use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 
+#[Title("Kategori")]
 class CategoryEdit extends Component
 {
     #[Validate('required', message:'Masukkan nama produk!')]

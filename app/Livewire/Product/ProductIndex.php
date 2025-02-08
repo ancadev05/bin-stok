@@ -4,8 +4,10 @@ namespace App\Livewire\Product;
 
 use App\Models\Product;
 use Livewire\Component;
+use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
 
+#[Title("Produk")]
 class ProductIndex extends Component
 {
     #[Layout('template-dashboard.main')]

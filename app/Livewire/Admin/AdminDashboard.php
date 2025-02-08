@@ -6,10 +6,14 @@ use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Sale;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
+
+#[Title("Dasboard")]
 
 class AdminDashboard extends Component
 {
+    public $title = "Dashboard";
     #[Layout("template-dashboard.main")]
     public function render()
     {

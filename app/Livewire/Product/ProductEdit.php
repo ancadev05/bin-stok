@@ -5,9 +5,11 @@ namespace App\Livewire\Product;
 use App\Models\Product;
 use Livewire\Component;
 use App\Models\Category;
+use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 
+#[Title("Produk")]
 class ProductEdit extends Component
 {
     public $id;

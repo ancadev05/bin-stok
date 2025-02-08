@@ -2,10 +2,12 @@
 
 namespace App\Livewire\Supplier;
 
-use App\Models\Supplier;
 use Livewire\Component;
+use App\Models\Supplier;
+use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
 
+#[Title("Supplayer")]
 class SupplierIndex extends Component
 {
     #[Layout('template-dashboard.main')]

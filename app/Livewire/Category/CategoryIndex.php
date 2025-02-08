@@ -6,7 +6,9 @@ use Livewire\Component;
 use App\Models\Category;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Title;
 
+#[Title("Kategori")]
 class CategoryIndex extends Component
 {
     #[Layout('template-dashboard.main')]

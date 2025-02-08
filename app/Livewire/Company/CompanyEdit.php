@@ -3,12 +3,14 @@
 namespace App\Livewire\Company;
 
 use App\Models\Company;
-use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
+use Illuminate\Support\Facades\Storage;
 
+#[Title("Pengaturan")]
 class CompanyEdit extends Component
 {
     use WithFileUploads;

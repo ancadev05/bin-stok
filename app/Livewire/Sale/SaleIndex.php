@@ -4,11 +4,13 @@ namespace App\Livewire\Sale;
 
 use App\Models\Sale;
 use App\Models\Product;
-use App\Models\SalesDetails;
 use Livewire\Component;
+use App\Models\SalesDetails;
 use Illuminate\Support\Carbon;
+use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
 
+#[Title("Penjualan")]
 class SaleIndex extends Component
 {
     #[Layout('template-dashboard.main')]
