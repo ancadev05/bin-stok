@@ -22,7 +22,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div wire:ignore class="mb-3 row">
+                            <div wire:ignore.prevent class="mb-3 row">
                                 <label for="product_id" class="col-sm-3 col-form-label text-end">Kode Produk</label>
                                 <div class="col">
                                     <select wire:model="product_id" id="product_id" class="select2 form-select">
@@ -189,13 +189,18 @@
         </section>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            $('.select2').select2();
 
-            $('.select2').on('change', function(e) {
-                @this.set('product_id', $(this).val());
-            });
-        })
-    </script>
+    @push('script')
+        <script>
+            $(document).ready(function() {
+                $('.select2').select2({
+                    theme: "bootstrap"
+                });
+
+                $('.select2').on('change', function(e) {
+                    @this.set('product_id', $(this).val());
+                });
+            })
+        </script>
+    @endpush
 </div>

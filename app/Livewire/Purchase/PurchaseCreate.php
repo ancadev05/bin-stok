@@ -40,7 +40,14 @@ class PurchaseCreate extends Component
         $products = Product::all();
         $purchase_details = PurchaseDetails::where('purchase_id', $this->purchase_id)->get();
 
+        // $this->dispatch('select2-init');
+
         return view('livewire.purchase.purchase-create', compact('suppliers', 'products', 'purchase_details'));
+    }
+
+    public function rendered()
+    {
+        $this->dispatch('select2-init'); // Mengirim event setelah komponen di-render
     }
 
     public function purchaseDetailsStore()

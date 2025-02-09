@@ -1,6 +1,6 @@
 <div>
     <div class="page-header">
-        <h4 class="page-title">Daftar Penjualan</h4>
+        <h4 class="page-title">Daftar Pembelian</h4>
     </div>
 
     <div class="card">

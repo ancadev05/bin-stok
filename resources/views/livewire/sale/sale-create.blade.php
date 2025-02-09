@@ -1,9 +1,12 @@
 <div>
-    <div class="pagetitle">
-        <h1>Penjualan</h1>
+    <div class="page-header">
+        <h4 class="page-title">Penjualan</h4>
     </div>
 
-            <section class="bg-white p-3 shadow-sm mb-3">
+    <div class="page-category">
+
+        <section class="card">
+            <div class="card-body">
                 <form wire:submit="saleDetailsStore">
                     @csrf
                     <div class="mb-3 row">
@@ -31,29 +34,34 @@
                                 <small class="invalid-feedback">{{ $message }}</small>
                             @enderror
                         </div>
+                        <span style="font-size: 12px" class="text-secondary">Ready {{ $max_stock }}
+                            stok</span>
                     </div>
 
 
                     <div class="mt-3">
-                        <table class="table table-sm table-borderless ">
+                        <table class="table table-sm table-borderless">
                             <tr>
                                 <td class="text-end align-middle">
                                     <label for="total_products">Qty</label>
                                 </td>
                                 <td>
-                                    <input wire:model.live="total_products" id="total_products" type="number" class="form-control" min="{{ $min_stock }}" max="{{ $max_stock }}">
+                                    <input wire:model.live="total_products" id="total_products" type="number"
+                                        class="form-control" min="{{ $min_stock }}" max="{{ $max_stock }}">
                                 </td>
                                 <td class="text-end align-middle">
                                     <label for="sale_price">Harga</label>
                                 </td>
                                 <td>
-                                    <input wire:model="sale_price" id="sele_price" type="text" class="form-control" readonly>
+                                    <input wire:model="sale_price" id="sele_price" type="text" class="form-control"
+                                        readonly>
                                 </td>
                                 <td class="text-end align-middle">
                                     <label for="total_price">Total</label>
                                 </td>
                                 <td>
-                                    <input wire:model="total_price" id="total_price" type="text" class="form-control" readonly>
+                                    <input wire:model="total_price" id="total_price" type="text" class="form-control"
+                                        readonly>
                                 </td>
                                 <td>
                                     <button type="submit" class="btn btn-secondary"><b>+</b></button>
@@ -61,50 +69,57 @@
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><span style="font-size: 12px" class="text-secondary">Ready {{ $max_stock }} stok</span></td>
+                                <td><span style="font-size: 12px" class="text-secondary">Ready {{ $max_stock }}
+                                        stok</span></td>
                             </tr>
                         </table>
                     </div>
                 </form>
-            </section>
+            </div>
+        </section>
 
-            {{-- detail pembelian --}}
-            <section class="bg-white p-3 shadow-sm mb-3">
-                <table class="table table-sm table-bordered">
-                    <thead>
-                        <tr class="text-center">
-                            <th>No</th>
-                            <th>Produk</th>
-                            <th>Harga (Rp)</th>
-                            <th>Qty</th>
-                            <th>Total (Rp)</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($sale_details as $index => $item)
-                            <tr>
-                                <td>{{ ++$index }}</td>
-                                <td>{{ '(' . $item->product->product_code . ') - ' . $item->product->name }}</td>
-                                <td class="text-end">{{ number_format($item->sale_price) }}</td>
-                                <td class="text-center">{{ $item->total_products }}</td>
-                                <td class="text-end">{{ number_format($item->total_price) }}</td>
-                                <td class="text-center">
-                                    <button class="btn badge text-bg-danger"
-                                        wire:click="deleteProduct({{ $item->id }})"><i
-                                            class="bi bi-trash"></i></button>
-                                </td>
+        {{-- detail pembelian --}}
+        <section class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr class="text-center">
+                                <th>No</th>
+                                <th>Produk</th>
+                                <th>Harga (Rp)</th>
+                                <th>Qty</th>
+                                <th>Total (Rp)</th>
+                                <th>Aksi</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($sale_details as $index => $item)
+                                <tr>
+                                    <td>{{ ++$index }}</td>
+                                    <td>{{ '(' . $item->product->product_code . ') - ' . $item->product->name }}</td>
+                                    <td class="text-end">{{ number_format($item->sale_price) }}</td>
+                                    <td class="text-center">{{ $item->total_products }}</td>
+                                    <td class="text-end">{{ number_format($item->total_price) }}</td>
+                                    <td class="text-center">
+                                        <button class="btn btn-xs btn-danger"
+                                            wire:click="deleteProduct({{ $item->id }})"><i
+                                                class="far fa-trash-alt"></i></button>
+                                    </td>
+                                </tr>
                             @endforeach
                             <tr class="fw-bold">
                                 <td colspan="4" class="text-end">Subtotal</td>
                                 <td class="text-end">{{ number_format($subtotal) }}</td>
                             </tr>
-                    </tbody>
-                </table>
-            </section>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
 
-        <section class="bg-white p-3 shadow-sm mb-3">
+        <section class="card">
+            <div class="card-body">
             {{-- penjualan produk --}}
             <div class="col-6">
                 <form wire:submit="saleProcess">
@@ -170,18 +185,20 @@
                     </div>
                 </form>
             </div>
+        </div>
 
 
         </section>
+    </div>
 
-        <script>
-            $(document).ready(function() {
-                $('.select2').select2();
-    
-                $('.select2').on('change', function(e) {
-                    @this.set('product_id', $(this).val());
-                });
-            })
-        </script>
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+
+            $('.select2').on('change', function(e) {
+                @this.set('product_id', $(this).val());
+            });
+        })
+    </script>
 
 </div>

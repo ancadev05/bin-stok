@@ -1,11 +1,14 @@
 <div>
+    <div class="page-header">
+        <h4 class="page-title">Transaksi Penjualan Harian</h4>
+    </div>
 
     <div class="card">
         <div class="card-header d-flex justify-content-end">
             <button wire:click="saleCreate" class="btn btn-sm btn-primary">Buat Transaksi Penjualan</button>
         </div>
         <section class="card-body">
-            <table class="table table-sm">
+            <table class="table table-sm" id="basic-datatables">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -41,4 +44,12 @@
             </div>
         </section>
     </div>
+
+    @push('script')
+        <script>
+            $(document).ready(function() {
+                $('#basic-datatables').DataTable();
+            })
+        </script>
+    @endpush
 </div>

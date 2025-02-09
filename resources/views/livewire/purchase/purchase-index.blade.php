@@ -11,7 +11,7 @@
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-sm table-bordered">
+                <table class="table table-sm table-bordered" id="basic-datatables">
                     <thead>
                         <tr class="text-center">
                             <th>#</th>
@@ -60,4 +60,12 @@
             </div>
         </div>
     </section>
+
+    @push('script')
+        <script>
+            $(document).ready(function() {
+                $('#basic-datatables').DataTable();
+            })
+        </script>
+    @endpush
 </div>

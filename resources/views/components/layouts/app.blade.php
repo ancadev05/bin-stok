@@ -3,9 +3,11 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
+    <title>{{ $title ?? config('app.name') }}</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-    <link rel="icon" href="kaiadmin/img/kaiadmin/favicon.ico" type="image/x-icon" />
+
+    <!-- Favicons -->
+    <link href="{{ asset('assets/img/logo-biner.png') }}" rel="icon" type="image/x-icon">
 
     <!-- Fonts and icons -->
     <script src="{{ asset('kaiadmin/js/plugin/webfont/webfont.min.js') }}"></script>
@@ -31,8 +33,11 @@
     <link rel="stylesheet" href="{{ asset('kaiadmin/css/plugins.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('kaiadmin/css/kaiadmin.min.css') }}" />
 
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    {{-- <link rel="stylesheet" href="kaiadmin/css/demo.css" /> --}}
+    {{-- select2 --}}
+    <link href="{{ asset('vendor/select2/css/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/select2/theme/select2-bootstrap.min.css') }}" rel="stylesheet">
+
+    @livewireStyles
 </head>
 
 <body>
@@ -97,11 +102,11 @@
     <!-- Kaiadmin JS -->
     <script src="{{ asset('kaiadmin/js/kaiadmin.min.js') }}"></script>
 
-    <script>
-        $(document).ready(function() {
-            $('#basic-datatables').DataTable();
-        })
-    </script>
+    {{-- select2 --}}
+    <script src="{{ asset('vendor/select2/js/select2.min.js') }}"></script>
+
+    @livewireScripts
+    @stack('script')
 </body>
 
 </html>

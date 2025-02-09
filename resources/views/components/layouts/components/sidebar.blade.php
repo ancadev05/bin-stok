@@ -66,13 +66,13 @@
 
                 <li class="nav-item {{ Request::is('purchase*') ? 'active' : '' }}">
                     <a href="{{ route('purchase') }}">
-                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-cart-plus"></i>
                         <p>Pembelian</p>
                     </a>
                 </li>
                 <li class="nav-item {{ Request::is('sale*') ? 'active' : '' }}">
                     <a href="{{ route('sale') }}">
-                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-luggage-cart"></i>
                         <p>Penjualan</p>
                     </a>
                 </li>
@@ -86,7 +86,7 @@
 
                 <li class="nav-item {{ Request::is('purchase.report') ? 'active' : '' }}">
                     <a href="{{ route('purchase.report') }}">
-                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-file-alt"></i>
                         <p>Laporan Pembelian</p>
                     </a>
                 </li>
