@@ -55,7 +55,7 @@
                 </table>
             </div>
 
-            <div class="alert alert-secondary">
+            <div class="alert alert-secondary mt-4">
                 <small><i>Menghapus transaksi akan mempengaruhi jumlah stok!</i></small>
             </div>
         </div>

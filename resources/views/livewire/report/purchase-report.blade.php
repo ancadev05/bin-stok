@@ -4,7 +4,26 @@
     </div>
 
     <div class="card">
+        <div class="card-header">
+            <div class="row align-items-end">
+                <div class="col">
+                    <label for="" class="form-label">Tanggal Awal</label>
+                    <input type="date" class="form-control">
+                </div>
+                <div class="col">
+                    <label for="" class="form-label">Tanggal Akhir</label>
+                    <input type="date" class="form-control">
+                </div>
+                <div class="col">
+                    <button class="btn btn-info"><i class="fas fa-filter"> </i> Filter</button>
+                </div>
+            </div>
+        </div>
         <section class="card-body">
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-success mb-2">Export Excel</button>
+            </div>
+            
             <div class="table-responsive">
                 <table class="table table-sm table-bordered">
                     <thead>

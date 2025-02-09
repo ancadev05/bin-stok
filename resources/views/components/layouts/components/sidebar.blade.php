@@ -84,8 +84,8 @@
                     <h4 class="text-section">Laporan</h4>
                 </li>
 
-                <li class="nav-item {{ Request::is('purchase.report') ? 'active' : '' }}">
-                    <a href="{{ route('purchase.report') }}">
+                <li class="nav-item {{ Request::is('report-purchase') ? 'active' : '' }}">
+                    <a href="{{ route('report-purchase') }}">
                         <i class="fas fa-file-alt"></i>
                         <p>Laporan Pembelian</p>
                     </a>

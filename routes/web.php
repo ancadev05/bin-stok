@@ -77,7 +77,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/sale/show/{id}', SaleShow::class)->name('sale.show');
     // Route::get('/sale/edit/{id}', SaleEdit::class)->name('sale.edit');
     // report
-    Route::get('/report-purchase', PurchaseReport::class)->name('purchase.report');
+    Route::get('/report-purchase', PurchaseReport::class)->name('report-purchase');
     // user
     Route::get('/users', UserIndex::class)->name('users');
     Route::get('/users/create', UserCreate::class)->name('users.create');

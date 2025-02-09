@@ -106,6 +106,11 @@
     <script src="{{ asset('vendor/select2/js/select2.min.js') }}"></script>
 
     @livewireScripts
+
+    {{-- alert costum --}}
+    @include('components.layouts.components.sweet-alert')
+    @include('components.layouts.components.session')
+
     @stack('script')
 </body>
 

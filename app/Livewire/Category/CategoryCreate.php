@@ -36,7 +36,7 @@ class CategoryCreate extends Component
             'name' => $this->name,
             'description'=> $this->description
         ]);
-        
+        session()->flash('status','Data berhasil ditambahkan!');
         $this->redirectRoute('category.create', navigate:true);
     }
     // #[Layout('template-dashboard.main')]

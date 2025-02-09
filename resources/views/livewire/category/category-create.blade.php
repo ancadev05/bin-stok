@@ -3,15 +3,6 @@
         <h4 class="page-title">Tambah Kategori Produk</h4>
     </div>
 
-    @if (session('status'))
-        <section>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('status') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </section>
-    @endif
-
     <section class="card">
         <div class="card-body">
             <form wire:submit="store">

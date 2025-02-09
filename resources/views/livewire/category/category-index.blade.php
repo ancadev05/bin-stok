@@ -12,20 +12,11 @@
 
             <div class="card-body">
 
-                @if (session('status'))
-                    <section>
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session('status') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                aria-label="Close"></button>
-                        </div>
-                    </section>
-                @endif
-
                 <table class="table table-sm table-hover table-striped" id="basic-datatables">
                     <thead>
                         <th>No</th>
                         <th>Kategori</th>
+                        <th>Total Produk</th>
                         <th>Deskripsi</th>
                         <th>Aksi</th>
                     </thead>
@@ -34,12 +25,14 @@
                             <tr>
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $item->name }}</td>
+                                <td>{{ $item->product->count() }}</td>
                                 <td>{{ $item->description }}</td>
                                 <td>
                                     <a wire:navigate href="{{ route('category.edit', $item->id) }}"
                                         class="btn btn-xs btn-warning"><i class="far fa-edit"></i></a>
-                                    <button wire:click="destroy({{ $item->id }})"
-                                        onclick="delete()"
+                                    {{-- <button wire:click="destroy({{ $item->id }})" onclick="delete()"
+                                        class="btn btn-xs btn-danger"><i class="far fa-trash-alt"></i></button> --}}
+                                    <button onclick="deleteCategory({{ $item->id }}, '{{ $item->name }}')"
                                         class="btn btn-xs btn-danger"><i class="far fa-trash-alt"></i></button>
                                 </td>
                             </tr>
@@ -50,38 +43,34 @@
         </section>
     </div>
 
-    <script>
-        function delete() {
-            swal({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                type: 'warning',
-                buttons: {
-                    confirm: {
-                        text: 'Yes, delete it!',
-                        className: 'btn btn-success'
-                    },
-                    cancel: {
-                        visible: true,
-                        className: 'btn btn-danger'
-                    }
-                }
-            }).then((Delete) => {
-                if (Delete) {
-                    swal({
-                        title: 'Deleted!',
-                        text: 'Your file has been deleted.',
-                        type: 'success',
-                        buttons: {
-                            confirm: {
-                                className: 'btn btn-success'
-                            }
+    @push('script')
+        <script>
+            function deleteCategory(id, name) {
+
+                swal({
+                    title: 'Yakin ingin hapus ' + name + ' ?',
+                    buttons: {
+                        confirm: {
+                            text: 'Yes, delete it!',
+                            className: 'btn btn-success'
+                        },
+                        cancel: {
+                            visible: true,
+                            className: 'btn btn-danger'
                         }
-                    });
-                } else {
-                    swal.close();
-                }
-            });
-        }
-    </script>
+                    }
+                }).then((Delete) => {
+                    if (Delete) {
+
+                        Livewire.dispatch('destroy', {
+                            id
+                        });
+
+                    } else {
+                        swal.close();
+                    }
+                });
+            }
+        </script>
+    @endpush
 </div>

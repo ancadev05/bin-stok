@@ -25,17 +25,18 @@
                             <div wire:ignore.prevent class="mb-3 row">
                                 <label for="product_id" class="col-sm-3 col-form-label text-end">Kode Produk</label>
                                 <div class="col">
-                                    <select wire:model="product_id" id="product_id" class="select2 form-select">
-                                        <option value="">-- Pilih Produk --</option>
+                                    <select wire:model="product_id" id="product_id"
+                                        class="select2 form-select @error('product_id') is-invalid @enderror">
+                                        <option value="" selected>-- Pilih Produk --</option>
                                         @foreach ($products as $item)
                                             <option value="{{ $item->id }}">
                                                 {{ '(' . $item->product_code . ') - ' . $item->name }}</option>
                                         @endforeach
                                     </select>
-                                    @error('product_id')
-                                        <small class="invalid-feedback">{{ $message }}</small>
-                                    @enderror
                                 </div>
+                                @error('product_id')
+                                    <small class="invalid-feedback">{{ $message }}</small>
+                                @enderror
                             </div>
                             <div class="mb-3 row">
                                 <label for="purchase_price" class="col-sm-3 col-form-label text-end">Harga
@@ -70,12 +71,13 @@
                 </div>
 
                 <div class="col-6 border-start">
-                    <form wire:submit="purchaseProcess">
+                    <form wire:submit.prevent="purchaseProcess">
                         @csrf
                         <div class="mb-3 row">
                             <label for="supplier_name" class="col-sm-3 col-form-label text-end">Supplayer</label>
                             <div class="col">
-                                <select wire:model="supplier_name" id="supplier_name" class="form-select">
+                                <select wire:model="supplier_name" id="supplier_name"
+                                    class="form-select @error('supplier_name') is-invalid @enderror">
                                     <option value="">-- Pilih Supplayer --</option>
                                     @foreach ($suppliers as $item)
                                         <option value="{{ $item->name }}">{{ $item->name }}</option>
@@ -111,7 +113,6 @@
                                 Pembayaran</label>
                             <div class="col">
                                 <select wire:model="payment_method" id="payment_method" class="form-select">
-                                    <option value="">--</option>
                                     <option value="Tunai">Tunai</option>
                                     <option value="Non Tunai">Non Tunai</option>
                                 </select>
@@ -165,9 +166,9 @@
                                     <td class="text-end">{{ number_format($item->purchase_price) }}</td>
                                     <td class="text-end">{{ number_format($item->total_price) }}</td>
                                     <td class="text-center">
-                                        <button class="btn badge text-bg-danger"
+                                        <button class="btn btn-xs btn-danger"
                                             wire:click="deleteProduct({{ $item->id }})"><i
-                                                class="bi bi-trash"></i></button>
+                                                class="far fa-trash-alt"></i></button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -199,6 +200,11 @@
 
                 $('.select2').on('change', function(e) {
                     @this.set('product_id', $(this).val());
+                });
+
+                livewire.on('failed', (event) => {
+                    console.log('gagal');
+                    
                 });
             })
         </script>

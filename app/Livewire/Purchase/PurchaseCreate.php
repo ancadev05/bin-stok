@@ -8,7 +8,6 @@ use App\Models\Purchase;
 use App\Models\Supplier;
 use Livewire\Attributes\Title;
 use App\Models\PurchaseDetails;
-use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 
 #[Title("Pembelian")]
@@ -16,9 +15,11 @@ class PurchaseCreate extends Component
 {
     // tabel pembelian
     public $purchase_code, $supplier_name, $total_price, $discount, $discount_price,  $payment_method, $date, $description;
+
     // tabel pembelian detail
     #[Validate('required', message: 'wajib diisi!')]
     public $purchase_id, $product_id, $purchase_price, $total_products;
+
     // tambahan
     public $subtotal;
 
@@ -30,10 +31,11 @@ class PurchaseCreate extends Component
 
         $this->discount_price = Purchase::find($this->purchase_id)->total_price;
 
+        $this->date = date('Y-m-d');
+
         $this->subtotal();
     }
 
-    // #[Layout('template-dashboard.main')]
     public function render()
     {
         $suppliers = Supplier::all();
@@ -52,8 +54,17 @@ class PurchaseCreate extends Component
 
     public function purchaseDetailsStore()
     {
-        // dd($this->purchase_price);
+        $data = [
+            $this->purchase_id,
+            $this->product_id,
+            $this->purchase_price,
+            $this->total_products,
+        ];
+
+        // dd($data);
+
         $this->validate();
+
         $purchase_total_price = Purchase::find($this->purchase_id)->total_price;
 
         $product_id = PurchaseDetails::where('purchase_id', $this->purchase_id)
@@ -98,9 +109,7 @@ class PurchaseCreate extends Component
                 ->where('purchase_id', $this->purchase_id)
                 ->update($purchase_detail);
 
-            $this->product_id = null;
-            $this->purchase_price = null;
-            $this->total_products = null;
+            $this->reset('product_id', 'purchase_price', 'total_product');
 
             Purchase::where('id', $this->purchase_id)->update([
                 'total_price' => PurchaseDetails::where('purchase_id', $this->purchase_id)->sum('total_price'),
@@ -111,16 +120,7 @@ class PurchaseCreate extends Component
 
         $this->subtotal();
         $this->discount();
-
-        $this->dispatch('select2Updated');
     }
-
-    // inisialisasi ulang select2
-    public function updatedSelectedItem()
-    {
-        $this->dispatch('select2Updated');
-    }
-
 
     // penentuan discount
     public function discount()
@@ -143,6 +143,7 @@ class PurchaseCreate extends Component
         $this->subtotal = PurchaseDetails::where('purchase_id', $this->purchase_id)->sum('total_price');
     }
 
+    // menghapus daftar pilihan produk
     public function deleteProduct($id)
     {
         $purchase = Purchase::find($this->purchase_id)->total_price;
@@ -156,6 +157,7 @@ class PurchaseCreate extends Component
         $this->discount();
     }
 
+    // update harga discount
     public function updated($discount_price)
     {
         $purchase = Purchase::find($this->purchase_id);
@@ -170,6 +172,7 @@ class PurchaseCreate extends Component
         $this->discount_price = $total_price - ($total_price * $discount / 100);
     }
 
+    // membatalkan transaksi
     public function purchaseUndo()
     {
         PurchaseDetails::where('purchase_id', $this->purchase_id)->delete();
@@ -180,6 +183,7 @@ class PurchaseCreate extends Component
     // proses pembelian
     public function purchaseProcess()
     {
+        
         // penentuan tanggal otomatis
         if ($this->date == null) {
             $this->date = date('Y-m-d');
@@ -188,6 +192,19 @@ class PurchaseCreate extends Component
         // penentuan discount otomatis
         if ($this->discount == null) {
             $this->discount = 0;
+        }
+        
+        $this->validate([
+            'supplier_name' => 'required'
+        ], [
+            'supplier_name.required' => 'Supplier tidak boleh kosong'
+        ]);
+        
+        // mengecek apakah ada produk yang ditambahkan
+        $pruduct = PurchaseDetails::where('purchase_id', $this->purchase_id);
+        if ($pruduct->count() == 0) {
+            // $this->redirectRoute('purchase', navigate: true);
+            return $this->dispatch('failed');
         }
 
         // update data pembelian
