@@ -14,6 +14,9 @@
                         <th>#</th>
                         <th>Tanggal</th>
                         <th>Kode Transaksi</th>
+                        <th>Total Item</th>
+                        <th>Harga (Rp)</th>
+                        <th>Discount</th>
                         <th>Total (Rp)</th>
                         <th>Status</th>
                         <th>Aksi</th>
@@ -25,14 +28,25 @@
                             <td>{{ ++$index }}</td>
                             <td>{{ \Carbon\Carbon::parse($item->date)->format('d/m/Y') }}</td>
                             <td>{{ $item->sale_code }}</td>
-                            <td class="text-end pe-5">{{ number_format($item->discount_price) }}</td>
-                            <td>{{ $item->status }}</td>
+                            <td class="text-center">{{ $item->salesDetails->sum('total_products') }}</td>
+                            <td class="text-end">{{ number_format($item->total_price) }}</td>
+                            <td class="text-center">{{ $item->discount }}</td>
+                            <td class="text-end">{{ number_format($item->discount_price) }}</td>
+                            <td class="text-center">
+                                @if ($item->status == 'Pending')
+                                    <span class="badge text-bg-warning">{{ $item->status }}</span>
+                                @else
+                                    <span class="badge text-bg-success">{{ $item->status }}</span>
+                                @endif
+                            </td>
                             <td>
-                                <a wire:navigate href="{{ route('purchase.show', $item->id) }}"
-                                    class="btn btn-xs btn-secondary"><i class="far fa-eye"></i></a>
-                                <button wire:confirm="Yakin ingin hapus {{ $item->purchase_code }}"
-                                    wire:click="saleDestroy({{ $item->id }})" class="btn btn-xs btn-danger"><i
-                                        class="far fa-trash-alt"></i></button>
+                                <div class="btn-group">
+                                    <a wire:navigate href="{{ route('purchase.show', $item->id) }}"
+                                        class="btn btn-xs btn-secondary"><i class="far fa-eye"></i></a>
+                                    <button wire:confirm="Yakin ingin hapus {{ $item->purchase_code }}"
+                                        wire:click="saleDestroy({{ $item->id }})" class="btn btn-xs btn-danger"><i
+                                            class="far fa-trash-alt"></i></button>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

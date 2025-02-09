@@ -54,18 +54,7 @@ class PurchaseCreate extends Component
 
     public function purchaseDetailsStore()
     {
-        $data = [
-            $this->purchase_id,
-            $this->product_id,
-            $this->purchase_price,
-            $this->total_products,
-        ];
-
-        // dd($data);
-
         $this->validate();
-
-        $purchase_total_price = Purchase::find($this->purchase_id)->total_price;
 
         $product_id = PurchaseDetails::where('purchase_id', $this->purchase_id)
             ->where('product_id', $this->product_id)->count();

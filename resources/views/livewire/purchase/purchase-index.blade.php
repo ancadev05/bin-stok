@@ -6,7 +6,8 @@
     <section class="card">
 
         <div class="card-header d-flex justify-content-end">
-            <button wire:click="purchaseCreate" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Buat Transaksi Pembelian</button>
+            <button wire:click="purchaseCreate" class="btn btn-sm btn-primary"><i class="fas fa-plus"></i> Buat Transaksi
+                Pembelian</button>
         </div>
 
         <div class="card-body">
@@ -36,18 +37,20 @@
                                 <td class="text-center">{{ $item->discount }}%</td>
                                 <td class="text-end">{{ number_format($item->discount_price) }}</td>
                                 <td class="text-center">
-                                    @if ($item->status == "Pending")
+                                    @if ($item->status == 'Pending')
                                         <span class="badge text-bg-warning">{{ $item->status }}</span>
                                     @else
                                         <span class="badge text-bg-success">{{ $item->status }}</span>
                                     @endif
                                 </td>
                                 <td class="text-center">
-                                    <a wire:navigate href="{{ route('purchase.show', $item->id) }}"
-                                        class="btn btn-xs btn-secondary"><i class="far fa-eye"></i></a>
-                                    <button wire:confirm="Yakin ingin hapus {{ $item->purchase_code }}"
-                                        wire:click="purchaseDestroy({{ $item->id }})"
-                                        class="btn btn-xs btn-danger"><i class="far fa-trash-alt"></i></button>
+                                    <div class="btn-group">
+                                        <a wire:navigate href="{{ route('purchase.show', $item->id) }}"
+                                            class="btn btn-xs btn-secondary"><i class="far fa-eye"></i></a>
+                                        <button wire:confirm="Yakin ingin hapus {{ $item->purchase_code }}"
+                                            wire:click="purchaseDestroy({{ $item->id }})"
+                                            class="btn btn-xs btn-danger"><i class="far fa-trash-alt"></i></button>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

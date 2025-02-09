@@ -7,7 +7,7 @@
 
         <section class="card">
             <div class="card-body">
-                <form wire:submit="saleDetailsStore">
+                <form wire:submit.prevent="saleDetailsStore">
                     @csrf
                     <div class="mb-3 row">
                         <label for="sale_code" class="col-sm-2 col-form-label text-end">Kode Transaksi</label>
@@ -19,7 +19,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div wire:ignore class="mb-3 row">
+                    <div wire:ignore class="row">
                         <label for="product_id" class="col-sm-2 col-form-label text-end">Kode Produk</label>
                         <div class="col">
                             <select wire:model.live="product_id"
@@ -30,16 +30,19 @@
                                         {{ '(' . $item->product_code . ') - ' . $item->name }}</option>
                                 @endforeach
                             </select>
-                            @error('product_id')
-                                <small class="invalid-feedback">{{ $message }}</small>
-                            @enderror
                         </div>
-                        <span style="font-size: 12px" class="text-secondary">Ready {{ $max_stock }}
-                            stok</span>
+                    </div>
+                    <div class="row">
+                        <div class="col offset-2">
+                            @error('product_id')
+                                <small class="text-danger">{{ $message }} || </small>
+                            @enderror
+                            <span class="text-secondary">Ready <strong>{{ $max_stock }}</strong> stok</span>
+                        </div>
                     </div>
 
 
-                    <div class="mt-3">
+                    <div class="table-responsive">
                         <table class="table table-sm table-borderless">
                             <tr>
                                 <td class="text-end align-middle">
@@ -47,7 +50,11 @@
                                 </td>
                                 <td>
                                     <input wire:model.live="total_products" id="total_products" type="number"
-                                        class="form-control" min="{{ $min_stock }}" max="{{ $max_stock }}">
+                                        class="form-control @error('total_products') is-invalid @enderror"
+                                        min="{{ $min_stock }}" max="{{ $max_stock }}">
+                                    @error('total_products')
+                                        <small class="invalid-feedback">{{ $message }}</small>
+                                    @enderror
                                 </td>
                                 <td class="text-end align-middle">
                                     <label for="sale_price">Harga</label>
@@ -64,13 +71,9 @@
                                         readonly>
                                 </td>
                                 <td>
-                                    <button type="submit" class="btn btn-secondary"><b>+</b></button>
+                                    <button type="submit" class="btn btn-secondary"><i
+                                            class="fas fa-plus"></i></button>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><span style="font-size: 12px" class="text-secondary">Ready {{ $max_stock }}
-                                        stok</span></td>
                             </tr>
                         </table>
                     </div>
@@ -118,87 +121,124 @@
             </div>
         </section>
 
+        {{-- data penjualan --}}
         <section class="card">
             <div class="card-body">
-            {{-- penjualan produk --}}
-            <div class="col-6">
-                <form wire:submit="saleProcess">
-                    @csrf
-                    <div class="mb-3 row">
-                        <label for="costumer" class="col-sm-3 col-form-label text-end">Nama Pelanggang</label>
-                        <div class="col">
-                            <input wire:model="costumer" type="text"
-                                class="form-control @error('costumer') is-invalid @enderror">
-                            @error('costumer')
-                                <small class="invalid-feedback">{{ $message }}</small>
-                            @enderror
+                <div class="row">
+                    <div class="col">
+                        <div class="border p-2 mb-3">
+                            <h2 class="fw-bold text-center">Total Bayar : Rp {{ number_format($discount_price) }}</h2>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="pay" class="col-sm-3 col-form-label text-end">Diterima (Rp.)</label>
+                            <div class="col">
+                                <input type="number" class="form-control @error('pay') is-invalid @enderror"
+                                    id="pay" wire:model.live="pay">
+                                @error('pay')
+                                    <small class="invalid-feedback">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="change" class="col-sm-3 col-form-label text-end">Kembali (Rp.)</label>
+                            <div class="col">
+                                <input type="text" class="form-control @error('change') is-invalid @enderror"
+                                    id="change" wire:model="change" readonly>
+                                @error('change')
+                                    <small class="invalid-feedback">{{ $message }}</small>
+                                @enderror
+                            </div>
                         </div>
                     </div>
-                    <div class="mb-3 row">
-                        <label for="date" class="col-sm-3 col-form-label text-end">Date</label>
-                        <div class="col">
-                            <input type="date" class="form-control @error('date') is-invalid @enderror"
-                                id="date" wire:model="date">
-                            @error('date')
-                                <small class="invalid-feedback">{{ $message }}</small>
-                            @enderror
-                        </div>
+                    <div class="col">
+                        <form wire:submit.prevent="saleProcess">
+                            @csrf
+                            <div class="mb-3 row">
+                                <label for="date" class="col-sm-3 col-form-label text-end">Date</label>
+                                <div class="col">
+                                    <input type="date" class="form-control @error('date') is-invalid @enderror"
+                                        id="date" wire:model="date">
+                                    @error('date')
+                                        <small class="invalid-feedback">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="costumer" class="col-sm-3 col-form-label text-end">Nama Pelanggang</label>
+                                <div class="col">
+                                    <input wire:model="costumer" type="text"
+                                        class="form-control @error('costumer') is-invalid @enderror">
+                                    @error('costumer')
+                                        <small class="invalid-feedback">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="discount" class="col-sm-3 col-form-label text-end">Diskon %</label>
+                                <div class="col">
+                                    <input type="number" class="form-control @error('discount') is-invalid @enderror"
+                                        id="discount" wire:model.live="discount" min="0" max="100">
+                                    @error('discount')
+                                        <small class="invalid-feedback">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="payment_method" class="col-sm-3 col-form-label text-end">Metode
+                                    Pembayaran</label>
+                                <div class="col">
+                                    <select wire:model="payment_method" id="payment_method" class="form-select">
+                                        <option value="Tunai" selected>Tunai</option>
+                                        <option value="Non Tunai">Non Tunai</option>
+                                    </select>
+                                    @error('payment_method')
+                                        <small class="invalid-feedback">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="description" class="col-sm-3 col-form-label text-end">Ket</label>
+                                <div class="col">
+                                    <textarea wire:model="description" id="" class="form-control"></textarea>
+                                    @error('description')
+                                        <small class="invalid-feedback">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button wire:click="saleUndo" type="button"
+                                    class="btn btn-sm btn-danger me-2">Batal</button>
+                                <a wire:navigate href="{{ route('sale') }}" type="button"
+                                    class="btn btn-sm btn-success me-2">Simpan</a>
+                                <button type="submit" class="btn btn-sm btn-primary">Proses</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="mb-3 row">
-                        <label for="discount" class="col-sm-3 col-form-label text-end">Diskon %</label>
-                        <div class="col">
-                            <input type="number" class="form-control @error('discount') is-invalid @enderror"
-                                id="discount" wire:model.live="discount" min="0" max="100">
-                            @error('discount')
-                                <small class="invalid-feedback">{{ $message }}</small>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="payment_method" class="col-sm-3 col-form-label text-end">Metode Pembayaran</label>
-                        <div class="col">
-                            <select wire:model="payment_method" id="payment_method" class="form-select">
-                                <option value="">--</option>
-                                <option value="Tunai">Tunai</option>
-                                <option value="Non Tunai">Non Tunai</option>
-                            </select>
-                            @error('payment_method')
-                                <small class="invalid-feedback">{{ $message }}</small>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="mb-3 row">
-                        <label for="description" class="col-sm-3 col-form-label text-end">Ket</label>
-                        <div class="col">
-                            <textarea wire:model="description" id="" class="form-control"></textarea>
-                            @error('description')
-                                <small class="invalid-feedback">{{ $message }}</small>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <button wire:click="saleUndo" type="button"
-                            class="btn btn-sm btn-danger me-2">Batal</button>
-                        <a wire:navigate href="{{ route('sale') }}" type="button"
-                            class="btn btn-sm btn-success me-2">Simpan</a>
-                        <button type="submit" class="btn btn-sm btn-primary">Proses</button>
-                    </div>
-                </form>
+                </div>
             </div>
-        </div>
-
-
         </section>
     </div>
 
-    <script>
-        $(document).ready(function() {
-            $('.select2').select2();
+    <span style="font-size: 12px" class="text-secondary">Ready {{ $max_stock }}
+        stok</span>
 
-            $('.select2').on('change', function(e) {
-                @this.set('product_id', $(this).val());
-            });
-        })
-    </script>
+    @push('script')
+        <script>
+            $(document).ready(function() {
+                $('.select2').select2({
+                    theme: "bootstrap"
+                });
+
+                $('.select2').on('change', function(e) {
+                    @this.set('product_id', $(this).val());
+                });
+
+                // livewire.on('failed', (event) => {
+                //     console.log('gagal');
+
+                // });
+            })
+        </script>
+    @endpush
 
 </div>
