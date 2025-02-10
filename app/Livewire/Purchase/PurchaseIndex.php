@@ -38,16 +38,18 @@ class PurchaseIndex extends Component
 
     public function purchaseDestroy($id)
     {
-        // mengurangi stok produk
-        $purchase_details = PurchaseDetails::where('purchase_id', $id)->get();
-
-        // update stok barang
-        foreach ($purchase_details as $key => $value) {
-            $product = Product::find($value->product_id);
-
-            if ($product) {
-                $product->stock -= $value->total_products;
-                $product->save();
+        // penghapusan transaksi pending
+        $purchase = Purchase::find($id)->status;
+        if ($purchase == 'Selesai') {
+            // mengurangi stok produk
+            $purchase_details = PurchaseDetails::where('purchase_id', $id)->get();
+            // update stok barang
+            foreach ($purchase_details as $key => $value) {
+                $product = Product::find($value->product_id);
+                if ($product) {
+                    $product->stock -= $value->total_products;
+                    $product->save();
+                }
             }
         }
 

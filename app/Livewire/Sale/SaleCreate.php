@@ -107,7 +107,6 @@ class SaleCreate extends Component
         $sale_details = SalesDetails::find($id)->total_price;
 
         Sale::find($this->sale_id)->update(['total_price' => $sale - $sale_details]);
-
         SalesDetails::find($id)->delete();
 
         $this->subtotal();
@@ -186,7 +185,7 @@ class SaleCreate extends Component
             'discount_price' => $this->discount_price,
             'payment_method' => $this->payment_method,
             'date' => $this->date,
-            'status' => 'selesai',
+            'status' => 'Selesai',
             'description' => $this->description,
         ];
 

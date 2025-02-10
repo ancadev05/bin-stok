@@ -75,7 +75,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/sale', SaleIndex::class)->name('sale');
     Route::get('/sale/create/{id}', SaleCreate::class)->name('sale.create');
     Route::get('/sale/show/{id}', SaleShow::class)->name('sale.show');
-    // Route::get('/sale/edit/{id}', SaleEdit::class)->name('sale.edit');
     // report
     Route::get('/report-purchase', PurchaseReport::class)->name('report-purchase');
     // user

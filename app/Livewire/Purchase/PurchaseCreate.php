@@ -32,6 +32,7 @@ class PurchaseCreate extends Component
         $this->discount_price = Purchase::find($this->purchase_id)->total_price;
 
         $this->date = date('Y-m-d');
+        $this->discount = 0;
 
         $this->subtotal();
     }
@@ -139,7 +140,6 @@ class PurchaseCreate extends Component
         $product = PurchaseDetails::find($id)->total_price;
 
         Purchase::find($this->purchase_id)->update(['total_price' => $purchase - $product]);
-
         PurchaseDetails::find($id)->delete();
 
         $this->subtotal();
@@ -172,17 +172,6 @@ class PurchaseCreate extends Component
     // proses pembelian
     public function purchaseProcess()
     {
-        
-        // penentuan tanggal otomatis
-        if ($this->date == null) {
-            $this->date = date('Y-m-d');
-        }
-
-        // penentuan discount otomatis
-        if ($this->discount == null) {
-            $this->discount = 0;
-        }
-        
         $this->validate([
             'supplier_name' => 'required'
         ], [
@@ -192,7 +181,6 @@ class PurchaseCreate extends Component
         // mengecek apakah ada produk yang ditambahkan
         $pruduct = PurchaseDetails::where('purchase_id', $this->purchase_id);
         if ($pruduct->count() == 0) {
-            // $this->redirectRoute('purchase', navigate: true);
             return $this->dispatch('failed');
         }
 

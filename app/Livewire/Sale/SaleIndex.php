@@ -36,16 +36,19 @@ class SaleIndex extends Component
 
     public function saleDestroy($id)
     {
-        // mengurangi stok produk
-        $sale_details = SalesDetails::where('sale_id', $id)->get();
+        // penghapusan transaksi pending
+        $sale = Sale::find($id)->status;
+        if ($sale == 'Selesai') {
+            // mengurangi stok produk
+            $sale_details = SalesDetails::where('sale_id', $id)->get();
 
-        // update stok barang
-        foreach ($sale_details as $key => $value) {
-            $product = Product::find($value->product_id);
-
-            if ($product) {
-                $product->stock -= $value->total_products;
-                $product->save();
+            // update stok barang
+            foreach ($sale_details as $key => $value) {
+                $product = Product::find($value->product_id);
+                if ($product) {
+                    $product->stock += $value->total_products;
+                    $product->save();
+                }
             }
         }
 

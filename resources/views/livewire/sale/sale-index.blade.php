@@ -41,7 +41,7 @@
                             </td>
                             <td>
                                 <div class="btn-group">
-                                    <a wire:navigate href="{{ route('purchase.show', $item->id) }}"
+                                    <a wire:navigate href="{{ route('sale.show', $item->id) }}"
                                         class="btn btn-xs btn-secondary"><i class="far fa-eye"></i></a>
                                     <button wire:confirm="Yakin ingin hapus {{ $item->purchase_code }}"
                                         wire:click="saleDestroy({{ $item->id }})" class="btn btn-xs btn-danger"><i
