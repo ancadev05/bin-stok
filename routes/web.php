@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Product\ProductSearch;
 use App\Models\Purchase;
 use App\Livewire\Sale\SaleShow;
 use App\Livewire\User\UserEdit;
@@ -63,6 +64,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product', ProductIndex::class)->name('product');
     Route::get('/product/create', ProductCreate::class)->name('product.create');
     Route::get('/product/edit/{id}', ProductEdit::class)->name('product.edit');
+    Route::get('/product/search/{id}', ProductSearch::class)->name('product.search');
     // supplier
     Route::get('/supplier', SupplierIndex::class)->name('supplier');
     Route::get('/supplier/create', SupplierCreate::class)->name('supplier.create');

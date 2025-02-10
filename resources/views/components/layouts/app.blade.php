@@ -54,6 +54,8 @@
             <div class="container">
                 <div class="page-inner">
 
+                    {{-- @livewire('product.product-search') --}}
+
                     {{ $slot }}
 
                 </div>

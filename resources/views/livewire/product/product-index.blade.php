@@ -46,6 +46,8 @@
                                         {{ $item->stock }}</td>
                                     <td>
                                         <div class="btn-group">
+                                            <a wire:navigate href="{{ route('product.search', $item->id) }}"
+                                                class="btn btn-xs btn-secondary"><i class="far fa-eye"></i></a>
                                             <a wire:navigate href="{{ route('product.edit', $item->id) }}"
                                                 class="btn btn-xs btn-warning"><i class="far fa-edit"></i></a>
                                             <button wire:click="destroy({{ $item->id }})"

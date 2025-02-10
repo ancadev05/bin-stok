@@ -8,11 +8,11 @@
             <div class="row align-items-end">
                 <div class="col">
                     <label for="" class="form-label">Tanggal Awal</label>
-                    <input type="date" class="form-control">
+                    <input wire:model="start_date" type="date" class="form-control">
                 </div>
                 <div class="col">
                     <label for="" class="form-label">Tanggal Akhir</label>
-                    <input type="date" class="form-control">
+                    <input wire:model="end_date" type="date" class="form-control">
                 </div>
                 <div class="col">
                     <button class="btn btn-info"><i class="fas fa-filter"> </i> Filter</button>
@@ -21,7 +21,7 @@
         </div>
         <section class="card-body">
             <div class="d-flex justify-content-end">
-                <a href="{{ route('export.purchase') }}" class="btn btn-success mb-2"><i class="fas fa-file-excel"> </i> Export Excel</a>
+                <a href="{{ route('export.purchase') }}" class="btn btn-sm btn-success mb-2"><i class="fas fa-file-excel"> </i> Export Excel</a>
             </div>
             
             <div class="table-responsive">

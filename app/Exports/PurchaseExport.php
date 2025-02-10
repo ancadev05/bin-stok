@@ -20,7 +20,7 @@ class PurchaseExport implements FromView
 
     public function view(): View
     {
-        return view('exports.report-purchase', [
+        return view('exports.excel.report-purchase', [
             'purchases' => Purchase::all(),
             'total' => Purchase::sum('discount_price'),
         ]);
