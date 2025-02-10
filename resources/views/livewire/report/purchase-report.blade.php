@@ -21,7 +21,7 @@
         </div>
         <section class="card-body">
             <div class="d-flex justify-content-end">
-                <button class="btn btn-success mb-2"><i class="fas fa-file-excel"> </i> Export Excel</button>
+                <a href="{{ route('export.purchase') }}" class="btn btn-success mb-2"><i class="fas fa-file-excel"> </i> Export Excel</a>
             </div>
             
             <div class="table-responsive">

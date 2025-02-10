@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Purchase;
 use App\Livewire\Sale\SaleShow;
 use App\Livewire\User\UserEdit;
 use App\Livewire\Sale\SaleIndex;
@@ -8,6 +9,7 @@ use App\Livewire\Sale\SaleCreate;
 use App\Livewire\User\UserCreate;
 use App\Livewire\Category\Category;
 use Illuminate\Support\Facades\Auth;
+use App\Livewire\Company\CompanyEdit;
 use App\Livewire\Product\ProductEdit;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\AdminDashboard;
@@ -18,6 +20,7 @@ use App\Livewire\Category\CategoryEdit;
 use App\Livewire\Product\ProductCreate;
 use App\Livewire\Purchase\PurchaseEdit;
 use App\Livewire\Purchase\PurchaseShow;
+use App\Livewire\Report\PurchaseReport;
 use App\Livewire\Supplier\SupplierEdit;
 use App\Http\Controllers\HomeController;
 use App\Livewire\Category\CategoryIndex;
@@ -27,8 +30,6 @@ use App\Livewire\Category\CategoryCreate;
 use App\Livewire\Purchase\PurchaseCreate;
 use App\Livewire\Supplier\SupplierCreate;
 use App\Http\Controllers\CategoryController;
-use App\Livewire\Company\CompanyEdit;
-use App\Livewire\Report\PurchaseReport;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -38,7 +39,7 @@ Route::get('/', function () {
 //     return view('category.category-index');
 // });
 
-Route::get('/kaiadmin', function() {
+Route::get('/kaiadmin', function () {
     // dd('ok');
     return view('kaiadmin');
 });
@@ -77,6 +78,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/sale/show/{id}', SaleShow::class)->name('sale.show');
     // report
     Route::get('/report-purchase', PurchaseReport::class)->name('report-purchase');
+    Route::get('/export-purchase', [PurchaseReport::class, 'export'])->name('export.purchase');
     // user
     Route::get('/users', UserIndex::class)->name('users');
     Route::get('/users/create', UserCreate::class)->name('users.create');
@@ -85,5 +87,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/company', CompanyIndex::class)->name('company');
     Route::get('/company/edit/{id}', CompanyEdit::class)->name('company.edit');
 
-});
+    Route::get('coba', function () {
 
+        return view('exports.report-purchase', [
+            'purchases' => Purchase::all(),
+            'total' => Purchase::sum('discount_price'),
+        ] );
+    });
+});
