@@ -45,11 +45,13 @@
                                         class="text-center {{ $item->min_stock >= $item->stock ? 'text-bg-danger' : '' }}">
                                         {{ $item->stock }}</td>
                                     <td>
-                                        <a wire:navigate href="{{ route('product.edit', $item->id) }}"
-                                            class="btn btn-xs btn-warning"><i class="far fa-edit"></i></a>
-                                        <button wire:click="destroy({{ $item->id }})"
-                                            wire:confirm="Yakin inign hapus {{ $item->name }}"
-                                            class="btn btn-xs btn-danger"><i class="far fa-trash-alt"></i></button>
+                                        <div class="btn-group">
+                                            <a wire:navigate href="{{ route('product.edit', $item->id) }}"
+                                                class="btn btn-xs btn-warning"><i class="far fa-edit"></i></a>
+                                            <button wire:click="destroy({{ $item->id }})"
+                                                wire:confirm="Yakin inign hapus {{ $item->name }}"
+                                                class="btn btn-xs btn-danger"><i class="far fa-trash-alt"></i></button>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

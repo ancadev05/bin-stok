@@ -21,11 +21,11 @@
         </div>
         <section class="card-body">
             <div class="d-flex justify-content-end">
-                <button class="btn btn-success mb-2">Export Excel</button>
+                <button class="btn btn-success mb-2"><i class="fas fa-file-excel"> </i> Export Excel</button>
             </div>
             
             <div class="table-responsive">
-                <table class="table table-sm table-bordered">
+                <table class="table table-sm table-bordered" id="basic-datatables">
                     <thead>
                         <tr class="text-center">
                             <th>No</th>
@@ -59,4 +59,12 @@
             </div>
         </section>
     </div>
+
+    @push('script')
+        <script>
+            $(document).ready(function() {
+                $('#basic-datatables').DataTable();
+            })
+        </script>
+    @endpush
 </div>

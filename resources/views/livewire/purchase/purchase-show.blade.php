@@ -94,9 +94,42 @@
             <hr>
 
             <div class="d-flex justify-content-end">
-                <a wire:navigate href="{{ route('purchase') }}" class="btn btn-sm btn-danger">Kembali</a>
+                <a wire:navigate href="{{ route('purchase') }}" class="btn btn-sm btn-secondary"><i class="fas fa-reply"> </i> Kembali</a>
+                <button onclick="deletePurchase({{ $purchase->id }}, '{{ $purchase->purchase_code }}')" class="btn btn-sm btn-danger ms-2"><i class="far fa-trash-alt"> </i> Hapus</button>
             </div>
 
         </div>
     </section>
+
+    @push('script')
+        <script>
+            function deletePurchase(id, name) {
+                console.log(id, name);
+                
+                swal({
+                    title: 'Yakin ingin hapus ' + name + ' ?',
+                    buttons: {
+                        confirm: {
+                            text: 'Yes, delete it!',
+                            className: 'btn btn-success'
+                        },
+                        cancel: {
+                            visible: true,
+                            className: 'btn btn-danger'
+                        }
+                    }
+                }).then((Delete) => {
+                    if (Delete) {
+
+                        Livewire.dispatch('destroy', {
+                            id
+                        });
+
+                    } else {
+                        swal.close();
+                    }
+                });
+            }
+        </script>
+    @endpush
 </div>
