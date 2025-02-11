@@ -7,12 +7,14 @@ use Livewire\Component;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Title;
-use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
+use Livewire\WithFileUploads;
 
 #[Title("Produk")]
 class ProductCreate extends Component
 {
+    use WithFileUploads;
+
     #[Validate('required', message: 'Pilih kategori produk!')]
     public $category_id;
     public $product_code;
@@ -28,6 +30,7 @@ class ProductCreate extends Component
     public $cost;
     #[Validate('required', message: 'Isi harga jual produk!')]
     public $selling_price;
+    // #[Validate('sometimes|image|max:1024')]
     public $images;
     public $description;
 
@@ -36,6 +39,13 @@ class ProductCreate extends Component
         $this->validate();
 
         $new_code = $this->generateProductCode();
+
+        if ($this->images) {
+            $this->validate(['images' => 'image|max:1024']);
+            $images = $this->images->store('product-image', 'public');
+        } else {
+            $images = 'images.png';
+        }
 
         Product::create([
             'category_id' => $this->category_id,
@@ -46,7 +56,7 @@ class ProductCreate extends Component
             'min_stock' => $this->min_stock,
             'cost' => $this->cost,
             'selling_price' => $this->selling_price,
-            'images' => 'images.png',
+            'images' => $images,
             'description' => $this->description,
         ]);
 

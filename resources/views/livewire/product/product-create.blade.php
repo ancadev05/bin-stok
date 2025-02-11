@@ -6,7 +6,7 @@
     <div class="page-category">
         <section class="card">
             <div class="card-body">
-                <form wire:submit="store">
+                <form wire:submit="store" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3 row">
@@ -93,13 +93,16 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="gambar" class="col-sm-2 col-form-label text-end">Gambar</label>
+                            <label for="images" class="col-sm-2 col-form-label text-end">Gambar</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control @error('gambar') is-invalid @enderror"
-                                    id="gambar" wire:model="gambar">
-                                @error('gambar')
+                                <input type="file" class="form-control @error('images') is-invalid @enderror"
+                                    id="images" wire:model="images">
+                                @error('images')
                                     <small class="invalid-feedback">{{ $message }}</small>
                                 @enderror
+                                @if ($images)
+                                    <img src="{{ $images->temporaryUrl() }}" width="150px" class="mt-3">
+                                @endif
                             </div>
                         </div>
                         <div class="mb-3 row">
