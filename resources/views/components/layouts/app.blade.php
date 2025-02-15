@@ -111,7 +111,6 @@
 
     {{-- alert costum --}}
     @include('components.layouts.components.sweet-alert')
-    @include('components.layouts.components.session')
 
     @stack('script')
 </body>

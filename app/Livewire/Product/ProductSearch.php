@@ -31,8 +31,12 @@ class ProductSearch extends Component
     public function render()
     {
         $product = Product::find($this->id);
-        $purchases = Purchase::where('discount_price', '>', 0)->where('product_id', $this->id)->get();
+
+        $purchases = PurchaseDetails::where('product_id', $this->id);
+
+        // $purchases = Purchase::where('discount_price', '>', 0)->where('product_id', $this->id)->get();
         $sales = SalesDetails::where('product_id', $this->id)->get();
+
         return view('livewire.product.product-search', compact('product', 'purchases', 'sales'));
     }
 }

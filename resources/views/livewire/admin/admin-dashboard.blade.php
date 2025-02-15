@@ -50,7 +50,7 @@
                         <div class="row">
                             <div class="col-3">
                                 <div class="icon-big text-center">
-                                    <i class="fas fa-cubes"></i>
+                                    <i class="fas fa-cart-plus"></i>
                                 </div>
                             </div>
                             <div class="col-9 col-stats">
@@ -69,7 +69,7 @@
                         <div class="row">
                             <div class="col-3">
                                 <div class="icon-big text-center">
-                                    <i class="fas fa-cubes"></i>
+                                    <i class="fas fa-luggage-cart"></i>
                                 </div>
                             </div>
                             <div class="col-9 col-stats">

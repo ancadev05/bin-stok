@@ -24,7 +24,7 @@
                             <label for="product_code" class="col-sm-2 col-form-label text-end">Kode Produk</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control @error('product_code') is-invalid @enderror"
-                                    id="product_code" wire:model="product_code">
+                                    id="product_code" wire:model="product_code" readonly>
                                 @error('product_code')
                                     <small class="invalid-feedback">{{ $message }}</small>
                                 @enderror
@@ -91,13 +91,28 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <label for="gambar" class="col-sm-2 col-form-label text-end">Gambar</label>
+                            <label for="unit" class="col-sm-2 col-form-label text-end">Satuan</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control @error('gambar') is-invalid @enderror"
-                                    id="gambar" wire:model="gambar">
-                                @error('gambar')
+                                <input type="text" class="form-control @error('unit') is-invalid @enderror"
+                                    id="unit" wire:model="unit" placeholder="Unit, Pcs, Kg, dll.">
+                                @error('unit')
                                     <small class="invalid-feedback">{{ $message }}</small>
                                 @enderror
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label for="new_images" class="col-sm-2 col-form-label text-end">Gambar</label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control @error('new_images') is-invalid @enderror"
+                                    id="new_images" wire:model="new_images">
+                                @error('new_images')
+                                    <small class="invalid-feedback">{{ $message }}</small>
+                                @enderror
+                                @if ($new_images)
+                                    <img src="{{ $new_images->temporaryUrl() }}" width="150px" class="mt-3">
+                                @else
+                                    <img src="{{ Storage::url($images) }}" width="150px" class="mt-3">
+                                @endif
                             </div>
                         </div>
                         <div class="mb-3 row">

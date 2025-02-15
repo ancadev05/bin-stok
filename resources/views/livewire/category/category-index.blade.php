@@ -45,6 +45,11 @@
 
     @push('script')
         <script>
+            $(document).ready(function() {
+                $('#basic-datatables').DataTable();
+            })
+        </script>
+        <script>
             function deleteCategory(id, name) {
 
                 swal({

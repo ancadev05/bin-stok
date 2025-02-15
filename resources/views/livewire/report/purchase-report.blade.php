@@ -21,7 +21,10 @@
         </div>
         <section class="card-body">
             <div class="d-flex justify-content-end">
-                <a href="{{ route('export.purchase') }}" class="btn btn-sm btn-success mb-2"><i class="fas fa-file-excel"> </i> Export Excel</a>
+                <div class="btn-group mb-3 me-2">
+                    <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-file-pdf"> </i> PDF</a>
+                    <a href="{{ route('export.purchase') }}" class="btn btn-sm btn-success"><i class="fas fa-file-excel"> </i> Excel</a>
+                </div>
             </div>
             
             <div class="table-responsive">

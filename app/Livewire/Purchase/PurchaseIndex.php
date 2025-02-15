@@ -16,6 +16,14 @@ class PurchaseIndex extends Component
     // #[Layout('template-dashboard.main')]
     public function render()
     {
+        // menghapus transaksi yang pending/batal
+        $purchase_id = Purchase::where('discount_price', '=', 0)->latest()->first();
+        // dd($purchase_id);
+        if ($purchase_id != null) {
+            PurchaseDetails::where('purchase_id', $purchase_id->id)->delete();
+            Purchase::find($purchase_id->id)->delete();
+        }
+
         $today = date('Y-m-d');
         $purchases = Purchase::where('date', $today)->orderBy('id', 'desc')->get();
         return view('livewire.purchase.purchase-index', compact('purchases'));

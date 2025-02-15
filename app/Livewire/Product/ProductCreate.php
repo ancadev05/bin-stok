@@ -27,6 +27,7 @@ class ProductCreate extends Component
     #[Validate('required', message: 'Masukkan minimal stok!')]
     public $min_stock;
     #[Validate('required', message: 'Isi HPP produk!')]
+    public $unit;
     public $cost;
     #[Validate('required', message: 'Isi harga jual produk!')]
     public $selling_price;
@@ -54,6 +55,7 @@ class ProductCreate extends Component
             'brand' => $this->brand,
             'specifications' => $this->specifications,
             'min_stock' => $this->min_stock,
+            'unit' => $this->unit,
             'cost' => $this->cost,
             'selling_price' => $this->selling_price,
             'images' => $images,
@@ -69,8 +71,14 @@ class ProductCreate extends Component
     {
         $this->validate();
 
-        // penentuan kode product
         $new_code = $this->generateProductCode();
+
+        if ($this->images) {
+            $this->validate(['images' => 'image|max:1024']);
+            $images = $this->images->store('product-image', 'public');
+        } else {
+            $images = 'images.png';
+        }
 
         Product::create([
             'category_id' => $this->category_id,
@@ -79,6 +87,7 @@ class ProductCreate extends Component
             'brand' => $this->brand,
             'specifications' => $this->specifications,
             'min_stock' => $this->min_stock,
+            'unit' => $this->unit,
             'cost' => $this->cost,
             'selling_price' => $this->selling_price,
             'images' => 'images.png',

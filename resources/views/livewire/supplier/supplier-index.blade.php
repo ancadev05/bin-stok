@@ -14,7 +14,7 @@
             <div class="card-body">
 
                 <div class="table-responsive">
-                    <table class="table table-sm table-hover table-striped">
+                    <table class="table table-sm table-hover table-striped" id="basic-datatables">
                         <thead>
                             <th>No</th>
                             <th>Supplayer</th>
@@ -44,4 +44,12 @@
             </div>
         </div>
     </div>
+
+    @push('script')
+        <script>
+            $(document).ready(function() {
+                $('#basic-datatables').DataTable();
+            })
+        </script>
+    @endpush
 </div>

@@ -3,54 +3,61 @@
 
         <div class="card">
             <div class="card-body">
-                <div class="table-responsive">
-                    <table>
-                        <tr>
-                            <td width="150px">Kategori</td>
-                            <td>:</td>
-                            <td>{{ $product->category->name }}</td>
-                        </tr>
-                        <tr>
-                            <td>Kode Produk</td>
-                            <td>:</td>
-                            <td>{{ $product->product_code }}</td>
-                        </tr>
-                        <tr>
-                            <td>Nama Produk</td>
-                            <td>:</td>
-                            <td>{{ $product->name }}</td>
-                        </tr>
-                        <tr>
-                            <td>Merek</td>
-                            <td>:</td>
-                            <td>{{ $product->brand }}</td>
-                        </tr>
-                        <tr>
-                            <td>Spesifikasi</td>
-                            <td>:</td>
-                            <td>{{ $product->specifications}}</td>
-                        </tr>
-                        <tr>
-                            <td>Stok</td>
-                            <td>:</td>
-                            <td>{{ $product->stock }}</td>
-                        </tr>
-                        <tr>
-                            <td>HPP</td>
-                            <td>:</td>
-                            <td>Rp. {{ number_format($product->cost) }}</td>
-                        </tr>
-                        <tr>
-                            <td>Harga Jual</td>
-                            <td>:</td>
-                            <td>Rp. {{ number_format($product->selling_price) }}</td>
-                        </tr>
-                        <tr>
-                            <td>Deskripsi</td>
-                            <td>:</td>
-                            <td>{{ $product->description }}</td>
-                        </tr>
-                    </table>
+                <div class="row">
+                    <div class="col">
+                        <div class="table-responsive">
+                            <table>
+                                <tr>
+                                    <td width="150px">Kategori</td>
+                                    <td>:</td>
+                                    <td>{{ $product->category->name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Kode Produk</td>
+                                    <td>:</td>
+                                    <td>{{ $product->product_code }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Nama Produk</td>
+                                    <td>:</td>
+                                    <td>{{ $product->name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Merek</td>
+                                    <td>:</td>
+                                    <td>{{ $product->brand }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Spesifikasi</td>
+                                    <td>:</td>
+                                    <td>{{ $product->specifications }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Stok</td>
+                                    <td>:</td>
+                                    <td>{{ $product->stock . ' ' . $product->unit}}</td>
+                                </tr>
+                                <tr>
+                                    <td>HPP</td>
+                                    <td>:</td>
+                                    <td>Rp. {{ number_format($product->cost) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Harga Jual</td>
+                                    <td>:</td>
+                                    <td>Rp. {{ number_format($product->selling_price) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Deskripsi</td>
+                                    <td>:</td>
+                                    <td>{{ $product->description }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <img src="{{ Storage::url($product->images) }}" alt="" width="150px">
+                    </div>
                 </div>
             </div>
         </div>
@@ -114,9 +121,10 @@
                 </div>
             </div>
         </section>
-        
+
         <section class="d-flex justify-content-end">
-            <a wire:navigate href="{{ route('product') }}" class="btn btn-sm btn-danger"><i class="fas fa-reply"> </i> Kembali</a>
+            <a wire:navigate href="{{ route('product') }}" class="btn btn-sm btn-danger"><i class="fas fa-reply"> </i>
+                Kembali</a>
         </section>
     </div>
 </div>

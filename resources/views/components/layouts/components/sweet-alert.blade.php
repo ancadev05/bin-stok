@@ -1,13 +1,42 @@
-<script>
-    // alert jika berhasil hapus data
-    Livewire.on('status', (data) => {
+@if (session('status'))
+{{-- alert sukses create data--}}
+    <script>
         swal({
-            icon: data.icon,
-            text: data.text,
-            // timer: 2000,
+            title: '{{ session('status') }}',
+            icon: "success",
+            timer: 1000,
             buttons: {
                 confirm: {
-                    className: data.btn
+                    className: 'btn btn-success'
+                }
+            },
+        });
+    </script>
+@endif
+<script>
+    // success delete data
+    Livewire.on('success', (data) => {
+        swal({
+            icon: 'success',
+            text: data.text,
+            // timer: 3000,
+            buttons: {
+                confirm: {
+                    className: 'btn btn-success'
+                }
+            }
+        });
+    });
+
+    // failed delete data
+    Livewire.on('failed', (data) => {
+        swal({
+            icon: 'error',
+            text: data.text,
+            // timer: 3000,
+            buttons: {
+                confirm: {
+                    className: 'btn btn-danger',
                 }
             }
         });

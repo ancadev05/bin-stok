@@ -11,8 +11,8 @@
                     <div class="modal-body">
                         <div class="mb-3 row">
                             <label for="category_id" class="col-sm-2 col-form-label text-end">Kategori</label>
-                            <div class="col-sm-10">
-                                <select wire:model="category_id" id="" class="form-select">
+                            <div wire:ignore class="col-sm-10">
+                                <select wire:model="category_id" id="" class="form-select select2">
                                     <option value="">--Pilih Kategori--</option>
                                     @foreach ($categories as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -93,6 +93,16 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
+                            <label for="unit" class="col-sm-2 col-form-label text-end">Satuan</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control @error('unit') is-invalid @enderror"
+                                    id="unit" wire:model="unit" placeholder="Unit, Pcs, Kg, dll.">
+                                @error('unit')
+                                    <small class="invalid-feedback">{{ $message }}</small>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
                             <label for="images" class="col-sm-2 col-form-label text-end">Gambar</label>
                             <div class="col-sm-10">
                                 <input type="file" class="form-control @error('images') is-invalid @enderror"
@@ -124,4 +134,23 @@
             </div>
         </section>
     </div>
+
+    @push('script')
+        <script>
+            $(document).ready(function() {
+                $('.select2').select2({
+                    theme: "bootstrap"
+                });
+
+                $('.select2').on('change', function(e) {
+                    @this.set('category_id', $(this).val());
+                });
+
+                livewire.on('failed', (event) => {
+                    console.log('gagal');
+                    
+                });
+            })
+        </script>
+    @endpush
 </div>

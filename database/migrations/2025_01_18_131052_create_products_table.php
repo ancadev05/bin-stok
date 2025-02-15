@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('specifications');
             $table->integer('stock')->default(0);
             $table->integer('min_stock')->default(0);
+            $table->string('unit')->nullable();
             $table->integer('cost');
             $table->integer('selling_price');
             $table->string('images')->nullable();
