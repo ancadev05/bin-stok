@@ -4,6 +4,7 @@ namespace App\Livewire\Supplier;
 
 use Livewire\Component;
 use App\Models\Supplier;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
 
@@ -16,9 +17,10 @@ class SupplierIndex extends Component
         return view('livewire.supplier.supplier-index', ['suppliers' => Supplier::all()]);
     }
 
+    #[On('destroy')]
     public function destroy($id)
     {
         Supplier::find($id)->delete();
-        session()->flash('status','Data berhasil dihapus!');
+        $this->dispatch('success', text:'Data berhasil dihapus!');
     }
 }

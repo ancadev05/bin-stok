@@ -12,7 +12,7 @@
                         <div class="mb-3 row">
                             <label for="category_id" class="col-sm-2 col-form-label text-end">Kategori</label>
                             <div class="col-sm-10">
-                                <select wire:model="category_id" id="" class="form-select">
+                                <select wire:model="category_id" id="" class="form-select" disabled>
                                     <option value="">--Pilih Kategori--</option>
                                     @foreach ($categories as $item)
                                         <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -24,7 +24,7 @@
                             <label for="product_code" class="col-sm-2 col-form-label text-end">Kode Produk</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control @error('product_code') is-invalid @enderror"
-                                    id="product_code" wire:model="product_code" readonly>
+                                    id="product_code" wire:model="product_code" disabled>
                                 @error('product_code')
                                     <small class="invalid-feedback">{{ $message }}</small>
                                 @enderror

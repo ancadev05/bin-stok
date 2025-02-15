@@ -30,8 +30,6 @@
                                 <td>
                                     <a wire:navigate href="{{ route('category.edit', $item->id) }}"
                                         class="btn btn-xs btn-warning"><i class="far fa-edit"></i></a>
-                                    {{-- <button wire:click="destroy({{ $item->id }})" onclick="delete()"
-                                        class="btn btn-xs btn-danger"><i class="far fa-trash-alt"></i></button> --}}
                                     <button onclick="deleteCategory({{ $item->id }}, '{{ $item->name }}')"
                                         class="btn btn-xs btn-danger"><i class="far fa-trash-alt"></i></button>
                                 </td>
