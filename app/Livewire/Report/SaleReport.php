@@ -2,12 +2,14 @@
 
 namespace App\Livewire\Report;
 
+use App\Models\Sale;
 use Livewire\Component;
 
 class SaleReport extends Component
 {
     public function render()
     {
-        return view('livewire.report.sale-report');
+        $sales = Sale::all();
+        return view('livewire.report.sale-report', compact('sales'));
     }
 }

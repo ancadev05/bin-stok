@@ -31,6 +31,7 @@ use App\Livewire\Category\CategoryCreate;
 use App\Livewire\Purchase\PurchaseCreate;
 use App\Livewire\Supplier\SupplierCreate;
 use App\Http\Controllers\CategoryController;
+use App\Livewire\Report\SaleReport;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -78,7 +79,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/sale/create/{id}', SaleCreate::class)->name('sale.create');
     Route::get('/sale/show/{id}', SaleShow::class)->name('sale.show');
     // report
-    Route::get('/report-purchase', PurchaseReport::class)->name('report-purchase');
+    Route::get('/report-purchase', PurchaseReport::class)->name('report.purchase');
+    Route::get('/report-sale', SaleReport::class)->name('report.sale');
+    // export
     Route::get('/export-purchase', [PurchaseReport::class, 'export'])->name('export.purchase');
     // user
     Route::get('/users', UserIndex::class)->name('users');

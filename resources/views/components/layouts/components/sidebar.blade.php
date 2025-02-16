@@ -85,9 +85,15 @@
                 </li>
 
                 <li class="nav-item {{ Request::is('report-purchase') ? 'active' : '' }}">
-                    <a href="{{ route('report-purchase') }}">
+                    <a href="{{ route('report.purchase') }}">
                         <i class="fas fa-file-alt"></i>
                         <p>Laporan Pembelian</p>
+                    </a>
+                </li>
+                <li class="nav-item {{ Request::is('report-sale') ? 'active' : '' }}">
+                    <a href="{{ route('report.sale') }}">
+                        <i class="fas fa-file-alt"></i>
+                        <p>Laporan Penjualan</p>
                     </a>
                 </li>
 
