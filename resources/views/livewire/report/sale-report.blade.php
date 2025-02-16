@@ -24,7 +24,7 @@
                 <div class="d-flex justify-content-end">
                     <div class="btn-group mb-3 me-2">
                         <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-file-pdf"> </i> PDF</a>
-                        <a href="{{ route('export.purchase') }}" class="btn btn-sm btn-success"><i class="fas fa-file-excel"> </i> Excel</a>
+                        <a href="{{ route('export.sale') }}" class="btn btn-sm btn-success"><i class="fas fa-file-excel"> </i> Excel</a>
                     </div>
                 </div>
                 
@@ -35,6 +35,7 @@
                                 <th>No</th>
                                 <th>Tanggal</th>
                                 <th>Kode Transaksi</th>
+                                <th>Pelanggan</th>
                                 <th>Total Item</th>
                                 <th>Harga (Rp)</th>
                                 <th>Discount</th>
@@ -48,6 +49,7 @@
                                     <td class="text-center">{{ ++$index }}</td>
                                     <td>{{ \Carbon\Carbon::parse($item->date)->format('d/m/Y') }}</td>
                                     <td>{{ $item->sale_code }}</td>
+                                    <td>{{ $item->costumer }}</td>
                                     <td class="text-center">{{ $item->salesDetails->sum('total_products') }}</td>
                                     <td class="text-end">{{ number_format($item->total_price) }}</td>
                                     <td class="text-center">{{ $item->discount }}%</td>

@@ -8,7 +8,7 @@ use App\Models\Purchase;
 use Livewire\Attributes\Title;
 use Maatwebsite\Excel\Facades\Excel;
 
-#[Title("Laporan Penjualan")]
+#[Title("Laporan Pembelian")]
 class PurchaseReport extends Component
 {
     public $start_date, $end_date;
@@ -21,7 +21,7 @@ class PurchaseReport extends Component
 
     public function export()
     {
-        return Excel::download(new PurchaseExport, 'laporan-penjualan.xlsx');
+        return Excel::download(new PurchaseExport, 'laporan-pembelian.xlsx');
     }
 
     

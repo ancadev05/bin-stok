@@ -36,6 +36,7 @@
                                 <th>No</th>
                                 <th>Tanggal</th>
                                 <th>Kode Transaksi</th>
+                                <th>Supplayer</th>
                                 <th>Total Item</th>
                                 <th>Harga (Rp)</th>
                                 <th>Discount</th>
@@ -49,6 +50,7 @@
                                     <td class="text-center">{{ ++$index }}</td>
                                     <td>{{ \Carbon\Carbon::parse($item->date)->format('d/m/Y') }}</td>
                                     <td>{{ $item->purchase_code }}</td>
+                                    <td>{{ $item->supplier_name }}</td>
                                     <td class="text-center">{{ $item->purchaseDetails->sum('total_products') }}</td>
                                     <td class="text-end">{{ number_format($item->total_price) }}</td>
                                     <td class="text-center">{{ $item->discount }}%</td>

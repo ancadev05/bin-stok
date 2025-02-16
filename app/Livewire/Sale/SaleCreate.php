@@ -187,7 +187,6 @@ class SaleCreate extends Component
             return $this->dispatch('failed', text: 'Pilih produk terlebih dahulu!');
         }
 
-
         // update stok barang
         $sale_details = SalesDetails::where('sale_id', $this->sale_id)->get();
         foreach ($sale_details as $key => $value) {
@@ -198,8 +197,11 @@ class SaleCreate extends Component
             }
         }
 
+        // penentuan nama default costumer
+        empty($this->costumer) ? $costumer = 'Customer' : $costumer = $this->costumer;
+
         $sale = [
-            'costumer' => $this->costumer,
+            'costumer' => $costumer,
             'discount' => $this->discount,
             'discount_price' => $this->discount_price,
             'payment_method' => $this->payment_method,

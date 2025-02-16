@@ -10,14 +10,6 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 // class PurchaseExport implements FromCollection
 class PurchaseExport implements FromView
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    // public function collection()
-    // {
-    //     return Purchase::all();
-    // }
-
     public function view(): View
     {
         return view('exports.excel.report-purchase', [

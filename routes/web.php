@@ -81,8 +81,9 @@ Route::middleware(['auth'])->group(function () {
     // report
     Route::get('/report-purchase', PurchaseReport::class)->name('report.purchase');
     Route::get('/report-sale', SaleReport::class)->name('report.sale');
-    // export
+    // export excel
     Route::get('/export-purchase', [PurchaseReport::class, 'export'])->name('export.purchase');
+    Route::get('/export-sale', [SaleReport::class, 'export'])->name('export.sale');
     // user
     Route::get('/users', UserIndex::class)->name('users');
     Route::get('/users/create', UserCreate::class)->name('users.create');
