@@ -68,7 +68,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-sm">
+                    <table class="table table-sm basic-datatables">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -97,8 +97,8 @@
                 <h4>Riwayat Penjualan Produk</h4>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-sm">
+                <div class="table-responsive mb-3">
+                    <table class="table table-sm basic-datatables">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -119,12 +119,21 @@
                         </tbody>
                     </table>
                 </div>
+
+                <div class="d-flex justify-content-end">
+                    <a wire:navigate href="{{ route('product') }}" class="btn btn-sm btn-danger"><i class="fas fa-reply"> </i>
+                        Kembali</a>
+                </div>
             </div>
         </section>
 
-        <section class="d-flex justify-content-end">
-            <a wire:navigate href="{{ route('product') }}" class="btn btn-sm btn-danger"><i class="fas fa-reply"> </i>
-                Kembali</a>
-        </section>
     </div>
+
+    @push('script')
+    <script>
+        $(document).ready(function() {
+            $('.basic-datatables').DataTable();
+        })
+    </script>
+    @endpush
 </div>
