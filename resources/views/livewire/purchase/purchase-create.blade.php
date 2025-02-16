@@ -26,7 +26,7 @@
                                 <label for="product_id" class="col-sm-3 col-form-label text-end">Kode Produk</label>
                                 <div class="col">
                                     <select wire:model="product_id" id="product_id"
-                                        class="select2 form-select @error('product_id') is-invalid @enderror">
+                                        class="select2 form-select @error('product_id') is-invalid @enderror w-100">
                                         <option value="" selected>-- Pilih Produk --</option>
                                         @foreach ($products as $item)
                                             <option value="{{ $item->id }}">
@@ -34,10 +34,10 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                @error('product_id')
-                                    <small class="invalid-feedback">{{ $message }}</small>
-                                @enderror
                             </div>
+                            @error('product_id')
+                                <small class="invalid-feedback">{{ $message }}</small>
+                            @enderror
                             <div class="mb-3 row">
                                 <label for="purchase_price" class="col-sm-3 col-form-label text-end">Harga
                                     Satuan</label>

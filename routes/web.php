@@ -73,7 +73,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/purchase', PurchaseIndex::class)->name('purchase');
     Route::get('/purchase/create/{id}', PurchaseCreate::class)->name('purchase.create');
     Route::get('/purchase/show/{id}', PurchaseShow::class)->name('purchase.show');
-    Route::get('/purchase/edit/{id}', PurchaseEdit::class)->name('purchase.edit');
     // sell
     Route::get('/sale', SaleIndex::class)->name('sale');
     Route::get('/sale/create/{id}', SaleCreate::class)->name('sale.create');

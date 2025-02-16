@@ -43,8 +43,6 @@ class PurchaseCreate extends Component
         $products = Product::all();
         $purchase_details = PurchaseDetails::where('purchase_id', $this->purchase_id)->get();
 
-        // $this->dispatch('select2-init');
-
         return view('livewire.purchase.purchase-create', compact('suppliers', 'products', 'purchase_details'));
     }
 
@@ -181,7 +179,7 @@ class PurchaseCreate extends Component
         // mengecek apakah ada produk yang ditambahkan
         $pruduct = PurchaseDetails::where('purchase_id', $this->purchase_id);
         if ($pruduct->count() == 0) {
-            return $this->dispatch('failed');
+            return $this->dispatch('failed', text: 'Tambah produk terlebih dahulu!');
         }
 
         // update data pembelian
@@ -206,6 +204,7 @@ class PurchaseCreate extends Component
             }
         }
 
+        session()->flash('status', 'Transaksi berhasil!');
         $this->redirectRoute('purchase', navigate: true);
     }
 }

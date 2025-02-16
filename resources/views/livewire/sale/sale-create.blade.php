@@ -24,7 +24,7 @@
                         <div class="col">
                             <select wire:model.live="product_id"
                                 class="form-select @error('product_id') is-invalid @enderror select2">
-                                <option value="">-- Pilih Produk --</option>
+                                <option value="0">-- Pilih Produk --</option>
                                 @foreach ($products as $item)
                                     <option value="{{ $item->id }}">
                                         {{ '(' . $item->product_code . ') - ' . $item->name }}</option>
@@ -51,7 +51,7 @@
                                 <td>
                                     <input wire:model.live="total_products" id="total_products" type="number"
                                         class="form-control @error('total_products') is-invalid @enderror"
-                                        min="{{ $min_stock }}" max="{{ $max_stock }}">
+                                        min="{{ $min_stock }}" >
                                     @error('total_products')
                                         <small class="invalid-feedback">{{ $message }}</small>
                                     @enderror
@@ -208,8 +208,6 @@
                             <div class="d-flex justify-content-end">
                                 <button wire:click="saleUndo" type="button"
                                     class="btn btn-sm btn-danger me-2">Batal</button>
-                                <a wire:navigate href="{{ route('sale') }}" type="button"
-                                    class="btn btn-sm btn-success me-2">Simpan</a>
                                 <button type="submit" class="btn btn-sm btn-primary">Proses</button>
                             </div>
                         </form>
@@ -232,11 +230,6 @@
                 $('.select2').on('change', function(e) {
                     @this.set('product_id', $(this).val());
                 });
-
-                // livewire.on('failed', (event) => {
-                //     console.log('gagal');
-
-                // });
             })
         </script>
     @endpush

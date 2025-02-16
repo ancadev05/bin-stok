@@ -38,7 +38,7 @@
             <hr>
 
             <section>
-                <span style="font-size: 14px"><strong>Supplayer</strong> : {{ $sale->costumer }}</span>
+                <span style="font-size: 14px"><strong>Costumer</strong> : {{ $sale->costumer }}</span>
             </section>
 
             {{-- detail pembelian --}}
@@ -49,7 +49,7 @@
                             <th>No</th>
                             <th>Produk</th>
                             <th>Qty</th>
-                            <th>Harga Beli (Rp)</th>
+                            <th>Harga (Rp)</th>
                             <th>Jumlah (Rp)</th>
                         </tr>
                     </thead>
@@ -95,41 +95,40 @@
 
             <div class="d-flex justify-content-end">
                 <a wire:navigate href="{{ route('sale') }}" class="btn btn-sm btn-secondary"><i class="fas fa-reply"> </i> Kembali</a>
-                <button onclick="deleteSale({{ $sale->id }}, '{{ $sale->sale_code }}')" class="btn btn-sm btn-danger ms-2"><i class="far fa-trash-alt"> </i> Hapus</button>
+                <button onclick="deleteData({{ $sale->id }}, '{{ $sale->sale_code }}')" class="btn btn-sm btn-danger ms-2"><i class="far fa-trash-alt"> </i> Hapus</button>
             </div>
 
         </div>
     </section>
 
     @push('script')
-        <script>
-            function deleteSale(id, name) {
-                console.log(id, name);
-                
-                swal({
-                    title: 'Yakin ingin hapus ' + name + ' ?',
-                    buttons: {
-                        confirm: {
-                            text: 'Yes, delete it!',
-                            className: 'btn btn-success'
-                        },
-                        cancel: {
-                            visible: true,
-                            className: 'btn btn-danger'
-                        }
-                    }
-                }).then((Delete) => {
-                    if (Delete) {
+    <script>
+        function deleteData(id, name) {
 
-                        Livewire.dispatch('destroy', {
-                            id
-                        });
-
-                    } else {
-                        swal.close();
+            swal({
+                title: 'Yakin ingin hapus ' + name + ' ?',
+                buttons: {
+                    confirm: {
+                        text: 'Yes, delete it!',
+                        className: 'btn btn-success'
+                    },
+                    cancel: {
+                        visible: true,
+                        className: 'btn btn-danger'
                     }
-                });
-            }
-        </script>
+                }
+            }).then((Delete) => {
+                if (Delete) {
+
+                    Livewire.dispatch('destroy', {
+                        id
+                    });
+
+                } else {
+                    swal.close();
+                }
+            });
+        }
+    </script>
     @endpush
 </div>

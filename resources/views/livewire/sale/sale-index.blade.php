@@ -5,7 +5,7 @@
 
     <div class="card">
         <div class="card-header d-flex justify-content-end">
-            <button wire:click="saleCreate" class="btn btn-sm btn-primary">Buat Transaksi Penjualan</button>
+            <button wire:click="saleCreate" class="btn btn-sm btn-primary"><i class="fas fa-plus"> </i> Buat Transaksi Penjualan</button>
         </div>
         <section class="card-body">
             <table class="table table-sm" id="basic-datatables">
@@ -43,8 +43,7 @@
                                 <div class="btn-group">
                                     <a wire:navigate href="{{ route('sale.show', $item->id) }}"
                                         class="btn btn-xs btn-secondary"><i class="far fa-eye"></i></a>
-                                    <button wire:confirm="Yakin ingin hapus {{ $item->purchase_code }}"
-                                        wire:click="saleDestroy({{ $item->id }})" class="btn btn-xs btn-danger"><i
+                                    <button onclick="deleteData({{ $item->id }}, '{{ $item->sale_code }}')" class="btn btn-xs btn-danger"><i
                                             class="far fa-trash-alt"></i></button>
                                 </div>
                             </td>
@@ -64,6 +63,34 @@
             $(document).ready(function() {
                 $('#basic-datatables').DataTable();
             })
+        </script>
+        <script>
+            function deleteData(id, name) {
+
+                swal({
+                    title: 'Yakin ingin hapus ' + name + ' ?',
+                    buttons: {
+                        confirm: {
+                            text: 'Yes, delete it!',
+                            className: 'btn btn-success'
+                        },
+                        cancel: {
+                            visible: true,
+                            className: 'btn btn-danger'
+                        }
+                    }
+                }).then((Delete) => {
+                    if (Delete) {
+
+                        Livewire.dispatch('destroy', {
+                            id
+                        });
+
+                    } else {
+                        swal.close();
+                    }
+                });
+            }
         </script>
     @endpush
 </div>

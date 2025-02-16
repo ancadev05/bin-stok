@@ -38,7 +38,7 @@ class SaleCreate extends Component
     // #[Layout('template-dashboard.main')]
     public function render()
     {
-        $products = Product::all();
+        $products = Product::where('stock', '>', 0)->get();
         $sale_details = SalesDetails::where('sale_id', $this->sale_id)->get();
         return view('livewire.sale.sale-create', compact('products', 'sale_details'));
     }
@@ -60,7 +60,7 @@ class SaleCreate extends Component
 
     public function updatedPay()
     {
-        if($this->pay == null) {
+        if ($this->pay == null) {
             $pay = 0;
         } else {
             $pay = $this->pay;
@@ -77,6 +77,18 @@ class SaleCreate extends Component
             'product_id.required' => 'Pilih produk!',
             'total_products.required' => 'Produk minimal 1!'
         ]);
+
+        // kondisi jika stok produk melebihi stok tersedia
+        if ($this->total_products > $this->max_stock) {
+            $this->total_products = $this->max_stock;
+            return $this->dispatch('failed', text: 'Stok tersedia ' . $this->max_stock);
+        }
+
+        // pengecekan jumlah produk yang dibeli
+        $total_products = SalesDetails::where('sale_id', $this->sale_id)->where('product_id', $this->product_id)->sum('total_products');
+        if (($total_products + $this->total_products) > $this->max_stock) {
+            return $this->dispatch('failed', text: 'Stok tersedia ' . $this->max_stock - $total_products);
+        }
 
         $sale_details = [
             'sale_id' => $this->sale_id,
@@ -96,9 +108,7 @@ class SaleCreate extends Component
         $this->discount();
         $this->updatedPay();
 
-        $this->total_products = null;
-        $this->sale_price = null;
-        $this->total_price = null;
+        $this->reset('total_products', 'sale_price', 'total_price');
     }
 
     public function deleteProduct($id)
@@ -114,10 +124,14 @@ class SaleCreate extends Component
         $this->updatedPay();
     }
 
-    // update stok dan harga produk
+    // update stok dan harga produk saat input qty
     public function stockPrice()
     {
         $product = Product::find($this->product_id);
+
+        if ($product == null) {
+            return $this->dispatch('failed', text: 'Pilih produk terlebih dahulu!');
+        }
 
         // update stok produk tersisa
         $this->max_stock = $product->stock;
@@ -126,6 +140,11 @@ class SaleCreate extends Component
         // update harga produk
         $this->sale_price = 'Rp. ' . number_format($product->selling_price);
         $this->sale_price2 = $product->selling_price;
+
+        // jika kolom qty kosong
+        if (empty($this->total_products)) {
+            return false;
+        }
 
         // update total harga
         $this->total_price = 'Rp. ' . number_format($this->total_products * $product->selling_price);
@@ -155,7 +174,7 @@ class SaleCreate extends Component
 
     public function saleUndo()
     {
-        SalesDetails::where('sale_id',$this->sale_id)->delete();
+        SalesDetails::where('sale_id', $this->sale_id)->delete();
         Sale::find($this->sale_id)->delete();
         $this->redirectRoute('sale');
     }
@@ -165,7 +184,7 @@ class SaleCreate extends Component
         // mengecek apakah ada produk yang ditambahkan
         $pruduct = SalesDetails::where('sale_id', $this->sale_id);
         if ($pruduct->count() == 0) {
-            return $this->dispatch('failed');
+            return $this->dispatch('failed', text: 'Pilih produk terlebih dahulu!');
         }
 
 
@@ -191,9 +210,7 @@ class SaleCreate extends Component
 
         Sale::find($this->sale_id)->update($sale);
 
-        session()->flash('status', 'Transaksi selesai!');
-
+        session()->flash('status', 'Transaksi berhasil!');
         $this->redirectRoute('sale');
     }
-
 }

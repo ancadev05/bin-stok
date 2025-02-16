@@ -47,8 +47,7 @@
                                     <div class="btn-group">
                                         <a wire:navigate href="{{ route('purchase.show', $item->id) }}"
                                             class="btn btn-xs btn-secondary"><i class="far fa-eye"></i></a>
-                                        <button wire:confirm="Yakin ingin hapus {{ $item->purchase_code }}"
-                                            wire:click="purchaseDestroy({{ $item->id }})"
+                                        <button onclick="deleteData({{ $item->id }}, '{{ $item->purchase_code }}')"
                                             class="btn btn-xs btn-danger"><i class="far fa-trash-alt"></i></button>
                                     </div>
                                 </td>
@@ -69,6 +68,34 @@
             $(document).ready(function() {
                 $('#basic-datatables').DataTable();
             })
+        </script>
+        <script>
+            function deleteData(id, name) {
+
+                swal({
+                    title: 'Yakin ingin hapus ' + name + ' ?',
+                    buttons: {
+                        confirm: {
+                            text: 'Yes, delete it!',
+                            className: 'btn btn-success'
+                        },
+                        cancel: {
+                            visible: true,
+                            className: 'btn btn-danger'
+                        }
+                    }
+                }).then((Delete) => {
+                    if (Delete) {
+
+                        Livewire.dispatch('destroy', {
+                            id
+                        });
+
+                    } else {
+                        swal.close();
+                    }
+                });
+            }
         </script>
     @endpush
 </div>

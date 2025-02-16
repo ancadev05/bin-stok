@@ -5,10 +5,11 @@ namespace App\Livewire\Sale;
 use App\Models\Sale;
 use App\Models\Product;
 use Livewire\Component;
+use App\Models\Purchase;
+use Livewire\Attributes\On;
 use App\Models\SalesDetails;
 use Illuminate\Support\Carbon;
 use Livewire\Attributes\Title;
-use Livewire\Attributes\Layout;
 
 #[Title("Penjualan")]
 class SaleIndex extends Component
@@ -16,7 +17,15 @@ class SaleIndex extends Component
     // #[Layout('template-dashboard.main')]
     public function render()
     {
-        $sales = Sale::all();
+        // menghapus transaksi yang pending/batal
+        $sale_id = Sale::where('discount_price', '=', 0)->latest()->first();
+        if ($sale_id != null) {
+            SalesDetails::where('sale_id', $sale_id->id)->delete();
+            Sale::find($sale_id->id)->delete();
+        }
+        
+        $today = date('Y-m-d');
+        $sales = Sale::where('date', $today)->orderBy('id', 'desc')->get();;
         return view('livewire.sale.sale-index', compact('sales'));
     }
 
@@ -34,6 +43,7 @@ class SaleIndex extends Component
         $this->redirect('sale/create/' . $sale_id, navigate: true);
     }
 
+    #[On('destroy')]
     public function saleDestroy($id)
     {
         // penghapusan transaksi pending
@@ -54,6 +64,8 @@ class SaleIndex extends Component
 
         SalesDetails::where('sale_id', $id)->delete();
         Sale::find($id)->delete();
+
+        $this->dispatch('success', text:'Data berhasil dihapus!');
     }
 
     public function saleCode()

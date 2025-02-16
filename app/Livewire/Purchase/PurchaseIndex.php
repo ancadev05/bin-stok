@@ -5,10 +5,11 @@ namespace App\Livewire\Purchase;
 use App\Models\Product;
 use Livewire\Component;
 use App\Models\Purchase;
+use Livewire\Attributes\On;
 use Illuminate\Support\Carbon;
 use Livewire\Attributes\Title;
 use App\Models\PurchaseDetails;
-use Livewire\Attributes\Layout;
+use App\Models\SalesDetails;
 
 #[Title("Pembelian")]
 class PurchaseIndex extends Component
@@ -18,7 +19,6 @@ class PurchaseIndex extends Component
     {
         // menghapus transaksi yang pending/batal
         $purchase_id = Purchase::where('discount_price', '=', 0)->latest()->first();
-        // dd($purchase_id);
         if ($purchase_id != null) {
             PurchaseDetails::where('purchase_id', $purchase_id->id)->delete();
             Purchase::find($purchase_id->id)->delete();
@@ -44,13 +44,27 @@ class PurchaseIndex extends Component
         $this->redirect('purchase/create/' . $purchase_id, navigate: true);
     }
 
+    #[On('destroy')]
     public function purchaseDestroy($id)
     {
-        // penghapusan transaksi pending
         $purchase = Purchase::find($id)->status;
+        
+        // penghapusan transaksi pending
         if ($purchase == 'Selesai') {
+            // kondisi jika produk sudah dijual
+            $sale_details = SalesDetails::all();
+            foreach ($sale_details as $key => $value) {
+                $product = Product::find($value->product_id);
+                if($product)
+                {
+                    return $this->dispatch('failed', text: 'Transaksi, tidak bisa dihapus. Cek transaksi penjualan!');
+                }
+            }
+
             // mengurangi stok produk
             $purchase_details = PurchaseDetails::where('purchase_id', $id)->get();
+            
+            
             // update stok barang
             foreach ($purchase_details as $key => $value) {
                 $product = Product::find($value->product_id);
@@ -63,6 +77,8 @@ class PurchaseIndex extends Component
 
         PurchaseDetails::where('purchase_id', $id)->delete();
         Purchase::find($id)->delete();
+
+        $this->dispatch('success', text:'Data berhasil dihapus!');
     }
 
     public function purchaseCode()
