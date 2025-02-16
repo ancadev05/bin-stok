@@ -32,6 +32,7 @@ use App\Livewire\Purchase\PurchaseCreate;
 use App\Livewire\Supplier\SupplierCreate;
 use App\Http\Controllers\CategoryController;
 use App\Livewire\Report\SaleReport;
+use App\Models\Sale;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -83,7 +84,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/report-sale', SaleReport::class)->name('report.sale');
     // export excel
     Route::get('/export-purchase', [PurchaseReport::class, 'export'])->name('export.purchase');
-    Route::get('/export-sale', [SaleReport::class, 'export'])->name('export.sale');
+    // Route::get('/export-sale', [SaleReport::class, 'exportExcel'])->name('export.sale');
+    // export pdf
+    // Route::get('/export-pdf-sale', [SaleReport::class, 'exportPdf'])->name('export.pdf.sale');
     // user
     Route::get('/users', UserIndex::class)->name('users');
     Route::get('/users/create', UserCreate::class)->name('users.create');
@@ -94,9 +97,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('coba', function () {
 
-        return view('exports.report-purchase', [
-            'purchases' => Purchase::all(),
-            'total' => Purchase::sum('discount_price'),
+        return view('exports.pdf.pdf-report-sale', [
+            'sales' => Sale::all(),
+            'total' => Sale::sum('discount_price'),
         ] );
     });
 });
