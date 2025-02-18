@@ -16,7 +16,7 @@
                     <thead>
                         <th>No</th>
                         <th>Kategori</th>
-                        <th>Total Produk</th>
+                        <th>Produk</th>
                         <th>Deskripsi</th>
                         <th>Aksi</th>
                     </thead>

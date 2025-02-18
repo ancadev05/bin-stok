@@ -65,9 +65,9 @@
 
 <body>
     <div class="kop">
-        <h3>CV. Wana Satria Komputer</h3>
+        <h3>{{ $company[0]->company_name }}</h3>
         <h3>Laporan Penjualan</h3>
-        <h3>31 Desember 2030</h3>
+        <h3>{{  }}</h3>
     </div>
     <hr>
     <div class="table-responsive">

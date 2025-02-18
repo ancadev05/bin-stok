@@ -6,6 +6,7 @@ use App\Exports\Report\ReportSalePdf;
 use App\Models\Sale;
 use Livewire\Component;
 use App\Exports\SaleExport;
+use App\Models\Company;
 use Livewire\Attributes\Title;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Dompdf\Dompdf;
@@ -27,13 +28,11 @@ class SaleReport extends Component
     }
     public function exportPdf()
     {
-
-        // $sales = Sale::all();
-        // return Excel::download(new ReportSalePdf, 'laporan-penjualan.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
-
+        // filter
+        $company = Company::all();
         $sales = Sale::all();
         $total = Sale::sum('discount_price');
-        $pdf = Pdf::loadView('exports.pdf.pdf-report-sale', compact('sales', 'total'))->output();
+        $pdf = Pdf::loadView('exports.pdf.pdf-report-sale', compact('company','sales', 'total'))->output();
         return response()->streamDownload(
             fn() => print($pdf),
             'laporan-penjualan.pdf'

@@ -32,6 +32,7 @@ use App\Livewire\Purchase\PurchaseCreate;
 use App\Livewire\Supplier\SupplierCreate;
 use App\Http\Controllers\CategoryController;
 use App\Livewire\Report\SaleReport;
+use App\Models\Company;
 use App\Models\Sale;
 
 Route::get('/', function () {
@@ -98,6 +99,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('coba', function () {
 
         return view('exports.pdf.pdf-report-sale', [
+            'company' => Company::all(),
             'sales' => Sale::all(),
             'total' => Sale::sum('discount_price'),
         ] );
