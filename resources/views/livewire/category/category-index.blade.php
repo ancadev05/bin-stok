@@ -28,10 +28,12 @@
                                 <td>{{ $item->product->count() }}</td>
                                 <td>{{ $item->description }}</td>
                                 <td>
-                                    <a wire:navigate href="{{ route('category.edit', $item->id) }}"
-                                        class="btn btn-xs btn-warning"><i class="far fa-edit"></i></a>
-                                    <button onclick="deleteCategory({{ $item->id }}, '{{ $item->name }}')"
-                                        class="btn btn-xs btn-danger"><i class="far fa-trash-alt"></i></button>
+                                    <div class="btn-group">
+                                        <a wire:navigate href="{{ route('category.edit', $item->id) }}"
+                                            class="btn btn-xs btn-warning"><i class="far fa-edit"></i></a>
+                                        <button onclick="deleteCategory({{ $item->id }}, '{{ $item->name }}')"
+                                            class="btn btn-xs btn-danger"><i class="far fa-trash-alt"></i></button>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach

@@ -67,7 +67,7 @@
     <div class="kop">
         <h3>{{ $company[0]->company_name }}</h3>
         <h3>Laporan Penjualan</h3>
-        <h3>{{  }}</h3>
+        {{-- <h3>{{  }}</h3> --}}
     </div>
     <hr>
     <div class="table-responsive">

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Purchase;
 
+use App\Models\Sale;
 use App\Models\Company;
 use App\Models\Product;
 use Livewire\Component;
@@ -10,6 +11,7 @@ use Livewire\Attributes\On;
 use App\Models\SalesDetails;
 use Livewire\Attributes\Title;
 use App\Models\PurchaseDetails;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 #[Title("Pembelian")]
 class PurchaseShow extends Component
@@ -32,7 +34,7 @@ class PurchaseShow extends Component
     }
 
     // membatalkan transaksi
-    #[On('destroy')] 
+    #[On('destroy')]
     public function purchaseDestroy($id)
     {
         // penghapusan transaksi pending
@@ -42,12 +44,11 @@ class PurchaseShow extends Component
             $sale_details = SalesDetails::all();
             foreach ($sale_details as $key => $value) {
                 $product = Product::find($value->product_id);
-                if($product)
-                {
+                if ($product) {
                     return $this->dispatch('failed', text: 'Transaksi, tidak bisa dihapus. Cek transaksi penjualan!');
                 }
             }
-            
+
             // mengurangi stok produk
             $purchase_details = PurchaseDetails::where('purchase_id', $id)->get();
             // update stok barang
@@ -59,11 +60,24 @@ class PurchaseShow extends Component
                 }
             }
         }
-        
+
         PurchaseDetails::where('purchase_id', $this->purchase_id)->delete();
         Purchase::find($this->purchase_id)->delete();
 
-        session()->flash('status','Data berhasil dihapus!');
+        session()->flash('status', 'Data berhasil dihapus!');
         $this->redirectRoute('report-purchase', navigate: true);
+    }
+
+    // cetak transaksi
+    public function printTransaction()
+    {
+        $company = Company::all();
+        $purchase = Purchase::find($this->purchase_id);
+        $purchase_details = PurchaseDetails::where('purchase_id', $this->purchase_id)->get();
+        $pdf = Pdf::loadView('exports.pdf.pdf-transaction-purchase', compact('company', 'purchase', 'purchase_details'))->output();
+        return response()->streamDownload(
+            fn() => print($pdf),
+            'invoice-penjualan.pdf'
+        );
     }
 }

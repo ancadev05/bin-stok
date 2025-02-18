@@ -1,14 +1,17 @@
 <?php
 
-use App\Livewire\Product\ProductSearch;
+use App\Models\Sale;
+use App\Models\Company;
 use App\Models\Purchase;
 use App\Livewire\Sale\SaleShow;
 use App\Livewire\User\UserEdit;
+use App\Models\PurchaseDetails;
 use App\Livewire\Sale\SaleIndex;
 use App\Livewire\User\UserIndex;
 use App\Livewire\Sale\SaleCreate;
 use App\Livewire\User\UserCreate;
 use App\Livewire\Category\Category;
+use App\Livewire\Report\SaleReport;
 use Illuminate\Support\Facades\Auth;
 use App\Livewire\Company\CompanyEdit;
 use App\Livewire\Product\ProductEdit;
@@ -19,6 +22,7 @@ use App\Livewire\Product\ProductIndex;
 use App\Livewire\Setting\SettingIndex;
 use App\Livewire\Category\CategoryEdit;
 use App\Livewire\Product\ProductCreate;
+use App\Livewire\Product\ProductSearch;
 use App\Livewire\Purchase\PurchaseEdit;
 use App\Livewire\Purchase\PurchaseShow;
 use App\Livewire\Report\PurchaseReport;
@@ -31,9 +35,6 @@ use App\Livewire\Category\CategoryCreate;
 use App\Livewire\Purchase\PurchaseCreate;
 use App\Livewire\Supplier\SupplierCreate;
 use App\Http\Controllers\CategoryController;
-use App\Livewire\Report\SaleReport;
-use App\Models\Company;
-use App\Models\Sale;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -80,6 +81,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/sale', SaleIndex::class)->name('sale');
     Route::get('/sale/create/{id}', SaleCreate::class)->name('sale.create');
     Route::get('/sale/show/{id}', SaleShow::class)->name('sale.show');
+    Route::get('/sale/print/{id}', [SaleShow::class, 'printTransaction'])->name('sale.print');
     // report
     Route::get('/report-purchase', PurchaseReport::class)->name('report.purchase');
     Route::get('/report-sale', SaleReport::class)->name('report.sale');
@@ -102,6 +104,14 @@ Route::middleware(['auth'])->group(function () {
             'company' => Company::all(),
             'sales' => Sale::all(),
             'total' => Sale::sum('discount_price'),
+        ] );
+    });
+    Route::get('cetak', function () {
+
+        return view('exports.pdf.pdf-transaction-purchase', [
+            'company' => Company::all(),
+            'purchase' => Purchase::first(),
+            'purchase_details' => PurchaseDetails::where('purchase_id', Purchase::first()->id)->get(),
         ] );
     });
 });

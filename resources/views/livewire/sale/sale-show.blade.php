@@ -94,7 +94,9 @@
             <hr>
 
             <div class="d-flex justify-content-end">
-                <a wire:navigate href="{{ route('sale') }}" class="btn btn-sm btn-secondary"><i class="fas fa-reply"> </i> Kembali</a>
+                <a wire:navigate href="{{ route('sale') }}" class="btn btn-sm btn-secondary me-2"><i class="fas fa-reply"> </i> Kembali</a>
+                <a href="{{ route('sale.print', $sale->id) }}" class="btn btn-sm btn-info" target="_blank"><i
+                    class="fas fa-print"> </i> Cetak</a>
                 <button onclick="deleteData({{ $sale->id }}, '{{ $sale->sale_code }}')" class="btn btn-sm btn-danger ms-2"><i class="far fa-trash-alt"> </i> Hapus</button>
             </div>
 

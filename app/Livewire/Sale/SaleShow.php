@@ -55,4 +55,15 @@ class SaleShow extends Component
         session()->flash('status','Data berhasil dihapus!');
         $this->redirectRoute('sale', navigate: true);
     }
+
+    public function printTransaction($id)
+    {
+        $company = Company::first();
+        $sale = Sale::find($id);
+        $sale_details = SalesDetails::where('sale_id', $id)->get();
+
+        return view('exports.pdf.pdf-transaction-sale', compact(
+            'company', 'sale', 'sale_details'
+        ));
+    }
 }

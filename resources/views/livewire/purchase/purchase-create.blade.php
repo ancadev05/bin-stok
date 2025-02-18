@@ -73,11 +73,11 @@
                 <div class="col-6 border-start">
                     <form wire:submit.prevent="purchaseProcess">
                         @csrf
-                        <div class="mb-3 row">
+                        <div wire:ignore class="mb-3 row">
                             <label for="supplier_name" class="col-sm-3 col-form-label text-end">Supplayer</label>
                             <div class="col">
                                 <select wire:model="supplier_name" id="supplier_name"
-                                    class="form-select @error('supplier_name') is-invalid @enderror">
+                                    class="form-select @error('supplier_name') is-invalid @enderror select2">
                                     <option value="">-- Pilih Supplayer --</option>
                                     @foreach ($suppliers as $item)
                                         <option value="{{ $item->name }}">{{ $item->name }}</option>
@@ -200,6 +200,10 @@
 
                 $('.select2').on('change', function(e) {
                     @this.set('product_id', $(this).val());
+                });
+
+                $('.select2').on('change', function(e) {
+                    @this.set('supplier_name', $(this).val());
                 });
 
                 livewire.on('failed', (event) => {
