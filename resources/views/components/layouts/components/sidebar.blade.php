@@ -4,7 +4,7 @@
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
             <a href="index.html" class="logo">
-                <img src="{{ asset('assets/img/logo-biner.png') }}" alt="navbar brand" class="navbar-brand"
+                <img src="{{ asset('assets/img/binstok.png') }}" alt="navbar brand" class="navbar-brand"
                     height="20" />
             </a>
             <div class="nav-toggle">
