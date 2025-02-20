@@ -17,6 +17,7 @@ use App\Livewire\Company\CompanyEdit;
 use App\Livewire\Product\ProductEdit;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\AdminDashboard;
+use App\Livewire\Cashier\CashierIndex;
 use App\Livewire\Company\CompanyIndex;
 use App\Livewire\Product\ProductIndex;
 use App\Livewire\Setting\SettingIndex;
@@ -90,6 +91,8 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/export-sale', [SaleReport::class, 'exportExcel'])->name('export.sale');
     // export pdf
     // Route::get('/export-pdf-sale', [SaleReport::class, 'exportPdf'])->name('export.pdf.sale');
+    // cashier
+    Route::get('/cashier', CashierIndex::class)->name('cashier');
     // user
     Route::get('/users', UserIndex::class)->name('users');
     Route::get('/users/create', UserCreate::class)->name('users.create');

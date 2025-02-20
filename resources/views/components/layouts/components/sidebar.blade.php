@@ -4,8 +4,7 @@
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
             <a href="index.html" class="logo">
-                <img src="{{ asset('assets/img/binstok.png') }}" alt="navbar brand" class="navbar-brand"
-                    height="20" />
+                <img src="{{ asset('assets/img/binstok.png') }}" alt="navbar brand" class="navbar-brand" height="20" />
             </a>
             <div class="nav-toggle">
                 <button class="btn btn-toggle toggle-sidebar">
@@ -74,6 +73,20 @@
                     <a href="{{ route('sale') }}">
                         <i class="fas fa-luggage-cart"></i>
                         <p>Penjualan</p>
+                    </a>
+                </li>
+
+                <li class="nav-section">
+                    <span class="sidebar-mini-icon">
+                        <i class="fa fa-ellipsis-h"></i>
+                    </span>
+                    <h4 class="text-section">Kasir</h4>
+                </li>
+
+                <li class="nav-item {{ Request::is('cashier') ? 'active' : '' }}">
+                    <a href="{{ route('cashier') }}">
+                        <i class="fas fa-desktop"></i>
+                        <p>Kasir</p>
                     </a>
                 </li>
 
