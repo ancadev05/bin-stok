@@ -83,18 +83,7 @@ class PurchaseIndex extends Component
 
     public function purchaseCode()
     {
-        $date = date('Y-m-d');
-        $last_purchase_code = Purchase::where('date', $date)->latest()->first();
-
-        if ($last_purchase_code) {
-            $last_code = intval(substr($last_purchase_code->purchase_code, -4));
-            $new_code = str_pad($last_code + 1, 4, '0', STR_PAD_LEFT);
-        } else {
-            $new_code = str_pad(1, 4, '0', STR_PAD_LEFT);
-        }
-
-        $purchase_code = 'IN-' . date('d') . date('m') . '/' . $new_code;
-
+        $purchase_code = time();
         return $purchase_code;
     }
 }

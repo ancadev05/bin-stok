@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Sale;
 
+use Carbon\Carbon;
 use App\Models\Sale;
 use App\Models\Product;
 use Livewire\Component;
@@ -201,6 +202,7 @@ class SaleCreate extends Component
         empty($this->costumer) ? $costumer = 'Customer' : $costumer = $this->costumer;
 
         $sale = [
+            'sale_code' => $this->saleCode(),
             'costumer' => $costumer,
             'discount' => $this->discount,
             'discount_price' => $this->discount_price,
@@ -214,5 +216,24 @@ class SaleCreate extends Component
 
         session()->flash('status', 'Transaksi berhasil!');
         $this->redirectRoute('sale');
+    }
+
+    public function saleCode()
+    {
+        // $date = date('Y-m-d');
+        $last_sale_code = Sale::where('date', $this->date)->latest()->first();
+
+        if ($last_sale_code) {
+            $last_code = intval(substr($last_sale_code->sale_code, -4));
+            $new_code = str_pad($last_code + 1, 4, '0', STR_PAD_LEFT);
+        } else {
+            $new_code = str_pad(1, 4, '0', STR_PAD_LEFT);
+        }
+
+        $date = Carbon::parse($this->date)->format('d');
+        $mount = Carbon::parse($this->date)->format('m');
+        $sale_code = 'OUT-' . $date . $mount . '/' . $new_code;
+
+        return $sale_code;
     }
 }

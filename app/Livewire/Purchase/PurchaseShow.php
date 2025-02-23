@@ -65,6 +65,6 @@ class PurchaseShow extends Component
         Purchase::find($this->purchase_id)->delete();
 
         session()->flash('status', 'Data berhasil dihapus!');
-        $this->redirectRoute('report-purchase', navigate: true);
+        $this->redirectRoute('purchase', navigate: true);
     }
 }

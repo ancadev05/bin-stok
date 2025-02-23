@@ -8,6 +8,7 @@ use App\Models\Purchase;
 use App\Models\Supplier;
 use Livewire\Attributes\Title;
 use App\Models\PurchaseDetails;
+use Carbon\Carbon;
 use Livewire\Attributes\Validate;
 
 #[Title("Pembelian")]
@@ -170,7 +171,7 @@ class PurchaseCreate extends Component
     // proses pembelian
     public function purchaseProcess()
     {
-        // dd($this->supplier_name, $this->product_id);
+        // dd($this->date);
 
         $pruduct = PurchaseDetails::where('purchase_id', $this->purchase_id);
         if ($pruduct->count() == 0) {
@@ -190,6 +191,7 @@ class PurchaseCreate extends Component
 
         // update data pembelian
         Purchase::find($this->purchase_id)->update([
+            'purchase_code' => $this->purchaseCode(),
             'supplier_name' => $this->supplier_name,
             'discount' => $this->discount,
             'discount_price' => $this->discount_price,
@@ -212,5 +214,25 @@ class PurchaseCreate extends Component
 
         session()->flash('status', 'Transaksi berhasil!');
         $this->redirectRoute('purchase', navigate: true);
+    }
+
+    public function purchaseCode()
+    {
+        // $this->date = date('Y-m-d');
+        $last_purchase_code = Purchase::where('date', $this->date)->latest()->first();
+
+        if ($last_purchase_code) {
+            $last_code = intval(substr($last_purchase_code->purchase_code, -4));
+            $new_code = str_pad($last_code + 1, 4, '0', STR_PAD_LEFT);
+        } else {
+            $new_code = str_pad(1, 4, '0', STR_PAD_LEFT);
+        }
+
+        $date = Carbon::parse($this->date)->format('d');
+        $mount = Carbon::parse($this->date)->format('m');
+
+        $purchase_code = 'IN-' . $date . $mount . '/' . $new_code;
+
+        return $purchase_code;
     }
 }
