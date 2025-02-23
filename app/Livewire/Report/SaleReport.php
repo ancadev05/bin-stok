@@ -16,10 +16,22 @@ use Maatwebsite\Excel\Facades\Excel;
 class SaleReport extends Component
 {
     public $pdfUrl;
+    public $start_date, $end_date;
     public function render()
     {
         $sales = Sale::all();
+
+        if ($this->start_date && $this->end_date) {
+            $sales = Sale::whereBetween('date', [$this->start_date, $this->end_date])->get();
+        }
+        
+        $this->dispatch('datatables');
         return view('livewire.report.sale-report', compact('sales'));
+    }
+
+    public function search()
+    {
+        $this->render();
     }
 
     public function exportExcel()

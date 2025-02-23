@@ -16,7 +16,9 @@
                         <input wire:model="end_date" type="date" class="form-control">
                     </div>
                     <div class="col">
-                        <button class="btn btn-info"><i class="fas fa-filter"> </i> Filter</button>
+                        <button wire:click="search" class="btn btn-info"><i class="fas fa-filter"> </i> Filter</button>
+                        <button onclick="location.reload()" class="btn btn-warning"><i class="fas fa-sync-alt"> </i>
+                            Reset</button>
                     </div>
                 </div>
             </div>
@@ -72,6 +74,13 @@
         <script>
             $(document).ready(function() {
                 $('#basic-datatables').DataTable();
+
+                Livewire.on('datatables', (data) => {
+                    setTimeout(() => {
+                        $('#basic-datatables').DataTable().destroy();
+                        $('#basic-datatables').DataTable();
+                    }, 100); // Tunda 100 milidetik
+                });
             })
         </script>
     @endpush

@@ -16,13 +16,22 @@ class PurchaseReport extends Component
     public function render()
     {
         $purchases = Purchase::all();
+
+        if ($this->start_date && $this->end_date) {
+            $purchases = Purchase::whereBetween('date', [$this->start_date, $this->end_date])->get();
+        }
+
+        $this->dispatch('datatables');
         return view('livewire.report.purchase-report', compact('purchases'));
+    }
+
+    public function search()
+    {
+        $this->render();
     }
 
     public function export()
     {
         return Excel::download(new PurchaseExport, 'laporan-pembelian.xlsx');
     }
-
-    
 }
