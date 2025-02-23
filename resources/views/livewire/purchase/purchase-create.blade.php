@@ -26,7 +26,7 @@
                                 <label for="product_id" class="col-sm-3 col-form-label text-end">Kode Produk</label>
                                 <div class="col">
                                     <select wire:model="product_id" id="product_id"
-                                        class="select2 form-select @error('product_id') is-invalid @enderror w-100">
+                                        class="select2 form-select w-100">
                                         <option value="" selected>-- Pilih Produk --</option>
                                         @foreach ($products as $item)
                                             <option value="{{ $item->id }}">
@@ -35,9 +35,6 @@
                                     </select>
                                 </div>
                             </div>
-                            @error('product_id')
-                                <small class="invalid-feedback">{{ $message }}</small>
-                            @enderror
                             <div class="mb-3 row">
                                 <label for="purchase_price" class="col-sm-3 col-form-label text-end">Harga
                                     Satuan</label>
@@ -77,15 +74,12 @@
                             <label for="supplier_name" class="col-sm-3 col-form-label text-end">Supplayer</label>
                             <div class="col">
                                 <select wire:model="supplier_name" id="supplier_name"
-                                    class="form-select @error('supplier_name') is-invalid @enderror select2">
-                                    <option value="">-- Pilih Supplayer --</option>
+                                    class="form-select select2">
+                                    <option value="" selected>-- Pilih Supplayer --</option>
                                     @foreach ($suppliers as $item)
                                         <option value="{{ $item->name }}">{{ $item->name }}</option>
                                     @endforeach
                                 </select>
-                                @error('supplier_name')
-                                    <small class="invalid-feedback">{{ $message }}</small>
-                                @enderror
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -133,8 +127,6 @@
                         <div class="d-flex justify-content-end">
                             <button wire:click="purchaseUndo" type="button"
                                 class="btn btn-sm btn-danger me-2">Batal</button>
-                            {{-- <a wire:navigate href="{{ route('purchase') }}" type="button"
-                            class="btn btn-sm btn-success me-2">Simpan</a> --}}
                             <button type="submit" class="btn btn-sm btn-primary">Proses</button>
                         </div>
                     </form>

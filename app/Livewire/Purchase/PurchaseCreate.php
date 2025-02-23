@@ -53,8 +53,8 @@ class PurchaseCreate extends Component
 
     public function purchaseDetailsStore()
     {
-        $this->validate();
 
+        $this->validate();
         $product_id = PurchaseDetails::where('purchase_id', $this->purchase_id)
             ->where('product_id', $this->product_id)->count();
 
@@ -170,17 +170,23 @@ class PurchaseCreate extends Component
     // proses pembelian
     public function purchaseProcess()
     {
-        $this->validate([
-            'supplier_name' => 'required'
-        ], [
-            'supplier_name.required' => 'Supplier tidak boleh kosong'
-        ]);
-        
-        // mengecek apakah ada produk yang ditambahkan
+        // dd($this->supplier_name, $this->product_id);
+
         $pruduct = PurchaseDetails::where('purchase_id', $this->purchase_id);
         if ($pruduct->count() == 0) {
             return $this->dispatch('failed', text: 'Tambah produk terlebih dahulu!');
         }
+
+        
+        // mengecek apakah ada produk yang ditambahkan
+        if ($this->supplier_name == null) {
+            return $this->dispatch('failed', text: 'Isi nama supplier!');
+        }
+        
+        $this->validate([
+            'supplier_name' => 'required'
+        ]);
+
 
         // update data pembelian
         Purchase::find($this->purchase_id)->update([
