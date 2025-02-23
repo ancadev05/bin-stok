@@ -67,17 +67,4 @@ class PurchaseShow extends Component
         session()->flash('status', 'Data berhasil dihapus!');
         $this->redirectRoute('report-purchase', navigate: true);
     }
-
-    // cetak transaksi
-    public function printTransaction()
-    {
-        $company = Company::all();
-        $purchase = Purchase::find($this->purchase_id);
-        $purchase_details = PurchaseDetails::where('purchase_id', $this->purchase_id)->get();
-        $pdf = Pdf::loadView('exports.pdf.pdf-transaction-purchase', compact('company', 'purchase', 'purchase_details'))->output();
-        return response()->streamDownload(
-            fn() => print($pdf),
-            'invoice-penjualan.pdf'
-        );
-    }
 }

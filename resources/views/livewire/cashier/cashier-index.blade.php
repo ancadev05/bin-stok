@@ -1,4 +1,8 @@
 <div>
+    <section class="mb-3">
+        <button class="btn btn-sm btn-primary">Tambah</button>
+        <button class="btn btn-sm btn-warning">Tersimpan</button>
+    </section>
     <div class="card">
         <div class="card-body">
             <div class="row">

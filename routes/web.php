@@ -36,6 +36,7 @@ use App\Livewire\Category\CategoryCreate;
 use App\Livewire\Purchase\PurchaseCreate;
 use App\Livewire\Supplier\SupplierCreate;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PrintController;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -91,6 +92,9 @@ Route::middleware(['auth'])->group(function () {
     // Route::get('/export-sale', [SaleReport::class, 'exportExcel'])->name('export.sale');
     // export pdf
     // Route::get('/export-pdf-sale', [SaleReport::class, 'exportPdf'])->name('export.pdf.sale');
+    // print transaction
+    Route::get('/print-invoice-purchase/{id}', [PrintController::class, 'printPurchase'])->name('print.invoice.purchase');
+    Route::get('/print-invoice-sale/{id}', [PrintController::class, 'printSale'])->name('print.invoice.sale');
     // cashier
     Route::get('/cashier', CashierIndex::class)->name('cashier');
     // user

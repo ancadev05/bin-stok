@@ -94,21 +94,14 @@
             <hr>
 
             <div class="d-flex justify-content-end align-items-center">
-                <span wire:loading>
-                    <div class="me-2 d-flex align-items-center">
-                        <div class="spinner-border text-muted me-1" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                        <span>Loading...</span>
-                    </div>
-                </span>
                 <a wire:navigate href="{{ route('purchase') }}" class="btn btn-sm btn-secondary"><i
                         class="fas fa-reply"> </i> Kembali</a>
-                <button wire:click="printTransaction" class="btn btn-sm btn-info ms-2"><i class="fas fa-print"> </i>
-                    Cetak</button>
+
+                <a href="{{ route('print.invoice.purchase', $purchase->id) }}" class="btn btn-sm btn-info mx-2"
+                    target="_blank"><i class="fas fa-print"> </i> Cetak</a>
 
                 <button onclick="deleteData({{ $purchase->id }}, '{{ $purchase->purchase_code }}')"
-                    class="btn btn-sm btn-danger ms-2"><i class="far fa-trash-alt"> </i> Hapus</button>
+                    class="btn btn-sm btn-danger"><i class="far fa-trash-alt"> </i> Hapus</button>
             </div>
 
         </div>
