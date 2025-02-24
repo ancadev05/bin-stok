@@ -87,11 +87,6 @@ Route::middleware(['auth'])->group(function () {
     // report
     Route::get('/report-purchase', PurchaseReport::class)->name('report.purchase');
     Route::get('/report-sale', SaleReport::class)->name('report.sale');
-    // export excel
-    Route::get('/export-purchase', [PurchaseReport::class, 'export'])->name('export.purchase');
-    // Route::get('/export-sale', [SaleReport::class, 'exportExcel'])->name('export.sale');
-    // export pdf
-    // Route::get('/export-pdf-sale', [SaleReport::class, 'exportPdf'])->name('export.pdf.sale');
     // print transaction
     Route::get('/print-invoice-purchase/{id}', [PrintController::class, 'printPurchase'])->name('print.invoice.purchase');
     Route::get('/print-invoice-sale/{id}', [PrintController::class, 'printSale'])->name('print.invoice.sale');

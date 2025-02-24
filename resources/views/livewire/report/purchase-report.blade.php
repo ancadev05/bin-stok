@@ -25,9 +25,9 @@
             <div class="card-body">
                 <div class="d-flex justify-content-end">
                     <div class="btn-group mb-3 me-2">
-                        <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-file-pdf"> </i> PDF</a>
-                        <a href="{{ route('export.purchase') }}" class="btn btn-sm btn-success"><i
-                                class="fas fa-file-excel"> </i> Excel</a>
+                        <button wire:click="exportPdf" class="btn btn-sm btn-danger"><i class="fas fa-file-pdf"> </i> PDF</button>
+                        <button wire:click="exportExcel" class="btn btn-sm btn-success"><i
+                                class="fas fa-file-excel"> </i> Excel</button>
                     </div>
                 </div>
 

@@ -42,8 +42,15 @@ class SaleReport extends Component
     {
         // filter
         $company = Company::all();
+        
         $sales = Sale::all();
         $total = Sale::sum('discount_price');
+
+        if ($this->start_date && $this->end_date) {
+            $sales = Sale::whereBetween('date', [$this->start_date, $this->end_date])->get();
+            $total = $sales->sum('discount_price');
+        }
+
         $pdf = Pdf::loadView('exports.pdf.pdf-report-sale', compact('company','sales', 'total'))->output();
         return response()->streamDownload(
             fn() => print($pdf),

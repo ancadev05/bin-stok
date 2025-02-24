@@ -70,7 +70,7 @@
                 <div class="col-6 border-start">
                     <form wire:submit.prevent="purchaseProcess">
                         @csrf
-                        <div wire:ignore class="mb-3 row">
+                        <div wire:ignore.prevent class="mb-3 row">
                             <label for="supplier_name" class="col-sm-3 col-form-label text-end">Supplayer</label>
                             <div class="col">
                                 <select wire:model="supplier_name" id="supplier_name"

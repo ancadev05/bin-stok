@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Penjualan</title>
+    <title>Laporan Pembelian</title>
 
     <style>
         body {
@@ -60,7 +60,7 @@
 <body>
     <div class="kop">
         <h3>{{ $company[0]->company_name }}</h3>
-        <h3>Laporan Penjualan</h3>
+        <h3>Laporan Pembelian</h3>
         {{-- <h3>{{  }}</h3> --}}
     </div>
     <hr>
@@ -71,7 +71,7 @@
                     <th>No</th>
                     <th>Tanggal</th>
                     <th>Kode Transaksi</th>
-                    <th>Pelanggan</th>
+                    <th>Supplayer</th>
                     <th>Total Item</th>
                     <th>Harga (Rp)</th>
                     <th>Discount</th>
@@ -79,13 +79,13 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($sales as $index => $item)
+                @foreach ($purchases as $index => $item)
                     <tr>
                         <td class="text-center">{{ ++$index }}</td>
                         <td>{{ \Carbon\Carbon::parse($item->date)->format('d/m/Y') }}</td>
-                        <td>{{ $item->sale_code }}</td>
-                        <td>{{ $item->costumer }}</td>
-                        <td class="text-center">{{ $item->salesDetails->sum('total_products') }}</td>
+                        <td>{{ $item->purchase_code }}</td>
+                        <td>{{ $item->supplier_name }}</td>
+                        <td class="text-center">{{ $item->purchaseDetails->sum('total_products') }}</td>
                         <td class="text-end">{{ number_format($item->total_price) }}</td>
                         <td class="text-center">{{ $item->discount }}%</td>
                         <td class="text-end">{{ number_format($item->discount_price) }}</td>

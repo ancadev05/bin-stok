@@ -1,8 +1,18 @@
 <div>
     <section class="mb-3">
-        <button class="btn btn-sm btn-primary">Tambah</button>
-        <button class="btn btn-sm btn-warning">Tersimpan</button>
+        <button wire:click="addOrder" class="btn btn-sm btn-primary"><i class="fas fa-plus"> </i> Order</button>
     </section>
+
+    <section>
+        <ul class="nav nav-tabs">
+            @foreach ($sales as $item)
+                <li class="nav-item">
+                    <a class="nav-link" href="#">{{ $item->sale_code }}</a>
+                </li>
+            @endforeach
+        </ul>
+    </section>
+
     <div class="card">
         <div class="card-body">
             <div class="row">
@@ -28,7 +38,7 @@
                                     <td>{{ $item->product_code . ' - ' . $item->name }}</td>
                                     <td class="text-end">{{ number_format($item->selling_price) }}</td>
                                     <td>
-                                        <button wire:click="add({{ $item->id }})" class="btn btn-sm btn-primary"><i
+                                        <button wire:click="addProduct({{ $item->id }})" class="btn btn-sm btn-primary"><i
                                                 class="fas fa-plus"></i></button>
                                     </td>
                                 </tr>
@@ -55,7 +65,8 @@
                                     <td>2</td>
                                     <td class="text-end pe-3">{{ number_format($item->selling_price) }}</td>
                                     <td class="text-end pe-3">{{ number_format($item->selling_price * 2) }}</td>
-                                    <td><button wire:click="remove({{ $item->id }})" class="btn btn-sm btn-danger"><i class="fas fa-times"></i></button></td>
+                                    <td><button wire:click="remove({{ $item->id }})"
+                                            class="btn btn-sm btn-danger"><i class="fas fa-times"></i></button></td>
                                 </tr>
                             @endforeach
                             <tr>
@@ -107,6 +118,7 @@
             $(window).on('load', function() {
                 // menyembunyikan shidebar otomatis
                 $('.gg-menu-right').click();
+                $('.main-header').none();
             });
         </script>
     @endpush

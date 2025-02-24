@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use Livewire\Attributes\Title;
 use App\Models\PurchaseDetails;
 use App\Models\SalesDetails;
+use Illuminate\Support\Facades\Auth;
 
 #[Title("Pembelian")]
 class PurchaseIndex extends Component
@@ -34,6 +35,7 @@ class PurchaseIndex extends Component
 
         $purchase_code = $this->purchaseCode();
         Purchase::create([
+            'user_id' => Auth::user()->id,
             'purchase_code' => $purchase_code,
             'supplier_name' => 'Supplayer',
             'date' => Carbon::now()

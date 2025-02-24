@@ -10,6 +10,7 @@ use Livewire\Attributes\On;
 use App\Models\SalesDetails;
 use Illuminate\Support\Carbon;
 use Livewire\Attributes\Title;
+use Illuminate\Support\Facades\Auth;
 
 #[Title("Penjualan")]
 class SaleIndex extends Component
@@ -18,7 +19,7 @@ class SaleIndex extends Component
     public function render()
     {
         // menghapus transaksi yang pending/batal
-        $sale_id = Sale::where('discount_price', '=', 0)->latest()->first();
+        $sale_id = Sale::where('status', '=', 'Pending')->latest()->first();
         if ($sale_id != null) {
             SalesDetails::where('sale_id', $sale_id->id)->delete();
             Sale::find($sale_id->id)->delete();
@@ -33,6 +34,7 @@ class SaleIndex extends Component
     {
         $sale_code = $this->saleCode();
         Sale::create([
+            'user_id' => Auth::user()->id,
             'sale_code' => $sale_code,
             'costumer' => 'User',
             'date' => Carbon::now()

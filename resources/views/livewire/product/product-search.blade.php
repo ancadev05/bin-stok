@@ -74,7 +74,7 @@
                                 <th>No</th>
                                 <th>Tanggal</th>
                                 <th>Kode Transaksi</th>
-                                <th>IN ({{ $purchases->count() }})</th>
+                                <th>IN ({{ $purchases->sum('total_products') }})</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -104,7 +104,7 @@
                                 <th>No</th>
                                 <th>Tanggal</th>
                                 <th>Kode Transaksi</th>
-                                <th>OUT ({{ $sales->count() }})</th>
+                                <th>OUT ({{ $sales->sum('total_products') }})</th>
                             </tr>
                         </thead>
                         <tbody>

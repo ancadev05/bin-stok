@@ -35,7 +35,9 @@
                             <td class="text-center">
                                 @if ($item->status == 'Pending')
                                     <span class="badge text-bg-warning">{{ $item->status }}</span>
-                                @else
+                                @elseif ($item->status == 'k-pending')
+                                    <span class="badge text-bg-warning">Pending</span>
+                                @else 
                                     <span class="badge text-bg-success">{{ $item->status }}</span>
                                 @endif
                             </td>

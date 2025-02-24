@@ -71,9 +71,7 @@ class PurchaseCreate extends Component
 
             PurchaseDetails::create($purchase_detail);
 
-            $this->product_id = null;
-            $this->purchase_price = null;
-            $this->total_products = null;
+            $this->reset('product_id', 'purchase_price', 'total_products');
 
             Purchase::where('id', $this->purchase_id)->update([
                 'total_price' => PurchaseDetails::where('purchase_id', $this->purchase_id)->sum('total_price'),
@@ -98,7 +96,7 @@ class PurchaseCreate extends Component
                 ->where('purchase_id', $this->purchase_id)
                 ->update($purchase_detail);
 
-            $this->reset('product_id', 'purchase_price', 'total_product');
+            $this->reset('product_id', 'purchase_price', 'total_products');
 
             Purchase::where('id', $this->purchase_id)->update([
                 'total_price' => PurchaseDetails::where('purchase_id', $this->purchase_id)->sum('total_price'),
