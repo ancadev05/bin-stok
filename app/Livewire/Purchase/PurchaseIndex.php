@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Auth;
 #[Title("Pembelian")]
 class PurchaseIndex extends Component
 {
-    // #[Layout('template-dashboard.main')]
     public function render()
     {
         // menghapus transaksi yang pending/batal
@@ -85,7 +84,21 @@ class PurchaseIndex extends Component
 
     public function purchaseCode()
     {
-        $purchase_code = time();
+        $date = date('Y-m-d');
+        $last_purchase_code = Purchase::where('date', $date)->latest()->first();
+
+        if ($last_purchase_code) {
+            $last_code = intval(substr($last_purchase_code->purchase_code, -4));
+            $new_code = str_pad($last_code + 1, 4, '0', STR_PAD_LEFT);
+        } else {
+            $new_code = str_pad(1, 4, '0', STR_PAD_LEFT);
+        }
+
+        $date = date('d');
+        $mount = date('m');
+
+        $purchase_code = 'IN-' . $date . $mount . '/' . $new_code;
+
         return $purchase_code;
     }
 }

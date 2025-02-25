@@ -72,6 +72,7 @@ class PurchaseCreate extends Component
             PurchaseDetails::create($purchase_detail);
 
             $this->reset('product_id', 'purchase_price', 'total_products');
+            $this->product_id = '';
 
             Purchase::where('id', $this->purchase_id)->update([
                 'total_price' => PurchaseDetails::where('purchase_id', $this->purchase_id)->sum('total_price'),
@@ -170,26 +171,22 @@ class PurchaseCreate extends Component
     public function purchaseProcess()
     {
         // dd($this->date);
+        // $this->validate([
+        //     'supplier_name' => 'required'
+        // ]);
 
         $pruduct = PurchaseDetails::where('purchase_id', $this->purchase_id);
         if ($pruduct->count() == 0) {
             return $this->dispatch('failed', text: 'Tambah produk terlebih dahulu!');
         }
 
-        
         // mengecek apakah ada produk yang ditambahkan
         if ($this->supplier_name == null) {
             return $this->dispatch('failed', text: 'Isi nama supplier!');
         }
-        
-        $this->validate([
-            'supplier_name' => 'required'
-        ]);
-
 
         // update data pembelian
         Purchase::find($this->purchase_id)->update([
-            'purchase_code' => $this->purchaseCode(),
             'supplier_name' => $this->supplier_name,
             'discount' => $this->discount,
             'discount_price' => $this->discount_price,
@@ -212,25 +209,5 @@ class PurchaseCreate extends Component
 
         session()->flash('status', 'Transaksi berhasil!');
         $this->redirectRoute('purchase', navigate: true);
-    }
-
-    public function purchaseCode()
-    {
-        // $this->date = date('Y-m-d');
-        $last_purchase_code = Purchase::where('date', $this->date)->latest()->first();
-
-        if ($last_purchase_code) {
-            $last_code = intval(substr($last_purchase_code->purchase_code, -4));
-            $new_code = str_pad($last_code + 1, 4, '0', STR_PAD_LEFT);
-        } else {
-            $new_code = str_pad(1, 4, '0', STR_PAD_LEFT);
-        }
-
-        $date = Carbon::parse($this->date)->format('d');
-        $mount = Carbon::parse($this->date)->format('m');
-
-        $purchase_code = 'IN-' . $date . $mount . '/' . $new_code;
-
-        return $purchase_code;
     }
 }

@@ -72,7 +72,21 @@ class SaleIndex extends Component
 
     public function saleCode()
     {
-        $sale_code = time();
+        $date = date('Y-m-d');
+        $last_sale_code = Sale::where('date', $date)->latest()->first();
+
+        if ($last_sale_code) {
+            $last_code = intval(substr($last_sale_code->sale_code, -4));
+            $new_code = str_pad($last_code + 1, 4, '0', STR_PAD_LEFT);
+        } else {
+            $new_code = str_pad(1, 4, '0', STR_PAD_LEFT);
+        }
+
+        $date = date('d');
+        $mount = date('m');
+        
+        $sale_code = 'OUT-' . $date . $mount . '/' . $new_code;
+
         return $sale_code;
     }
 }
