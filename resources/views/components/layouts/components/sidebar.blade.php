@@ -47,6 +47,9 @@
                     <a href="{{ route('product') }}">
                         <i class="fas fa-cubes"></i>
                         <p>Produk</p>
+                        {{-- <i class="fas fa-circle text-danger"></i> --}}
+                        {{-- <span class="badge badge-danger"></span> --}}
+                        <span class="badge badge-success">4</span>
                     </a>
                 </li>
                 <li class="nav-item {{ Request::is('supplier*') ? 'active' : '' }}">
