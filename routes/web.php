@@ -56,7 +56,7 @@ Route::get('/kaiadmin', function () {
 // Route::resource('category', CategoryController::class);
 Auth::routes(['register' => false]);
 
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 Route::middleware(['auth'])->group(function () {
