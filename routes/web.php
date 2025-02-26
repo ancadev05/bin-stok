@@ -37,6 +37,7 @@ use App\Livewire\Purchase\PurchaseCreate;
 use App\Livewire\Supplier\SupplierCreate;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PrintController;
+use App\Livewire\Cashier\CashierSales;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -92,6 +93,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/print-invoice-sale/{id}', [PrintController::class, 'printSale'])->name('print.invoice.sale');
     // cashier
     Route::get('/cashier', CashierIndex::class)->name('cashier');
+    Route::get('/cashier-sales/{id}', CashierSales::class)->name('cashier.sales');
     // user
     Route::get('/users', UserIndex::class)->name('users');
     Route::get('/users/create', UserCreate::class)->name('users.create');

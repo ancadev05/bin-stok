@@ -59,7 +59,9 @@ class CashierIndex extends Component
             'status' => 'k-pending',
         ]);
 
-        $this->sale_id = Sale::where('sale_code', $sale_code)->first()->id;
+        $sale_id = Sale::where('sale_code', $sale_code)->first()->id;
+        
+        $this->redirectRoute('cashier.sales', $sale_id, navigate:true);
     }
 
     public function addProduct($id)
