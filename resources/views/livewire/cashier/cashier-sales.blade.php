@@ -8,7 +8,8 @@
         <ul class="nav nav-tabs">
             @foreach ($sales as $item)
                 <li class="nav-item">
-                    <a class="nav-link {{ $item->id == $sale_id ? 'active' : '' }}" href="{{ route('cashier.sales', $item->id) }}">{{ $item->sale_code }}</a>
+                    <a class="nav-link {{ $item->id == $sale_id ? 'active' : '' }}"
+                        href="{{ route('cashier.sales', $item->id) }}">{{ $item->sale_code }}</a>
                 </li>
             @endforeach
         </ul>
@@ -20,7 +21,10 @@
                 <div class="row">
                     <div class="col-6">
                         <h5>Produk</h5>
-                        <input wire:model.live="search" type="search" class="form-control mb-3" placeholder="Search">
+                        <div class="d-flex">
+                            <input wire:model.live="search" type="search" class="form-control mb-3" placeholder="Search">
+                            <div id="reader" width="60px"></div>
+                        </div>
                         <table class="table" width="100%">
                             <thead>
                                 <tr>
@@ -35,13 +39,13 @@
                                 @foreach ($products as $index => $item)
                                     <tr>
                                         <td>{{ ++$index }}</td>
-                                        <td class="text-center"><img src="{{ Storage::url($item->images) }}" alt="no-image"
-                                                height="50px" class="rounded"></td>
+                                        <td class="text-center"><img src="{{ Storage::url($item->images) }}"
+                                                alt="no-image" height="50px" class="rounded"></td>
                                         <td>{{ $item->product_code . ' - ' . $item->name }}</td>
                                         <td class="text-end">{{ number_format($item->selling_price) }}</td>
                                         <td>
-                                            <button wire:click="addProduct({{ $item->id }})" class="btn btn-sm btn-primary"><i
-                                                    class="fas fa-plus"></i></button>
+                                            <button wire:click="addProduct({{ $item->id }})"
+                                                class="btn btn-sm btn-primary"><i class="fas fa-plus"></i></button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -51,7 +55,8 @@
                     <div class="col-6">
                         <div class="d-flex justify-content-between">
                             <h5>Produk</h5>
-                            <button wire:click="cancelTransaction({{ $sale_id }})" class="btn btn-sm btn-danger">Batalkan Transaksi</button>
+                            <button wire:click="cancelTransaction({{ $sale_id }})"
+                                class="btn btn-sm btn-danger">Batalkan Transaksi</button>
                         </div>
                         <table class="table" width="100%">
                             <thead>
@@ -59,14 +64,17 @@
                                     <th>Produk</th>
                                     <th>Harga Satuan</th>
                                     <th>Total</th>
-                                    <th><button wire:click="resetProduct({{ $sale_id }})" class="btn btn-sm btn-warning"><i class="fas fa-sync-alt"> </i></button></th>
+                                    <th><button wire:click="resetProduct({{ $sale_id }})"
+                                            class="btn btn-sm btn-warning"><i class="fas fa-sync-alt"> </i></button>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($product_list as $index => $item)
                                     <tr>
                                         <td>{{ $item->product->product_code . ' - ' . $item->product->name }}</td>
-                                        <td>{{ $item->total_products }} x {{ number_format($item->product->selling_price) }}</td>
+                                        <td>{{ $item->total_products }} x
+                                            {{ number_format($item->product->selling_price) }}</td>
                                         <td class="text-end pe-3">{{ number_format($item->total_price) }}</td>
                                         <td><button wire:click="deleteProduct({{ $item->id }})"
                                                 class="btn btn-sm btn-danger"><i class="fas fa-times"></i></button></td>
@@ -87,7 +95,8 @@
                             </tr>
                             <tr>
                                 <td>Diskon %</td>
-                                <td class="text-end"><input type="number" class="form-control form-control-sm text-end">
+                                <td class="text-end"><input type="number"
+                                        class="form-control form-control-sm text-end">
                                 </td>
                             </tr>
                             <tr>
@@ -95,7 +104,7 @@
                                 <td class="text-end">-</td>
                             </tr>
                             <tr>
-    
+
                             </tr>
                             <tr>
                                 <td></td>
@@ -117,6 +126,8 @@
         </div>
     </div>
 
+    
+
     @push('script')
         <script>
             $(window).on('load', function() {
@@ -124,6 +135,32 @@
                 $('.gg-menu-right').click();
                 $('.main-header').none();
             });
+        </script>
+
+        <script src="{{ asset('vendor/html5-qrcode.min.js') }}" type="text/javascript"></script>
+        <script>
+            function onScanSuccess(decodedText, decodedResult) {
+                // handle the scanned code as you like, for example:
+                console.log(`Code matched = ${decodedText}`, decodedResult);
+            }
+
+            function onScanFailure(error) {
+                // handle scan failure, usually better to ignore and keep scanning.
+                // for example:
+                console.warn(`Code scan error = ${error}`);
+            }
+
+            let html5QrcodeScanner = new Html5QrcodeScanner(
+                "reader", {
+                    fps: 10,
+                    qrbox: {
+                        width: 250,
+                        height: 250
+                    }
+                },
+                /* verbose= */
+                false);
+            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
         </script>
     @endpush
 </div>
