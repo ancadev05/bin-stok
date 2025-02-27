@@ -37,9 +37,10 @@ class CashierSales extends Component
         if ($this->search) {
             $products = Product::where('name', 'like', '%' . $this->search . '%')
             ->orWhere('product_code', 'like', '%' . $this->search . '%')
+            ->orWhere('stock', '>', 0)
             ->get();
         } else {
-            $products = Product::all();
+            $products = Product::where('stock', '>', 0)->get();
         }
         
         $sales = Sale::where('status', 'k-pending')->get();
