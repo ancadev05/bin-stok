@@ -7,7 +7,7 @@
         <ul class="nav nav-tabs">
             @foreach ($sales as $item)
                 <li class="nav-item">
-                    <a class="nav-link" href="#">{{ $item->sale_code }}</a>
+                    <a class="nav-link" href="{{ route('cashier.sales', $item->id) }}">{{ $item->sale_code }}</a>
                 </li>
             @endforeach
         </ul>

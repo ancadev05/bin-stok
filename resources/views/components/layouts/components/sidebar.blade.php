@@ -87,7 +87,7 @@
                 <li class="nav-item {{ Request::is('cashier') ? 'active' : '' }}">
                     <a href="{{ route('cashier') }}">
                         <i class="fas fa-desktop"></i>
-                        <p>Kasir</p>
+                        <p>P.O.S</p>
                     </a>
                 </li>
 

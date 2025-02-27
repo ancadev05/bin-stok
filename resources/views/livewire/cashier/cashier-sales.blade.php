@@ -1,5 +1,6 @@
 <div>
     <section class="mb-3">
+        <a href="{{ route('cashier') }}" class="btn btn-sm btn-warning"><i class="fas fa-home"> </i> POS</a>
         <button wire:click="addOrder" class="btn btn-sm btn-primary"><i class="fas fa-plus"> </i> Order</button>
     </section>
 
@@ -20,7 +21,7 @@
                     <div class="col-6">
                         <h5>Produk</h5>
                         <input wire:model.live="search" type="search" class="form-control mb-3" placeholder="Search">
-                        <table class="" width="100%">
+                        <table class="table" width="100%">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -48,31 +49,32 @@
                         </table>
                     </div>
                     <div class="col-6">
-                        <h5>Produk</h5>
-                        <table class="" width="100%">
+                        <div class="d-flex justify-content-between">
+                            <h5>Produk</h5>
+                            <button wire:click="cancelTransaction({{ $sale_id }})" class="btn btn-sm btn-danger">Batalkan Transaksi</button>
+                        </div>
+                        <table class="table" width="100%">
                             <thead>
                                 <tr>
                                     <th>Produk</th>
-                                    <th>Qty</th>
-                                    <th>Harga</th>
+                                    <th>Harga Satuan</th>
                                     <th>Total</th>
-                                    <th>Aksi</th>
+                                    <th><button wire:click="resetProduct({{ $sale_id }})" class="btn btn-sm btn-warning"><i class="fas fa-sync-alt"> </i></button></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($product_list as $index => $item)
                                     <tr>
-                                        <td>{{ $item->product_code . ' - ' . $item->name }}</td>
-                                        <td>2</td>
-                                        <td class="text-end pe-3">{{ number_format($item->selling_price) }}</td>
-                                        <td class="text-end pe-3">{{ number_format($item->selling_price * 2) }}</td>
-                                        <td><button wire:click="remove({{ $item->id }})"
+                                        <td>{{ $item->product->product_code . ' - ' . $item->product->name }}</td>
+                                        <td>{{ $item->total_products }} x {{ number_format($item->product->selling_price) }}</td>
+                                        <td class="text-end pe-3">{{ number_format($item->total_price) }}</td>
+                                        <td><button wire:click="deleteProduct({{ $item->id }})"
                                                 class="btn btn-sm btn-danger"><i class="fas fa-times"></i></button></td>
                                     </tr>
                                 @endforeach
                                 <tr>
                                     <td colspan="2">Subtotal</td>
-                                    <td class="text-end">{{ number_format(32432432) }}</td>
+                                    <td class="text-end fw-bold">{{ number_format($sub_total) }}</td>
                                     <td></td>
                                 </tr>
                             </tbody>

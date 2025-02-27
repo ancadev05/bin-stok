@@ -61,7 +61,7 @@ class CashierIndex extends Component
 
         $sale_id = Sale::where('sale_code', $sale_code)->first()->id;
         
-        $this->redirectRoute('cashier.sales', $sale_id, navigate:true);
+        $this->redirectRoute('cashier.sales', $sale_id);
     }
 
     public function addProduct($id)
