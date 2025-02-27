@@ -22,8 +22,10 @@
                     <div class="col-6">
                         <h5>Produk</h5>
                         <div class="d-flex">
-                            <input wire:model.live="search" type="search" class="form-control mb-3" placeholder="Search">
-                            <div id="reader" width="60px"></div>
+                            <input wire:model.live="search" type="search" class="form-control mb-3"
+                                placeholder="Search">
+                            {{-- fitur scan barcode --}}
+                            {{-- <div id="reader" width="60px"></div> --}}
                         </div>
                         <table class="table" width="100%">
                             <thead>
@@ -89,51 +91,75 @@
                         </table>
                         <hr>
                         <table width="100%">
-                            <tr>
-                                <td>Total</td>
-                                <td class="text-end">3232</td>
-                            </tr>
+                            
                             <tr>
                                 <td>Diskon %</td>
-                                <td class="text-end"><input type="number"
-                                        class="form-control form-control-sm text-end">
+                                <td class="text-end"><input wire:model="discount" type="number" class="form-control text-end">
                                 </td>
                             </tr>
                             <tr>
                                 <td>PPN %</td>
-                                <td class="text-end">-</td>
+                                <td class="text-end">0</td>
                             </tr>
                             <tr>
 
                             </tr>
                             <tr>
-                                <td></td>
+                                <td>Metode Bayar</td>
                                 <td>
-                                    <div>
-                                        <input type="radio" name="" id="" selected>
-                                        <label for="">Tunai</label>
+                                    <div class="d-flex">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" wire:model="payment_method" value="Tunai"
+                                                id="payment_method_1" checked>
+                                            <label class="form-check-label" for="payment_method_1">Tunai</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" wire:model="payment_method" value="Non Tunai"
+                                                id="payment_method_2">
+                                            <label class="form-check-label" for="payment_method_2">Non Tunai</label>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Bayar</td>
-                                <td class="text-end"><input type="text" class="form-control">
+                                <td>Total (Rp)</td>
+                                <td><h2 class="text-bg-success fw-bold text-end p-2">{{ number_format($total_price) }}</h2></td>
+                            </tr>
+                            <tr>
+                                <td>Bayar (Rp)</td>
+                                <td><input wire:model.live="pay" type="number" class="form-control text-end">
+                            </tr>
+                            <tr>
+                                <td>Kembali (Rp)</td>
+                                <td><h2 class="text-bg-warning fw-bold text-end p-2">{{ number_format($change) }}</h2></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <span>Ket.</span>
+                                    <textarea wire:model="description" class="form-control"></textarea>
+                                </td>
                             </tr>
                         </table>
+
+                        {{-- proses pembayaran --}}
+                        <div class="d-flex justify-content-end mt-4">
+                            <button wire:click="saleProses" class="btn btn-success me-2">Bayar</button>
+                            <button class="btn btn-success">Cetak</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    
+
 
     @push('script')
         <script>
             $(window).on('load', function() {
                 // menyembunyikan shidebar otomatis
                 $('.gg-menu-right').click();
-                $('.main-header').none();
+                $('#header-kasir').none();
             });
         </script>
 

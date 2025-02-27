@@ -18,13 +18,18 @@ class CashierSales extends Component
     // tabel sales_details
     public $sale_id, $product_id, $sale_price, $total_products, $total_price;
     // variabel bantu
-    public $search, $sub_total;
+    public $search, $sub_total, $change, $pay;
     public function mount($id)
     {
         $sale = Sale::find($id);
         $this->sale_id = $sale->id;
 
+        $this->date = date('Y-m-d');
+        $this->discount = 0;
+
         $this->subTotal();
+        $this->discount();
+        $this->total();
     }
     public function render()
     {
@@ -52,8 +57,6 @@ class CashierSales extends Component
         $product = Product::find($product_id);
         $sale_details = SalesDetails::where('sale_id', $this->sale_id)->where('product_id', $product_id)->first();
 
-        // dd($sale_details->id);
-
         if ($sale_details) {
             $total_products = $sale_details->total_products + 1;
             $total_price = $total_products * $product->selling_price;
@@ -62,6 +65,9 @@ class CashierSales extends Component
                 'total_price' => $total_price,
             ];
             SalesDetails::find($sale_details->id)->update($products);
+            Sale::find($this->sale_id)->update([
+                'total_price' => SalesDetails::where('sale_id', $this->sale_id)->sum('total_price'),
+            ]);
         } else {
             $sale_details = [
                 'sale_id' => $this->sale_id,
@@ -71,20 +77,58 @@ class CashierSales extends Component
                 'total_price' => $product->selling_price,
             ];
             SalesDetails::create($sale_details);
+            Sale::find($this->sale_id)->update([
+                'total_price' => SalesDetails::where('sale_id', $this->sale_id)->sum('total_price'),
+            ]);
         }
 
         $this->subTotal();
+        $this->discount();
+        $this->total();
     }
 
     public function deleteProduct($product_id)
     {
         SalesDetails::find($product_id)->delete();
         $this->subTotal();
+        $this->discount();
+        $this->total();
+        $this->updatedPay();
     }
 
     public function subTotal()
     {
         $this->sub_total = SalesDetails::where('sale_id', $this->sale_id)->sum('total_price');
+    }
+
+    public function discount()
+    {
+        $sale = Sale::find($this->sale_id);
+        $total_price = $sale->total_price;
+
+        if ($this->discount >= 0) {
+            $discount = $this->discount;
+        } else {
+            $discount = 0;
+        }
+
+        return $this->discount_price = $total_price - ($total_price * $discount / 100);
+    }
+
+    public function total()
+    {
+        $this->total_price = SalesDetails::where('sale_id', $this->sale_id)->sum('total_price');
+    }
+
+    // menghitung kembalian
+    public function updatedPay()
+    {
+        if ($this->pay == null) {
+            $pay = 0;
+        } else {
+            $pay = $this->pay;
+        }
+        $this->change = $pay - $this->total_price;
     }
 
     public function addOrder()
@@ -125,11 +169,52 @@ class CashierSales extends Component
     public function resetProduct($sale_id)
     {
         SalesDetails::where('sale_id', $sale_id)->delete();
+        $this->subTotal();
+        $this->total();
+        $this->reset('pay');
+        $this->updatedPay();
     }
     public function cancelTransaction($sale_id)
     {
         SalesDetails::where('sale_id', $sale_id)->delete();
         Sale::find($sale_id)->delete();
+        $this->redirectRoute('cashier');
+    }
+
+    public function saleProses()
+    {
+        // mengecek apakah ada produk yang ditambahkan
+        $pruduct = SalesDetails::where('sale_id', $this->sale_id);
+        if ($pruduct->count() == 0) {
+            return $this->dispatch('failed', text: 'Pilih produk terlebih dahulu!');
+        }
+
+        // update stok barang
+        $sale_details = SalesDetails::where('sale_id', $this->sale_id)->get();
+        foreach ($sale_details as $key => $value) {
+            $product = Product::find($value->product_id);
+            if ($product) {
+                $product->stock -= $value->total_products;
+                $product->save();
+            }
+        }
+
+        // penentuan nama default costumer
+        empty($this->costumer) ? $costumer = 'Customer' : $costumer = $this->costumer;
+
+        $sale = [
+            'costumer' => $costumer,
+            'discount' => $this->discount,
+            'discount_price' => $this->discount_price,
+            'payment_method' => $this->payment_method,
+            'date' => $this->date,
+            'status' => 'Selesai',
+            'description' => $this->description,
+        ];
+
+        Sale::find($this->sale_id)->update($sale);
+
+        session()->flash('status', 'Transaksi seelsai!');
         $this->redirectRoute('cashier');
     }
 }
