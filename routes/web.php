@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BarcodeController;
 use App\Models\Sale;
 use App\Models\Company;
 use App\Models\Purchase;
@@ -72,6 +73,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/product/create', ProductCreate::class)->name('product.create');
     Route::get('/product/edit/{id}', ProductEdit::class)->name('product.edit');
     Route::get('/product/search/{id}', ProductSearch::class)->name('product.search');
+    Route::get('/barcode-products', [BarcodeController::class, 'barcodeProducts'])->name('barcode.products');
     // supplier
     Route::get('/supplier', SupplierIndex::class)->name('supplier');
     Route::get('/supplier/create', SupplierCreate::class)->name('supplier.create');

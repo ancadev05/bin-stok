@@ -7,7 +7,8 @@
 
 
         <section class="card">
-            <div class="card-header d-flex justify-content-end mb-2">
+            <div class="card-header d-flex justify-content-between mb-2">
+                <a href="{{ route('barcode.products') }}" class="btn btn-sm btn-info" target="_blank"><i class="fas fa-barcode"></i> Cetak Barcode</a>
                 <a wire:navigate href="{{ route('product.create') }}" class="btn btn-sm btn-primary"><i
                         class="fas fa-plus"></i> Tambah</a>
             </div>
