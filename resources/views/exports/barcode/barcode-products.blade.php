@@ -7,6 +7,12 @@
     <title>barcode-products</title>
 
     <style>
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+
         .text-center {
             text-align: center;
         }
@@ -14,12 +20,13 @@
 </head>
 
 <body>
+    <button onclick="window.close()" class="no-print"><< Kembali</button>
     <h3>Barcode Produk</h3>
 
     <table border="1" width="100%">
         <tr>
             @foreach ($products as $item)
-                <td class="text-center">{!! DNS1D::getBarcodeSVG(strval($item->product_code), 'C93', 1,35) !!}</td>
+                <td class="text-center">{!! Milon\Barcode\Facades\DNS1DFacade::getBarcodeSVG(strval($item->product_code), 'C93', 1,35) !!}</td>
                 @if ($no++ % 4 == 0)
         <tr></tr>
         @endif
@@ -27,11 +34,11 @@
         </tr>
     </table>
 
-    {{-- <script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             window.print();
         });
-    </script> --}}
+    </script>
 </body>
 
 </html>

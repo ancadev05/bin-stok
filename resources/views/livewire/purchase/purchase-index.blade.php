@@ -20,7 +20,7 @@
                             <th>Kode Transaksi</th>
                             <th>Total Item</th>
                             <th>Harga (Rp)</th>
-                            <th>Discount</th>
+                            <th>Discount %</th>
                             <th>Total (Rp)</th>
                             <th>Status</th>
                             <th>Aksi</th>

@@ -1,26 +1,29 @@
 <div>
-    <section class="mb-3">
-        <a href="{{ route('cashier') }}" class="btn btn-sm btn-warning"><i class="fas fa-home"> </i> POS</a>
-        <button wire:click="addOrder" class="btn btn-sm btn-primary"><i class="fas fa-plus"> </i> Order</button>
-    </section>
-
-    <section>
-        <ul class="nav nav-tabs">
-            @foreach ($sales as $item)
-                <li class="nav-item">
-                    <a class="nav-link {{ $item->id == $sale_id ? 'active' : '' }}"
-                        href="{{ route('cashier.sales', $item->id) }}">{{ $item->sale_code }}</a>
-                </li>
-            @endforeach
-        </ul>
-    </section>
+    
 
     <div class="page-category">
         <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
-                        <h5>Produk</h5>
+
+                        <section class="mb-3">
+                            <a href="{{ route('cashier') }}" class="btn btn-sm btn-warning"><i class="fas fa-home"> </i> POS</a>
+                            <button wire:click="addOrder" class="btn btn-sm btn-primary"><i class="fas fa-plus"> </i> Order</button>
+                        </section>
+                    
+                        <section>
+                            <ul class="nav nav-tabs">
+                                @foreach ($sales as $item)
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ $item->id == $sale_id ? 'active' : '' }}"
+                                            href="{{ route('cashier.sales', $item->id) }}">{{ $item->sale_code }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </section>
+
+                        <h5 class="mt-3">Produk</h5>
                         <div class="d-flex">
                             <input wire:model.live="search" type="search" class="form-control mb-3"
                                 placeholder="Search">
@@ -60,6 +63,7 @@
                             <button wire:click="cancelTransaction({{ $sale_id }})"
                                 class="btn btn-sm btn-danger">Batalkan Transaksi</button>
                         </div>
+                        <hr>
                         <table class="table" width="100%">
                             <thead>
                                 <tr>
@@ -94,7 +98,7 @@
                             
                             <tr>
                                 <td>Diskon %</td>
-                                <td class="text-end"><input wire:model="discount" type="number" class="form-control text-end">
+                                <td class="text-end"><input wire:model.live="discount" type="number" class="form-control">
                                 </td>
                             </tr>
                             <tr>
@@ -107,7 +111,11 @@
                             <tr>
                                 <td>Metode Bayar</td>
                                 <td>
-                                    <div class="d-flex">
+                                    <select wire:model="payment_method" class="form-select" id="">
+                                        <option value="Tunai" selected>Tunai</option>
+                                        <option value="Non Tunai">Non Tunai</option>
+                                    </select>
+                                    {{-- <div class="d-flex">
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" wire:model="payment_method" value="Tunai"
                                                 id="payment_method_1" checked>
@@ -118,7 +126,7 @@
                                                 id="payment_method_2">
                                             <label class="form-check-label" for="payment_method_2">Non Tunai</label>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </td>
                             </tr>
                             <tr>
@@ -127,7 +135,7 @@
                             </tr>
                             <tr>
                                 <td>Bayar (Rp)</td>
-                                <td><input wire:model.live="pay" type="number" class="form-control text-end">
+                                <td><input wire:model.live="pay" type="number" class="form-control text-end" required>
                             </tr>
                             <tr>
                                 <td>Kembali (Rp)</td>
@@ -143,8 +151,8 @@
 
                         {{-- proses pembayaran --}}
                         <div class="d-flex justify-content-end mt-4">
-                            <button wire:click="saleProses" class="btn btn-success me-2">Bayar</button>
-                            <button class="btn btn-success">Cetak</button>
+                            <button wire:click="saleProses" class="btn btn-success me-2"><i class="far fa-money-bill-alt"> </i> PROSES</button>
+                            <button class="btn btn-info"><i class="fas fa-print"> </i> CETAK</button>
                         </div>
                     </div>
                 </div>

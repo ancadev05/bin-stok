@@ -28,7 +28,7 @@ class CashierSales extends Component
         $this->discount = 0;
 
         $this->subTotal();
-        $this->discount();
+        $this->updatedDiscount();
         $this->total();
     }
     public function render()
@@ -84,7 +84,7 @@ class CashierSales extends Component
         }
 
         $this->subTotal();
-        $this->discount();
+        $this->updatedDiscount();
         $this->total();
     }
 
@@ -92,7 +92,7 @@ class CashierSales extends Component
     {
         SalesDetails::find($product_id)->delete();
         $this->subTotal();
-        $this->discount();
+        $this->updatedDiscount();
         $this->total();
         $this->updatedPay();
     }
@@ -102,7 +102,7 @@ class CashierSales extends Component
         $this->sub_total = SalesDetails::where('sale_id', $this->sale_id)->sum('total_price');
     }
 
-    public function discount()
+    public function updatedDiscount()
     {
         $sale = Sale::find($this->sale_id);
         $total_price = $sale->total_price;
@@ -113,7 +113,7 @@ class CashierSales extends Component
             $discount = 0;
         }
 
-        return $this->discount_price = $total_price - ($total_price * $discount / 100);
+        $this->discount_price  = $total_price - ($total_price * $discount / 100);
     }
 
     public function total()
@@ -171,6 +171,7 @@ class CashierSales extends Component
     {
         SalesDetails::where('sale_id', $sale_id)->delete();
         $this->subTotal();
+        $this->updatedDiscount()();
         $this->total();
         $this->reset('pay');
         $this->updatedPay();
@@ -184,6 +185,9 @@ class CashierSales extends Component
 
     public function saleProses()
     {
+        // $this->validate([
+        //     $this->pay => 'required',
+        // ]);
         // mengecek apakah ada produk yang ditambahkan
         $pruduct = SalesDetails::where('sale_id', $this->sale_id);
         if ($pruduct->count() == 0) {

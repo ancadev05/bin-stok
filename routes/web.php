@@ -96,6 +96,7 @@ Route::middleware(['auth'])->group(function () {
     // cashier
     Route::get('/cashier', CashierIndex::class)->name('cashier');
     Route::get('/cashier-sales/{id}', CashierSales::class)->name('cashier.sales');
+    Route::get('/print-receipt/{id}', [PrintController::class, 'printReceipt'])->name('print.receipt');
     // user
     Route::get('/users', UserIndex::class)->name('users');
     Route::get('/users/create', UserCreate::class)->name('users.create');

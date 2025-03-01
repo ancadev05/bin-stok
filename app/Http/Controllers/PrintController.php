@@ -31,4 +31,12 @@ class PrintController extends Controller
             'company', 'sale', 'sale_details'
         ));
     }
+
+    public function printReceipt($id)
+    {
+        $company = Company::first();
+        $sale = Sale::find($id);
+        $sales_details = SalesDetails::where('sale_id', $sale->id)->get();
+        return view('exports.print.cashier-receipt', compact('company', 'sale', 'sales_details'));
+    }
 }

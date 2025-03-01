@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $purchase->purchase_code }}</title>
+    <link href="{{ asset('assets/img/logo-biner.png') }}" rel="icon" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('kaiadmin/css/bootstrap.min.css') }}" />
 
     <style>
@@ -108,7 +109,8 @@
 
         <div class="no-print">
             <div class="d-flex justify-content-center mt-3">
-                <button onclick="window.close()" class="btn btn-sm btn-danger me-2"><i class="fas fa-print"> </i> Kembali</button>
+                <button onclick="window.close()" class="btn btn-sm btn-danger me-2"><i class="fas fa-print"> </i>
+                    Kembali</button>
                 <button onclick="printWindow()" class="btn btn-sm btn-info"><i class="fas fa-print"> </i> Cetak</button>
             </div>
         </div>

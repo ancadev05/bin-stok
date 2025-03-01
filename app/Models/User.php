@@ -46,4 +46,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // relasi ketabel lain
+    public function sale()
+    {
+        return $this->hasMany(Sale::class);
+    }
 }

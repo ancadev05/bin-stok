@@ -29,22 +29,15 @@ class CashierIndex extends Component
     public $saya=[];
     public function render()
     {
-        if ($this->search) {
-            $products = Product::where('product_code', 'like', '%' . $this->search . '%')
-                ->orWhere('name', 'like', '%' . $this->search . '%')
-                ->get();
-        } else {
-            $products = Product::all();
-        }
-
-        $sales = Sale::where('status', 'k-pending')->get();
+        $user_id = Auth::user()->id;
+        $today = date('Y-m-d');
+        $sales_active = Sale::where('user_id', $user_id)->where('status', 'k-pending')->get();
+        $sales = Sale::where('user_id', $user_id)->where('date', $today)
+        ->orderBy('id', 'desc')->get();
 
         return view(
             'livewire.cashier.cashier-index',
-            compact(
-                'products',
-                'sales',
-            )
+            compact('sales_active','sales',)
         );
     }
 
@@ -62,28 +55,6 @@ class CashierIndex extends Component
         $sale_id = Sale::where('sale_code', $sale_code)->first()->id;
         
         $this->redirectRoute('cashier.sales', $sale_id);
-    }
-
-    public function addProduct($id)
-    {
-        $sale_details = [
-            'sale_id' => $this->sale_id,
-            'product_id' => $this->product_id,
-            'sale_price' => $this->sale_price2,
-            'total_products' => $this->total_products,
-            'total_price' => $this->total_price2,
-        ];
-
-        SalesDetails::create($sale_details);
-    }
-
-    public function remove($id)
-    {
-        $index = array_search($id, $this->list_products);
-        if ($index) {
-            unset($this->list_products[$index]);
-            $this->list_products = array_values($this->list_products); // re-index array
-        }
     }
 
     public function saleCode()
@@ -104,4 +75,5 @@ class CashierIndex extends Component
 
         return $sale_code;
     }
+
 }
