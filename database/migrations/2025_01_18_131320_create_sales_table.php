@@ -20,6 +20,8 @@ return new class extends Migration
             $table->integer('discount')->default(0);
             $table->integer('discount_price')->default(0);
             $table->string('payment_method')->nullable();
+            $table->integer('pay')->default(0);
+            $table->integer('change')->default(0);
             $table->date('date');
             $table->string('status')->default('Pending');
             $table->string('description')->nullable();

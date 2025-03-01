@@ -14,11 +14,11 @@ use Illuminate\Support\Facades\Auth;
 class CashierSales extends Component
 {
     // tabel sales
-    public $sale_code, $costumer, $subtotal, $discount, $discount_price, $payment_method, $date, $status, $description;
+    public $sale_code, $costumer, $subtotal, $discount, $discount_price, $payment_method, $pay, $change, $date, $status, $description;
     // tabel sales_details
     public $sale_id, $product_id, $sale_price, $total_products, $total_price;
     // variabel bantu
-    public $search, $sub_total, $change, $pay;
+    public $search, $sub_total;
     public function mount($id)
     {
         $sale = Sale::find($id);
@@ -27,22 +27,20 @@ class CashierSales extends Component
         $this->date = date('Y-m-d');
         $this->discount = 0;
 
-        $this->subTotal();
-        $this->updatedDiscount();
-        $this->total();
+        $this->updateAll();
     }
     public function render()
     {
         $sale_id = $this->sale_id;
         if ($this->search) {
             $products = Product::where('name', 'like', '%' . $this->search . '%')
-            ->orWhere('product_code', 'like', '%' . $this->search . '%')
-            ->orWhere('stock', '>', 0)
-            ->get();
+                ->orWhere('product_code', 'like', '%' . $this->search . '%')
+                ->orWhere('stock', '>', 0)
+                ->get();
         } else {
             $products = Product::where('stock', '>', 0)->get();
         }
-        
+
         $sales = Sale::where('status', 'k-pending')->get();
         $product_list = SalesDetails::where('sale_id', $this->sale_id)->get();
         return view('livewire.cashier.cashier-sales', compact('sales', 'products', 'product_list'));
@@ -57,6 +55,12 @@ class CashierSales extends Component
     {
         $product = Product::find($product_id);
         $sale_details = SalesDetails::where('sale_id', $this->sale_id)->where('product_id', $product_id)->first();
+
+        // mengecek ketersediaan stok
+        $stok_produk = $product->stock;
+        if ($sale_details && $stok_produk <= $sale_details->total_products) {
+            return $this->dispatch('failed', text: 'Stok produk tidak mencukupi!');
+        }
 
         if ($sale_details) {
             $total_products = $sale_details->total_products + 1;
@@ -83,23 +87,15 @@ class CashierSales extends Component
             ]);
         }
 
-        $this->subTotal();
-        $this->updatedDiscount();
-        $this->total();
+        $this->updateAll();
     }
 
     public function deleteProduct($product_id)
     {
         SalesDetails::find($product_id)->delete();
-        $this->subTotal();
-        $this->updatedDiscount();
-        $this->total();
-        $this->updatedPay();
-    }
-
-    public function subTotal()
-    {
-        $this->sub_total = SalesDetails::where('sale_id', $this->sale_id)->sum('total_price');
+        $total_price = SalesDetails::where('sale_id', $this->sale_id)->sum('total_price');
+        Sale::find($this->sale_id)->update(['total_price' => $total_price]);
+        $this->updateAll();
     }
 
     public function updatedDiscount()
@@ -116,7 +112,7 @@ class CashierSales extends Component
         $this->discount_price  = $total_price - ($total_price * $discount / 100);
     }
 
-    public function total()
+    public function totalPrice()
     {
         $this->total_price = SalesDetails::where('sale_id', $this->sale_id)->sum('total_price');
     }
@@ -129,7 +125,14 @@ class CashierSales extends Component
         } else {
             $pay = $this->pay;
         }
-        $this->change = $pay - $this->total_price;
+        $this->change = $pay - $this->discount_price;
+    }
+
+    public function updateAll()
+    {
+        $this->updatedDiscount();
+        $this->totalPrice();
+        $this->updatedPay();
     }
 
     public function addOrder()
@@ -170,11 +173,8 @@ class CashierSales extends Component
     public function resetProduct($sale_id)
     {
         SalesDetails::where('sale_id', $sale_id)->delete();
-        $this->subTotal();
-        $this->updatedDiscount()();
-        $this->total();
-        $this->reset('pay');
-        $this->updatedPay();
+        Sale::find($sale_id)->update(['total_price' => 0]);
+        $this->updateAll();
     }
     public function cancelTransaction($sale_id)
     {
@@ -185,33 +185,47 @@ class CashierSales extends Component
 
     public function saleProses()
     {
-        // $this->validate([
-        //     $this->pay => 'required',
-        // ]);
         // mengecek apakah ada produk yang ditambahkan
         $pruduct = SalesDetails::where('sale_id', $this->sale_id);
         if ($pruduct->count() == 0) {
             return $this->dispatch('failed', text: 'Pilih produk terlebih dahulu!');
         }
 
+        // mengecek pembayaran
+        if ($this->pay <= 0) {
+            return $this->dispatch('failed', text: 'Masukkan nominal pembayaran tunai!');
+        }
+
+        $this->validate([
+            // 'payment_method' => 'required',
+            'pay' => 'required',
+        ]);
+
         // update stok barang
-        $sale_details = SalesDetails::where('sale_id', $this->sale_id)->get();
-        foreach ($sale_details as $key => $value) {
-            $product = Product::find($value->product_id);
-            if ($product) {
-                $product->stock -= $value->total_products;
-                $product->save();
+        $sale_details = SalesDetails::where('sale_id', $this->sale_id)->get(); // mengecek produk yang ditambahkan
+        foreach ($sale_details as $key => $value) { // mengupdate stok barang
+            $product = Product::find($value->product_id); // mengecek stok barang
+            if ($product) { // jika stok barang ada
+                if ($value->total_products > $product->stock) { // jika stok barang kurang
+                    return $this->dispatch('failed', text: 'Stok barang tidak mencukupi'); // mengirimkan pesan gagal
+                } else { // jika stok barang cukup
+                    $product->stock -= $value->total_products; // mengupdate stok barang
+                    $product->save(); // menyimpan perubahan stok barang
+                }
             }
         }
 
         // penentuan nama default costumer
         empty($this->costumer) ? $costumer = 'Customer' : $costumer = $this->costumer;
+        empty($this->payment_method) ? $payment_method = 'Tunai' : $payment_method = $this->payment_method;
 
         $sale = [
             'costumer' => $costumer,
             'discount' => $this->discount,
             'discount_price' => $this->discount_price,
-            'payment_method' => $this->payment_method,
+            'payment_method' => $payment_method,
+            'pay' => $this->pay,
+            'change' => $this->change,
             'date' => $this->date,
             'status' => 'Selesai',
             'description' => $this->description,

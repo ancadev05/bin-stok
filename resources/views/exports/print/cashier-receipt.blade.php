@@ -50,7 +50,7 @@
                 <td>Tgl.</td>
                 <td>: {{ date('d-m-Y h:i:s') }}</td>
                 <td>Pembayaran</td>
-                <td>: Tunai</td>
+                <td>: {{ $sale->payment_method }}</td>
             </tr>
             <tr>
                 <td>Ref.</td>
@@ -95,11 +95,11 @@
             </tr>
             <tr>
                 <td>Bayar</td>
-                <td class="text-end fw-bold">{{ number_format(890890) }}</td>
+                <td class="text-end fw-bold">{{ number_format($sale->pay) }}</td>
             </tr>
             <tr>
                 <td>Kembalian</td>
-                <td class="text-end fw-bold">{{ number_format(890890) }}</td>
+                <td class="text-end fw-bold">{{ number_format($sale->change) }}</td>
             </tr>
         </table>
         <hr>
