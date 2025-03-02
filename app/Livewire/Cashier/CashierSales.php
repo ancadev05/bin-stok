@@ -31,6 +31,7 @@ class CashierSales extends Component
     }
     public function render()
     {
+        $user_id = Auth::user();
         $sale_id = $this->sale_id;
         if ($this->search) {
             $products = Product::where('name', 'like', '%' . $this->search . '%')
@@ -41,7 +42,7 @@ class CashierSales extends Component
             $products = Product::where('stock', '>', 0)->get();
         }
 
-        $sales = Sale::where('status', 'k-pending')->get();
+        $sales = Sale::where('user_id', $user_id->id)->where('status', 'k-pending')->get();
         $product_list = SalesDetails::where('sale_id', $this->sale_id)->get();
         return view('livewire.cashier.cashier-sales', compact('sales', 'products', 'product_list'));
     }

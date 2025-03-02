@@ -37,8 +37,9 @@
 
             <hr>
 
-            <section>
-                <span style="font-size: 14px"><strong>Supplayer</strong> : {{ $purchase->supplier_name }}</span>
+            <section class="d-flex justify-content-between">
+                <span style="font-size: 14px"><strong>Costumer</strong> : {{ $purchase->supplier_name }}</span>
+                <span style="font-size: 14px"><strong>Admin/Kasir</strong> : {{ $purchase->user->name }}</span>
             </section>
 
             {{-- detail pembelian --}}

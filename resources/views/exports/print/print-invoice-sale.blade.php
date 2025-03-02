@@ -51,8 +51,9 @@
 
         <hr>
 
-        <section>
+        <section class="d-flex justify-content-between">
             <span style="font-size: 14px"><strong>Costumer</strong> : {{ $sale->costumer }}</span>
+            <span style="font-size: 14px"><strong>Admin/Kasir</strong> : {{ $sale->user->name }}</span>
         </section>
 
         {{-- detail pembelian --}}

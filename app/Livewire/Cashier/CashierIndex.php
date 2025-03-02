@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Sale;
 use App\Models\Product;
 use Livewire\Component;
+use Livewire\Attributes\On;
 use App\Models\SalesDetails;
 use Livewire\Attributes\Title;
 use Illuminate\Support\Facades\Auth;
@@ -29,10 +30,10 @@ class CashierIndex extends Component
     public $saya=[];
     public function render()
     {
-        $user_id = Auth::user()->id;
+        $user_id = Auth::user();
         $today = date('Y-m-d');
-        $sales_active = Sale::where('user_id', $user_id)->where('status', 'k-pending')->get();
-        $sales = Sale::where('user_id', $user_id)->where('date', $today)
+        $sales_active = Sale::where('user_id', $user_id->id)->where('status', 'k-pending')->get();
+        $sales = Sale::where('user_id', $user_id->id)->where('date', $today)
         ->orderBy('id', 'desc')->get();
 
         return view(
@@ -76,4 +77,28 @@ class CashierIndex extends Component
         return $sale_code;
     }
 
+    #[On('destroy')]
+    public function saleDestroy($id)
+    {
+        // penghapusan transaksi pending
+        $sale = Sale::find($id)->status;
+        if ($sale == 'Selesai') {
+            // mengurangi stok produk
+            $sale_details = SalesDetails::where('sale_id', $id)->get();
+
+            // update stok barang
+            foreach ($sale_details as $key => $value) {
+                $product = Product::find($value->product_id);
+                if ($product) {
+                    $product->stock += $value->total_products;
+                    $product->save();
+                }
+            }
+        }
+
+        SalesDetails::where('sale_id', $id)->delete();
+        Sale::find($id)->delete();
+
+        $this->dispatch('success', text:'Data berhasil dihapus!');
+    }
 }

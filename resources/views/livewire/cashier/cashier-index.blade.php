@@ -76,5 +76,33 @@
                 $('.main-header').none();
             });
         </script>
+        <script>
+            function deleteData(id, name) {
+
+                swal({
+                    title: 'Yakin ingin hapus ' + name + ' ?',
+                    buttons: {
+                        confirm: {
+                            text: 'Yes, delete it!',
+                            className: 'btn btn-success'
+                        },
+                        cancel: {
+                            visible: true,
+                            className: 'btn btn-danger'
+                        }
+                    }
+                }).then((Delete) => {
+                    if (Delete) {
+
+                        Livewire.dispatch('destroy', {
+                            id
+                        });
+
+                    } else {
+                        swal.close();
+                    }
+                });
+            }
+        </script>
     @endpush
 </div>

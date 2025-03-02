@@ -12,4 +12,9 @@ class Purchase extends Model
     {
         return $this->hasMany(PurchaseDetails::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

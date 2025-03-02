@@ -23,113 +23,132 @@
     <div class="sidebar-wrapper scrollbar scrollbar-inner">
         <div class="sidebar-content">
             <ul class="nav nav-secondary">
-                <li class="nav-item {{ Request::is('admin/dashboard*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.dashboard') }}">
-                        <i class="fas fa-home"></i>
-                        <p>Dahsboard</p>
-                    </a>
-                </li>
+                {{-- menu untuk admin --}}
+                @if (Auth::user()->roles == 1)
+                    <li class="nav-item {{ Request::is('admin/dashboard*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.dashboard') }}">
+                            <i class="fas fa-home"></i>
+                            <p>Dahsboard</p>
+                        </a>
+                    </li>
 
-                <li class="nav-section">
-                    <span class="sidebar-mini-icon">
-                        <i class="fa fa-ellipsis-h"></i>
-                    </span>
-                    <h4 class="text-section">Master</h4>
-                </li>
+                    <li class="nav-section">
+                        <span class="sidebar-mini-icon">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </span>
+                        <h4 class="text-section">Master</h4>
+                    </li>
 
-                <li class="nav-item {{ Request::is('category*') ? 'active' : '' }}">
-                    <a href="{{ route('category') }}">
-                        <i class="fas fa-cube"></i>
-                        <p>Kategori</p>
-                    </a>
-                </li>
-                <li class="nav-item {{ Request::is('product*') ? 'active' : '' }}">
-                    <a href="{{ route('product') }}">
-                        <i class="fas fa-cubes"></i>
-                        <p>Produk</p>
-                        {{-- <span class="badge badge-success">4</span> --}}
-                    </a>
-                </li>
-                <li class="nav-item {{ Request::is('supplier*') ? 'active' : '' }}">
-                    <a href="{{ route('supplier') }}">
-                        <i class="fas fa-truck"></i>
-                        <p>Supplayer</p>
-                    </a>
-                </li>
+                    <li class="nav-item {{ Request::is('category*') ? 'active' : '' }}">
+                        <a href="{{ route('category') }}">
+                            <i class="fas fa-cube"></i>
+                            <p>Kategori</p>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ Request::is('product*') ? 'active' : '' }}">
+                        <a href="{{ route('product') }}">
+                            <i class="fas fa-cubes"></i>
+                            <p>Produk</p>
+                            {{-- <span class="badge badge-success">4</span> --}}
+                        </a>
+                    </li>
+                    <li class="nav-item {{ Request::is('supplier*') ? 'active' : '' }}">
+                        <a href="{{ route('supplier') }}">
+                            <i class="fas fa-truck"></i>
+                            <p>Supplayer</p>
+                        </a>
+                    </li>
 
-                <li class="nav-section">
-                    <span class="sidebar-mini-icon">
-                        <i class="fa fa-ellipsis-h"></i>
-                    </span>
-                    <h4 class="text-section">Transaksi</h4>
-                </li>
+                    <li class="nav-section">
+                        <span class="sidebar-mini-icon">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </span>
+                        <h4 class="text-section">Transaksi</h4>
+                    </li>
 
-                <li class="nav-item {{ Request::is('purchase*') ? 'active' : '' }}">
-                    <a href="{{ route('purchase') }}">
-                        <i class="fas fa-cart-plus"></i>
-                        <p>Pembelian</p>
-                    </a>
-                </li>
-                <li class="nav-item {{ Request::is('sale*') ? 'active' : '' }}">
-                    <a href="{{ route('sale') }}">
-                        <i class="fas fa-luggage-cart"></i>
-                        <p>Penjualan</p>
-                    </a>
-                </li>
+                    <li class="nav-item {{ Request::is('purchase*') ? 'active' : '' }}">
+                        <a href="{{ route('purchase') }}">
+                            <i class="fas fa-cart-plus"></i>
+                            <p>Pembelian</p>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ Request::is('sale*') ? 'active' : '' }}">
+                        <a href="{{ route('sale') }}">
+                            <i class="fas fa-luggage-cart"></i>
+                            <p>Penjualan</p>
+                        </a>
+                    </li>
 
-                <li class="nav-section">
-                    <span class="sidebar-mini-icon">
-                        <i class="fa fa-ellipsis-h"></i>
-                    </span>
-                    <h4 class="text-section">Kasir</h4>
-                </li>
+                    <li class="nav-section">
+                        <span class="sidebar-mini-icon">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </span>
+                        <h4 class="text-section">Kasir</h4>
+                    </li>
 
-                <li class="nav-item {{ Request::is('cashier') ? 'active' : '' }}">
-                    <a href="{{ route('cashier') }}">
-                        <i class="fas fa-desktop"></i>
-                        <p>P.O.S</p>
-                    </a>
-                </li>
+                    <li class="nav-item {{ Request::is('cashier') ? 'active' : '' }}">
+                        <a href="{{ route('cashier') }}">
+                            <i class="fas fa-desktop"></i>
+                            <p>P.O.S</p>
+                        </a>
+                    </li>
 
-                <li class="nav-section">
-                    <span class="sidebar-mini-icon">
-                        <i class="fa fa-ellipsis-h"></i>
-                    </span>
-                    <h4 class="text-section">Laporan</h4>
-                </li>
+                    <li class="nav-section">
+                        <span class="sidebar-mini-icon">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </span>
+                        <h4 class="text-section">Laporan</h4>
+                    </li>
 
-                <li class="nav-item {{ Request::is('report-purchase') ? 'active' : '' }}">
-                    <a href="{{ route('report.purchase') }}">
-                        <i class="fas fa-file-alt"></i>
-                        <p>Laporan Pembelian</p>
-                    </a>
-                </li>
-                <li class="nav-item {{ Request::is('report-sale') ? 'active' : '' }}">
-                    <a href="{{ route('report.sale') }}">
-                        <i class="fas fa-file-alt"></i>
-                        <p>Laporan Penjualan</p>
-                    </a>
-                </li>
+                    <li class="nav-item {{ Request::is('report-purchase') ? 'active' : '' }}">
+                        <a href="{{ route('report.purchase') }}">
+                            <i class="fas fa-file-alt"></i>
+                            <p>Laporan Pembelian</p>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ Request::is('report-sale') ? 'active' : '' }}">
+                        <a href="{{ route('report.sale') }}">
+                            <i class="fas fa-file-alt"></i>
+                            <p>Laporan Penjualan</p>
+                        </a>
+                    </li>
 
-                <li class="nav-section">
-                    <span class="sidebar-mini-icon">
-                        <i class="fa fa-ellipsis-h"></i>
-                    </span>
-                    <h4 class="text-section">System</h4>
-                </li>
+                    <li class="nav-section">
+                        <span class="sidebar-mini-icon">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </span>
+                        <h4 class="text-section">System</h4>
+                    </li>
 
-                <li class="nav-item {{ Request::is('users*') ? 'active' : '' }}">
-                    <a href="{{ route('users') }}">
-                        <i class="fas fa-user-cog"></i>
-                        <p>User</p>
-                    </a>
-                </li>
-                <li class="nav-item {{ Request::is('company*') ? 'active' : '' }}">
-                    <a href="{{ route('company') }}">
-                        <i class="fas fa-cog"></i>
-                        <p>Pengaturan</p>
-                    </a>
-                </li>
+                    <li class="nav-item {{ Request::is('users*') ? 'active' : '' }}">
+                        <a href="{{ route('users') }}">
+                            <i class="fas fa-user-cog"></i>
+                            <p>User</p>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ Request::is('company*') ? 'active' : '' }}">
+                        <a href="{{ route('company') }}">
+                            <i class="fas fa-cog"></i>
+                            <p>Pengaturan</p>
+                        </a>
+                    </li>
+                @endif
+
+                {{-- menu khusus untuk kasir --}}
+                @if (Auth::user()->roles == 2)
+                    <li class="nav-section">
+                        <span class="sidebar-mini-icon">
+                            <i class="fa fa-ellipsis-h"></i>
+                        </span>
+                        <h4 class="text-section">Kasir</h4>
+                    </li>
+                    <li class="nav-item {{ Request::is('cashier') ? 'active' : '' }}">
+                        <a href="{{ route('cashier') }}">
+                            <i class="fas fa-desktop"></i>
+                            <p>P.O.S</p>
+                        </a>
+                    </li>
+                @endif
 
             </ul>
         </div>
